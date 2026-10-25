@@ -3,261 +3,284 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0d0c0a" />
+  <meta name="theme-color" content="#fff4e6" />
   <meta name="description" content="Эталон — камерный отель премиум-класса в Грозном. Выберите номер и проверьте свободные даты онлайн." />
   <title>Эталон — отель в Грозном</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&display=swap');
     @font-face{font-family:Inter;src:url('fonts/inter-cyrillic.woff2') format('woff2');font-style:normal;font-weight:400 800;font-display:swap;unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
     @font-face{font-family:Inter;src:url('fonts/inter-latin.woff2') format('woff2');font-style:normal;font-weight:400 800;font-display:swap;unicode-range:U+0000-00FF}
-    /* Dark editorial system: warm black surfaces, one champagne-gold accent, Playfair Display / Inter */
-    :root{color-scheme:dark;--bg:#0d0c0a;--bg2:#141210;--card:#1a1713;--line:rgba(243,238,228,.14);--line-strong:rgba(243,238,228,.28);--ink:#f3eee4;--muted:#a9a193;--gold:#d6b36a;--gold-deep:#a8832f;--on-gold:#15110a;--ok:#7fc59b;--warn:#e3b55a;--bad:#e5877e;--serif:'Playfair Display',Georgia,'Times New Roman',serif;--sans:Inter,system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--ease:cubic-bezier(.2,.7,.2,1);--r:2px}
-    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px;background:var(--bg)}
-    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+    /* Warm bento system: cream canvas, pastel tiles, coral + sun accents, big radii, Unbounded / Inter */
+    :root{--cream:#fff4e6;--paper:#fff;--ink:#1f1b3a;--muted:#5b5775;--coral:#ff6b4a;--coral-d:#e9502f;--sun:#ffc83d;--mint:#bfebdd;--mint-d:#157a60;--lilac:#dcd2ff;--peach:#ffd6c2;--butter:#ffefb0;--line:rgba(31,27,58,.12);--ok:#157a60;--warn:#a85d00;--bad:#c23b2a;--display:'Unbounded','Montserrat','Arial Rounded MT Bold',system-ui,sans-serif;--sans:Inter,system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--ease:cubic-bezier(.34,1.4,.5,1);--soft:cubic-bezier(.2,.7,.2,1);--shadow:0 18px 40px -18px rgba(31,27,58,.28)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:100px}
+    body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
     a{color:inherit;text-decoration:none}button,input,select{font:inherit;color:inherit}button{cursor:pointer}img{display:block;max-width:100%}
-    :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-    .wrap{width:min(1280px,calc(100% - 64px));margin:auto}
-    section{padding:136px 0}
-    .eyebrow{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
-    .eyebrow:before{content:'';width:40px;height:1px;background:currentColor}
-    h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0;line-height:1.08;letter-spacing:-.015em}
-    h2 em,h1 em{font-style:italic;color:var(--gold)}
-    .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:48px;margin-bottom:64px}
-    .section-head h2{font-size:clamp(42px,6vw,84px);margin-top:20px}
+    :focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:12px}
+    .wrap{width:min(1240px,calc(100% - 48px));margin:auto}
+    section{padding:110px 0}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:var(--butter);color:var(--ink);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+    .eyebrow:before{content:'';width:8px;height:8px;border-radius:50%;background:var(--coral)}
+    h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;line-height:1.12;letter-spacing:-.02em}
+    .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:48px}
+    .section-head h2{font-size:clamp(30px,4.4vw,56px);margin-top:18px}
     .section-head p{max-width:360px;margin:0;color:var(--muted)}
 
-    /* buttons: sharp, editorial */
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:52px;padding:0 32px;border:1px solid var(--gold);background:var(--gold);color:var(--on-gold);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;border-radius:var(--r);transition:background .25s,color .25s,transform .25s var(--ease)}
-    .btn:hover{background:transparent;color:var(--gold)}
-    .text-link,.room-link{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid var(--gold);padding-bottom:6px;color:var(--ink);transition:color .2s}
-    .text-link:hover,.room-link:hover{color:var(--gold)}
+    /* buttons: pills with a springy hover */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 30px;border:0;background:var(--coral);color:var(--ink);font-size:15px;font-weight:700;border-radius:999px;box-shadow:0 6px 0 var(--coral-d);transition:transform .25s var(--ease),box-shadow .25s,background .2s,color .2s}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 9px 0 var(--coral-d)}.btn:active{transform:translateY(4px);box-shadow:0 2px 0 var(--coral-d)}
+    .text-link,.room-link{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;padding:14px 22px;border-radius:999px;background:var(--paper);box-shadow:var(--shadow);transition:transform .25s var(--ease)}
+    .text-link:hover,.room-link:hover{transform:translateY(-3px) rotate(-1deg)}
 
-    /* header: nav left, logo centre, actions right */
-    header{position:fixed;inset:0 0 auto;z-index:30;height:88px;transition:background .3s,height .3s,border-color .3s;border-bottom:1px solid transparent}
-    header.solid{height:68px;background:rgba(13,12,10,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom-color:var(--line)}
-    .nav{height:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px}
-    .nav-links{order:1;display:flex;gap:30px;white-space:nowrap;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
-    .nav-links a[href="#availability"]{display:none}.nav-links a{position:relative;padding:6px 0;color:#d9d3c6}.nav-links a:after{content:'';position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--gold);transition:right .3s var(--ease)}
-    .nav-links a:hover{color:var(--ink)}.nav-links a:hover:after{right:0}
-    .brand{order:2;display:flex;flex-direction:row;align-items:center;gap:14px}
-    .brand-mark{width:40px;height:40px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;font:600 21px var(--serif);color:var(--gold)}
-    .brand-name{font:600 22px/1 var(--serif);letter-spacing:.3em;text-indent:.3em}
-    .brand-sub{font-size:9px;letter-spacing:.34em;margin-top:6px;color:var(--muted)}
-    .nav-right{order:3;display:flex;align-items:center;justify-content:flex-end;gap:26px}.phone{font-size:13px;font-weight:600;white-space:nowrap;letter-spacing:.04em}
-    header .btn{min-height:42px;padding:0 22px;background:transparent;color:var(--ink);border-color:var(--line-strong)}header .btn:hover{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+    /* floating pill header */
+    header{position:fixed;top:14px;left:50%;z-index:30;transform:translateX(-50%);width:min(1240px,calc(100% - 32px));height:68px;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:999px;box-shadow:0 8px 30px -12px rgba(31,27,58,.25);transition:box-shadow .3s,background .3s}
+    header.solid{background:rgba(255,255,255,.96);box-shadow:0 14px 40px -14px rgba(31,27,58,.35)}
+    .nav{height:100%;width:100%;max-width:none;margin:0;padding:0 10px 0 18px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-mark{width:42px;height:42px;border-radius:50%;background:var(--coral);display:grid;place-items:center;font:600 20px var(--display);color:var(--ink);transform:rotate(-8deg);transition:transform .4s var(--ease)}.brand:hover .brand-mark{transform:rotate(8deg) scale(1.08)}
+    .brand-name{font:600 17px/1 var(--display);letter-spacing:.06em}.brand-sub{font-size:10px;letter-spacing:.16em;margin-top:4px;color:var(--muted)}
+    .nav-links{display:flex;gap:6px;font-size:14px;font-weight:600}
+    .nav-links a{padding:9px 16px;border-radius:999px;transition:background .2s}.nav-links a:hover{background:var(--butter)}
+    .nav-right{display:flex;align-items:center;gap:16px}.phone{font-size:14px;font-weight:700;white-space:nowrap}
+    header .btn{min-height:46px;padding:0 24px;background:var(--ink);color:#fff;box-shadow:none;font-size:14px}header .btn:hover{background:var(--coral);color:var(--ink);box-shadow:none}
 
-    /* hero: giant headline anchored bottom-left */
-    .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding:0;background:var(--bg) url('images 0.jpg') center 40%/cover no-repeat;overflow:hidden}
-    .hero:before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 4%,rgba(13,12,10,.55) 45%,rgba(13,12,10,.3) 100%),linear-gradient(90deg,rgba(13,12,10,.75),transparent 70%)}
-    .hero>.wrap:not(.hero-foot){position:relative;width:min(1280px,calc(100% - 64px))}
-    .hero-content{padding:160px 0 210px;max-width:1100px}
-    .hero .eyebrow{margin-bottom:34px}
-    .hero h1{font-size:clamp(60px,11.5vw,184px);line-height:.92;letter-spacing:-.03em;font-weight:500;margin:0 0 40px}
-    .hero h1 em{display:block;padding-left:.9em}
-    .hero p{font-size:18px;max-width:440px;margin:0 0 44px;color:#d4cec1}
-    .hero-actions{display:flex;align-items:center;gap:36px;flex-wrap:wrap}
-    .hero-foot{position:absolute;left:auto;width:auto;transform:none;right:max(32px,calc((100% - 1280px)/2));bottom:206px;writing-mode:vertical-rl;display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.3em;color:var(--muted)}.hero-foot span{color:var(--gold)}
+    /* hero: copy left, arch collage right */
+    .hero{position:relative;padding:150px 0 130px;background:radial-gradient(circle at 85% 20%,#ffe3c4 0,transparent 45%),var(--cream);overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+    .hero-content{max-width:640px}
+    .hero h1{font-size:clamp(36px,5.4vw,74px);line-height:1.06;margin:26px 0 24px}
+    .hero h1 em{display:inline-block;font-style:normal;background:var(--sun);padding:.02em .22em .08em;border-radius:.34em;transform:rotate(-2.5deg);margin-top:.12em}
+    .hero p{font-size:19px;max-width:460px;margin:0 0 36px;color:var(--muted)}
+    .hero-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+    .hero-foot{display:none}
+    .hero-art{position:relative;height:600px}
+    .hero-art .arch{position:absolute;right:0;top:0;width:76%;height:100%;border-radius:999px 999px 44px 44px;background:var(--ink) url('images 0.jpg') center 40%/cover;box-shadow:var(--shadow)}
+    .hero-art .blob{position:absolute;left:2%;top:8%;width:230px;height:230px;border-radius:62% 38% 55% 45%/50% 55% 45% 50%;background:var(--lilac);animation:morph 9s ease-in-out infinite}
+    .hero-art .pill{position:absolute;left:0;bottom:6%;width:46%;aspect-ratio:1;object-fit:cover;border-radius:50%;border:10px solid var(--cream);box-shadow:var(--shadow)}
+    .sticker{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-weight:700;font-size:13px;line-height:1.2;box-shadow:var(--shadow)}
+    .sticker.s1{right:-2%;top:12%;width:132px;height:132px;border-radius:50%;background:var(--sun);transform:rotate(12deg);animation:float 5s ease-in-out infinite}
+    .sticker.s1 b{font:600 36px/1 var(--display)}
+    .sticker.s2{left:6%;top:48%;padding:14px 22px;border-radius:999px;background:var(--mint);transform:rotate(-7deg);animation:float 6s ease-in-out -2s infinite}
+    .sticker.s3{right:8%;bottom:4%;padding:12px 20px;border-radius:999px;background:var(--coral);transform:rotate(5deg);animation:float 5.5s ease-in-out -1s infinite}
+    @keyframes float{50%{translate:0 -12px}}
+    @keyframes morph{50%{border-radius:40% 60% 45% 55%/55% 40% 60% 45%;rotate:20deg}}
 
-    /* booking bar docked on the hero's lower edge */
-    .booking-float{position:relative;z-index:5;margin-top:-92px}
+    /* booking bar */
+    .booking-float{position:relative;z-index:5;margin-top:-78px}
     .quick-booking-title{display:none}
-    .bookingbar{display:grid;grid-template-columns:repeat(5,1fr) auto;align-items:stretch;background:rgba(26,23,19,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line-strong);border-radius:var(--r);padding:0}
-    .field{padding:20px 24px;border-right:1px solid var(--line);min-width:0}.field:nth-last-child(2){border-right:0}
-    .field label{display:block;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-    .field input,.field select{width:100%;border:0;outline:0;background:transparent;font-size:16px;font-weight:500;color:var(--ink);padding:2px 0;min-height:28px}
-    .field select{text-overflow:ellipsis}.field select option{background:var(--card);color:var(--ink)}
-    .field:focus-within{background:rgba(255,255,255,.04)}
-    .bookingbar .btn{min-width:190px;min-height:0;border-radius:0}
+    .bookingbar{display:grid;grid-template-columns:repeat(5,1fr) auto;gap:8px;align-items:stretch;background:var(--paper);border-radius:38px;padding:12px;box-shadow:0 24px 60px -20px rgba(31,27,58,.4)}
+    .field{padding:12px 20px;background:var(--cream);border-radius:26px;min-width:0;transition:background .2s,box-shadow .2s}
+    .field:focus-within{background:var(--butter);box-shadow:0 0 0 2px var(--ink)}
+    .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+    .field input,.field select{width:100%;border:0;outline:0;background:transparent;font-size:16px;font-weight:600;padding:2px 0;min-height:28px;text-overflow:ellipsis}
+    .bookingbar .btn{min-width:180px;min-height:64px;padding:0 28px;border-radius:26px;align-self:center}
 
-    /* rooms: tall photo cards, one row */
-    .rooms-section{background:var(--bg);padding-top:170px}
-    .rooms-toolbar{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:36px}
-    .rooms-toolbar h3{font-size:28px}.rooms-toolbar p{margin:2px 0 0;font-size:14px;color:var(--muted)}
-    .rooms-trip{display:flex;align-items:center;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--muted)}.rooms-trip b{color:var(--ink);font-weight:600}
-    .rooms-trip button{background:none;border:0;padding:6px 0;border-bottom:1px solid var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--gold)}
-    .rooms-grid{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:thin;scrollbar-color:var(--gold-deep) transparent}
-    .room-card{position:relative;flex:1 0 calc((100% - 48px)/4);min-width:280px;aspect-ratio:3/4.4;scroll-snap-align:start;overflow:hidden;background:var(--card);border-radius:var(--r);isolation:isolate}
-    .room-card.is-unavailable{opacity:.55}
-    .room-image{position:absolute;inset:0;z-index:-1}.room-image:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,12,10,.97) 10%,rgba(13,12,10,.78) 48%,rgba(13,12,10,.1) 100%)}
-    .room-image img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}.room-card:hover .room-image img{transform:scale(1.07)}
-    .room-availability{position:absolute;left:18px;top:18px;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:rgba(13,12,10,.78);border:1px solid var(--line-strong);font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--ok)}
-    .room-availability:before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor}
+    /* marquee ribbon */
+    .marquee{overflow:hidden;padding:26px 0;margin:48px 0 40px}
+    .marquee-track{display:flex;width:max-content;gap:0;padding:18px 0;background:var(--ink);color:#fff;transform:rotate(-1.6deg);font:500 20px var(--display);white-space:nowrap;animation:slide 32s linear infinite}
+    .marquee-track span{padding:0 28px}.marquee-track span:nth-child(even){color:var(--sun)}
+    @keyframes slide{to{transform:rotate(-1.6deg) translateX(-50%)}}
+
+    /* rooms: pastel bento cards */
+    .rooms-section{padding-top:120px}
+    .rooms-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:20px 28px;background:var(--paper);border-radius:999px;margin-bottom:24px;box-shadow:var(--shadow)}
+    .rooms-toolbar h3{font-size:20px}.rooms-toolbar p{margin:0;font-size:13px;color:var(--muted)}
+    .rooms-trip{display:flex;align-items:center;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--muted)}.rooms-trip b{color:var(--ink);font-weight:700}
+    .rooms-trip button{border:0;padding:10px 18px;border-radius:999px;background:var(--ink);color:#fff;font-size:13px;font-weight:700;transition:background .2s,color .2s}.rooms-trip button:hover{background:var(--coral);color:var(--ink)}
+    .rooms-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .room-card{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:14px;border-radius:40px;background:var(--peach);transition:translate .4s var(--ease),box-shadow .3s}
+    .room-card:nth-child(4n+2){background:var(--mint)}.room-card:nth-child(4n+3){background:var(--lilac)}.room-card:nth-child(4n+4){background:var(--butter)}
+    .room-card:hover{translate:0 -8px;box-shadow:var(--shadow)}
+    .room-card.is-unavailable{opacity:.6}.room-card.is-unavailable:hover{translate:none;box-shadow:none}
+    .room-image{position:relative;min-height:340px;border-radius:28px;overflow:hidden}
+    .room-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--soft)}.room-card:hover .room-image img{transform:scale(1.08)}
+    .room-availability{position:absolute;left:12px;top:12px;display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:999px;background:#fff;font-size:12px;font-weight:700;color:var(--ok)}
+    .room-availability:before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor}
     .room-availability.few{color:var(--warn)}.room-availability.full{color:var(--bad)}
-    .room-count-badge{position:absolute;right:18px;top:18px;z-index:2;font:italic 500 18px var(--serif);color:var(--ink)}
-    .room-info{position:absolute;inset:auto 0 0;display:flex;flex-direction:column;padding:26px}
-    .room-name-row{display:flex;flex-direction:column;gap:8px}
-    .room-order{order:-1;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
-    .room-title{font:500 40px/1 var(--serif)}
-    .room-desc{margin:12px 0 14px;font-size:14px;color:#cfc8ba}
-    .room-facts{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:#cfc8ba;padding:14px 0;border-top:1px solid var(--line)}
-    .room-thumbs{display:none}
-    .room-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line)}
-    .room-price{font:500 28px/1 var(--serif);white-space:nowrap}.room-price small{display:block;margin-top:6px;font:400 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-    .room-choose{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 20px;border:1px solid var(--gold);background:var(--gold);color:var(--on-gold);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:var(--r);transition:background .2s,color .2s}
-    .room-choose:hover:not(:disabled){background:transparent;color:var(--gold)}.room-choose:disabled{background:transparent;border-color:var(--line-strong);color:var(--muted);cursor:not-allowed}
-    .room-selection-note{margin:28px 0 0;font-size:13px;color:var(--muted)}
-    .booking-benefits{display:flex;gap:12px 40px;flex-wrap:wrap;margin:22px 0 0;font-size:14px;color:var(--muted)}.booking-benefits strong{color:var(--ink);font-weight:600}
+    .room-count-badge{position:absolute;right:12px;top:12px;display:grid;place-items:center;min-width:42px;height:42px;padding:0 10px;border-radius:999px;background:var(--ink);color:#fff;font-size:12px;font-weight:700}
+    .room-info{display:flex;flex-direction:column;padding:20px 16px 12px 18px}
+    .room-name-row{display:flex;flex-direction:column;gap:10px}
+    .room-order{order:-1;align-self:flex-start;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.7);font-size:11px;font-weight:700;letter-spacing:.04em}
+    .room-title{font:500 30px/1.05 var(--display)}
+    .room-desc{margin:12px 0;font-size:14px;color:#46425f}
+    .room-facts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}.room-facts span{padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.65);font-size:12px;font-weight:600}
+    .room-thumbs{display:flex;gap:8px;margin-bottom:16px}.room-thumbs img{width:46px;height:46px;object-fit:cover;border-radius:50%;border:3px solid rgba(255,255,255,.9)}.room-thumbs img+img{margin-left:-18px}
+    .room-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:auto}
+    .room-price{font:500 26px/1 var(--display);white-space:nowrap}.room-price small{display:block;margin-top:6px;font:500 12px var(--sans);color:#46425f}
+    .room-choose{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 22px;border:0;border-radius:999px;background:var(--ink);color:#fff;font-size:14px;font-weight:700;transition:transform .25s var(--ease),background .2s,color .2s}
+    .room-choose span{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--coral);color:var(--ink);transition:transform .25s var(--ease)}
+    .room-choose:hover:not(:disabled){transform:translateY(-3px)}.room-choose:hover:not(:disabled) span{transform:translateX(3px) rotate(-12deg)}
+    .room-choose:disabled{background:rgba(31,27,58,.2);color:var(--muted);cursor:not-allowed}.room-choose:disabled span{background:transparent}
+    .room-selection-note{margin:24px 0 0;font-size:13px;color:var(--muted)}
+    .booking-benefits{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0;font-size:14px}.booking-benefits span{padding:10px 18px;border-radius:999px;background:var(--paper)}
 
-    /* facts: oversized numerals */
-    .facts{padding:0;background:var(--bg)}
-    .facts-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-    .fact{padding:64px 28px;border-right:1px solid var(--line)}.fact:last-child{border-right:0}
-    .fact b{display:block;font:500 clamp(54px,7vw,104px)/1 var(--serif);color:transparent;-webkit-text-stroke:1px var(--gold)}
-    .fact span{display:block;margin-top:14px;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+    /* facts: colourful number tiles */
+    .facts{padding:0 0 110px}
+    .facts-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .fact{padding:32px 28px;border-radius:36px;background:var(--mint);transition:translate .4s var(--ease),rotate .4s var(--ease)}
+    .fact:nth-child(2){background:var(--lilac)}.fact:nth-child(3){background:var(--sun)}.fact:nth-child(4){background:var(--peach)}
+    .fact:nth-child(odd):hover{rotate:-2deg;translate:0 -6px}.fact:nth-child(even):hover{rotate:2deg;translate:0 -6px}
+    .fact b{display:block;font:500 clamp(36px,4.4vw,60px)/1 var(--display)}.fact span{display:block;margin-top:14px;font-size:14px;font-weight:700}
 
     /* availability / calendar */
-    .availability{background:var(--bg2)}
-    .calendar-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(340px,1fr);gap:0;border:1px solid var(--line);align-items:stretch}
-    .calendar-box{padding:44px;border-right:1px solid var(--line)}
-    .booking-step{display:flex;align-items:center;gap:14px;font:500 28px var(--serif);margin-bottom:26px}
-    .booking-step span{display:grid;place-items:center;width:34px;height:34px;border:1px solid var(--gold);border-radius:50%;color:var(--gold);font:600 14px var(--sans)}
-    .booking-step small{margin-left:auto;font:500 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-    .date-inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px}
-    .date-inputs label{display:block;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
-    .date-inputs input,.date-inputs select{display:block;width:100%;margin-top:8px;min-height:50px;padding:0 14px;border:1px solid var(--line-strong);border-radius:var(--r);background:var(--bg);font-size:15px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink)}
-    .date-inputs input:focus,.date-inputs select:focus{border-color:var(--gold);outline:0}
-    .month-pair{display:grid;grid-template-columns:1fr 1fr;gap:40px}
-    .cal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-    .cal-month{font:500 26px var(--serif);text-align:center;flex:1}
-    .month-arrow{width:40px;height:40px;border:1px solid var(--line-strong);border-radius:50%;background:transparent;font-size:20px;line-height:1;transition:background .2s,color .2s,border-color .2s}.month-arrow:hover{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
-    .month-spacer{width:40px;flex:none}
+    .availability{background:var(--paper);border-radius:64px;margin:0 16px}
+    .calendar-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(330px,1fr);gap:20px;align-items:stretch}
+    .calendar-box{background:var(--cream);border-radius:40px;padding:36px}
+    .booking-step{display:flex;align-items:center;gap:14px;font:500 20px var(--display);margin-bottom:24px}
+    .booking-step span{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--coral);font:600 16px var(--display)}
+    .booking-step small{margin-left:auto;padding:6px 12px;border-radius:999px;background:var(--paper);font:700 11px var(--sans)}
+    .date-inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+    .date-inputs label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .date-inputs input,.date-inputs select{display:block;width:100%;margin-top:6px;min-height:52px;padding:0 18px;border:2px solid transparent;border-radius:20px;background:var(--paper);font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink)}
+    .date-inputs input:focus,.date-inputs select:focus{border-color:var(--ink);outline:0}
+    .month-pair{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+    .cal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .cal-month{font:500 17px var(--display);text-align:center;flex:1}
+    .month-arrow{width:42px;height:42px;border:0;border-radius:50%;background:var(--paper);font-size:20px;line-height:1;transition:transform .25s var(--ease),background .2s}.month-arrow:hover{background:var(--sun);transform:scale(1.12)}
+    .month-spacer{width:42px;flex:none}
     .cal-week,.cal-days{display:grid;grid-template-columns:repeat(7,1fr)}
-    .cal-week span{text-align:center;font-size:10px;font-weight:600;letter-spacing:.14em;color:var(--muted);padding:8px 0}
-    .cal-days{gap:3px 0}
-    .day{position:relative;aspect-ratio:1;min-height:40px;border:0;background:transparent;border-radius:50%;font-size:14px;font-weight:500;color:var(--ink);transition:background .15s,color .15s}
-    .day.available:hover:not(:disabled){background:rgba(255,255,255,.1)}
-    .day.few:not(.past){color:var(--warn);font-weight:700}.day.few:not(.past):after{content:'';position:absolute;left:50%;bottom:6px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--warn)}
-    .day.full{color:#6c6558;text-decoration:line-through;cursor:not-allowed}.day.past{color:#554f45;text-decoration:none;cursor:not-allowed}
-    .day.range-candidate:not(:disabled):not(.selected){background:rgba(214,179,106,.07)}
-    .day.inrange{background:rgba(214,179,106,.18);border-radius:0;color:var(--ink)}
-    .day.range-conflict{background:rgba(229,135,126,.22);color:var(--bad)}
-    .day.selected{background:var(--gold);color:var(--on-gold);font-weight:700;border-radius:50%}
-    .cal-legend{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 20px;margin-top:30px;padding-top:26px;border-top:1px solid var(--line);font-size:13px}
-    .cal-legend>span{display:flex;align-items:center;gap:12px}.cal-legend strong{display:block;font-weight:600}.cal-legend small{color:var(--muted);font-size:12px}
-    .legend-swatch,.period-swatch{flex:none;width:18px;height:18px;border-radius:50%;border:1px solid var(--line-strong)}
-    .legend-swatch.few{background:rgba(227,181,90,.35);border-color:var(--warn)}.legend-swatch.full{background:#2a2620;border-color:#6c6558}.period-swatch{background:var(--gold);border-color:var(--gold)}
-    .range-summary{display:none;margin-top:22px;padding:16px 20px;border-left:2px solid var(--gold);background:rgba(214,179,106,.08);font-size:14px}.range-summary.visible{display:block}
-    .cal-hint{margin:20px 0 0;font-size:13px;color:var(--muted)}
-    .calendar-results{background:var(--card);display:flex;flex-direction:column}
-    .booking-cover{height:170px;display:flex;align-items:flex-end;padding:20px 30px;background:linear-gradient(0deg,var(--card),rgba(26,23,19,.1)),url('images (6).jpg') center/cover}
-    .booking-cover span{font-size:11px;letter-spacing:.3em;color:var(--gold)}
-    .stay-summary-head{padding:26px 30px 8px}.best-price{font-size:10px;letter-spacing:.24em;font-weight:600;color:var(--gold)}
-    .stay-summary-head h3{font-size:38px;margin:10px 0 8px}.stay-summary-head p{margin:0;font-size:14px;color:var(--muted)}
-    .stay-summary{padding:8px 30px}.stay-line{display:flex;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);font-size:14px}
-    .stay-line span{color:var(--muted)}.stay-line strong{font-weight:600;text-align:right}
-    .cancel-note{display:flex;gap:10px;margin:6px 30px 0;padding:16px 0;font-size:13px;color:var(--gold)}.cancel-note small{display:block;color:var(--muted)}.cancel-note strong{color:var(--ink)}
-    .stay-available-list{padding:0 30px;display:grid;gap:10px}
-    .avail-row{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:10px;border:1px solid var(--line);cursor:pointer;transition:background .2s,border-color .2s}
-    .avail-row:hover{background:rgba(255,255,255,.05);border-color:var(--gold)}.avail-row img{width:64px;height:52px;object-fit:cover}
-    .avail-row strong{font:500 20px var(--serif);display:block}.avail-row small{color:var(--muted);font-size:12px}.avail-price{text-align:right;font-weight:600}.avail-price small{display:block}
-    .avail-empty{padding:14px;font-size:14px;color:var(--bad)}
-    .cal-actions{padding:22px 30px 32px;margin-top:auto}.cal-actions .btn{width:100%}
+    .cal-week span{text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:6px 0}
+    .cal-days{gap:4px 0}
+    .day{position:relative;aspect-ratio:1;min-height:40px;border:0;background:transparent;border-radius:50%;font-size:14px;font-weight:600;color:var(--ink);transition:background .15s,transform .2s var(--ease)}
+    .day.available:hover:not(:disabled){background:var(--sun);transform:scale(1.14)}
+    .day.few:not(.past){background:var(--butter);color:var(--warn);font-weight:800}
+    .day.full{color:#aaa6bd;text-decoration:line-through;cursor:not-allowed}.day.past{color:#c6c3d4;background:transparent;text-decoration:none;cursor:not-allowed}
+    .day.range-candidate:not(:disabled):not(.selected){box-shadow:inset 0 0 0 2px rgba(31,27,58,.1)}
+    .day.inrange{background:var(--peach);border-radius:0}
+    .day.range-conflict{background:#ffd0c8;color:var(--bad)}
+    .day.selected{background:var(--coral);color:var(--ink);font-weight:800;transform:scale(1.05)}
+    .cal-legend{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 18px;margin-top:26px;padding-top:22px;border-top:2px dashed var(--line);font-size:13px}
+    .cal-legend>span{display:flex;align-items:center;gap:12px}.cal-legend strong{display:block;font-weight:700}.cal-legend small{color:var(--muted);font-size:12px}
+    .legend-swatch,.period-swatch{flex:none;width:20px;height:20px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2px var(--line)}
+    .legend-swatch.few{background:var(--butter);box-shadow:inset 0 0 0 2px var(--warn)}.legend-swatch.full{background:#e4e1ee;box-shadow:none}.period-swatch{background:var(--coral);box-shadow:none}
+    .range-summary{display:none;margin-top:20px;padding:16px 22px;border-radius:24px;background:var(--butter);font-size:14px}.range-summary.visible{display:block}
+    .cal-hint{margin:16px 0 0;font-size:13px;color:var(--muted)}
+    .calendar-results{display:flex;flex-direction:column;background:var(--ink);color:#fff;border-radius:40px;padding:12px}
+    .booking-cover{height:170px;display:flex;align-items:flex-end;padding:18px 22px;border-radius:30px;background:linear-gradient(0deg,rgba(31,27,58,.7),transparent 70%),url('images (6).jpg') center/cover}
+    .booking-cover span{padding:6px 14px;border-radius:999px;background:var(--sun);color:var(--ink);font-size:11px;font-weight:800;letter-spacing:.08em}
+    .stay-summary-head{padding:24px 18px 6px}.best-price{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--mint);color:var(--ink);font-size:11px;font-weight:800;letter-spacing:.06em}
+    .stay-summary-head h3{font-size:26px;margin:14px 0 8px}.stay-summary-head p{margin:0;font-size:14px;color:#c9c5e0}
+    .stay-summary{padding:6px 18px}.stay-line{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px dashed rgba(255,255,255,.22);font-size:14px}
+    .stay-line span{color:#c9c5e0}.stay-line strong{font-weight:700;text-align:right}
+    .cancel-note{display:flex;gap:10px;margin:4px 18px 0;padding:14px 0;font-size:13px;color:var(--sun)}.cancel-note small{display:block;color:#c9c5e0}.cancel-note strong{color:#fff}
+    .stay-available-list{padding:0 18px;display:grid;gap:10px}
+    .avail-row{display:grid;grid-template-columns:60px 1fr auto;gap:14px;align-items:center;padding:8px;border-radius:26px;background:rgba(255,255,255,.08);cursor:pointer;transition:background .2s,translate .3s var(--ease)}
+    .avail-row:hover{background:rgba(255,255,255,.16);translate:4px 0}.avail-row img{width:60px;height:52px;object-fit:cover;border-radius:18px}
+    .avail-row strong{font:500 15px var(--display);display:block}.avail-row small{color:#c9c5e0;font-size:12px}.avail-price{text-align:right;font-weight:700;padding-right:10px}.avail-price small{display:block}
+    .avail-empty{padding:14px;font-size:14px;color:#ffb4a6}
+    .cal-actions{padding:20px 6px 6px;margin-top:auto}.cal-actions .btn{width:100%}
 
-    /* services: ruled index list */
-    #services{background:var(--bg)}
-    .services-grid{display:block;border-top:1px solid var(--line-strong);counter-reset:svc}
-    .service{counter-increment:svc;display:grid;grid-template-columns:90px 1fr 1fr;align-items:center;gap:24px;padding:38px 0;border-bottom:1px solid var(--line);transition:padding .35s var(--ease),background .35s}
-    .service:hover{padding-left:20px;background:rgba(255,255,255,.03)}
-    .service:before{content:'0' counter(svc);font:italic 500 22px var(--serif);color:var(--gold)}
-    .service .icon{display:none}
-    .service h3{font-size:clamp(28px,3.4vw,46px)}.service p{margin:0;color:var(--muted);max-width:420px}
-    .amenity-gallery{display:grid;grid-template-columns:5fr 7fr;grid-auto-rows:270px;gap:16px;margin-top:80px}
-    .amenity-gallery figure{position:relative;margin:0;overflow:hidden;border-radius:var(--r)}
-    .amenity-gallery figure:nth-child(1){grid-row:span 2}
-    .amenity-gallery img{width:100%;height:100%;object-fit:cover;filter:saturate(.9);transition:transform .9s var(--ease)}.amenity-gallery figure:hover img{transform:scale(1.05)}
-    .amenity-gallery figcaption{position:absolute;inset:auto 0 0;padding:60px 24px 22px;background:linear-gradient(0deg,rgba(13,12,10,.9),transparent);font:italic 500 24px var(--serif)}
+    /* services: pastel bento tiles */
+    #services{padding-top:120px}
+    .services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .service{display:flex;flex-direction:column;justify-content:space-between;min-height:290px;padding:30px;border-radius:40px;background:var(--mint);transition:translate .4s var(--ease),rotate .4s var(--ease)}
+    .service:nth-child(2){background:var(--butter)}.service:nth-child(3){background:var(--lilac)}.service:nth-child(4){background:var(--peach)}
+    .service:nth-child(odd):hover{rotate:-2deg;translate:0 -8px}.service:nth-child(even):hover{rotate:2deg;translate:0 -8px}
+    .service .icon{display:grid;place-items:center;width:62px;height:62px;border-radius:50%;background:#fff;font-size:26px;margin-bottom:40px}
+    .service .icon svg{width:28px;height:28px;fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .service h3{font-size:19px;margin-bottom:10px}.service p{margin:0;font-size:14px;color:#46425f}
+    .amenity-gallery{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:16px;margin-top:16px}
+    .amenity-gallery figure{position:relative;margin:0;height:420px;overflow:hidden;border-radius:36px}
+    .amenity-gallery figure:nth-child(1){border-radius:999px 999px 36px 36px}.amenity-gallery figure:nth-child(3){border-radius:36px 36px 999px 999px}
+    .amenity-gallery img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--soft)}.amenity-gallery figure:hover img{transform:scale(1.07)}
+    .amenity-gallery figcaption{position:absolute;left:50%;bottom:22px;translate:-50% 0;white-space:nowrap;padding:10px 18px;border-radius:999px;background:#fff;font-size:13px;font-weight:700;box-shadow:var(--shadow)}
+    .amenity-gallery figure:nth-child(3) figcaption{bottom:auto;top:22px}
 
-    /* about: copy left, framed photo right */
-    #about{background:var(--bg2)}
-    .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:110px;align-items:center}
-    .intro-copy{order:1}.intro-photo{order:2;position:relative;aspect-ratio:4/5;max-height:700px}
-    .intro-photo:before{content:'';position:absolute;inset:-22px 22px 22px -22px;border:1px solid var(--gold)}
-    .intro-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:var(--r)}
-    .photo-caption{position:absolute;right:-1px;bottom:36px;padding:16px 22px 16px 28px;background:var(--gold);color:var(--on-gold);font:italic 500 22px var(--serif)}
-    .intro-copy h2{font-size:clamp(46px,6vw,92px);margin:22px 0 32px}
-    .intro-copy p{max-width:480px;color:var(--muted);font-size:17px;line-height:1.8}
-    .features{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:40px 0 44px;border-top:1px solid var(--line)}
-    .feature{display:flex;align-items:center;gap:14px;padding:18px 0;border-bottom:1px solid var(--line);font-size:15px;font-weight:500}.feature i{font-style:normal;color:var(--gold);font-size:16px}
+    /* about: blob photo + chips */
+    #about{overflow:hidden}
+    .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+    .intro-photo{position:relative;aspect-ratio:1}
+    .intro-photo:before{content:'';position:absolute;inset:6% -6% -6% 6%;border-radius:58% 42% 50% 50%/48% 52% 48% 52%;background:var(--coral);animation:morph 10s ease-in-out infinite}
+    .intro-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:46% 54% 42% 58%/52% 44% 56% 48%}
+    .photo-caption{position:absolute;left:-14px;bottom:10%;padding:14px 22px;border-radius:999px;background:var(--sun);font-size:15px;font-weight:700;transform:rotate(-5deg);box-shadow:var(--shadow)}
+    .intro-copy h2{font-size:clamp(32px,4.4vw,56px);margin:20px 0 24px}
+    .intro-copy p{max-width:480px;color:var(--muted);font-size:17px}
+    .features{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 34px}
+    .feature{display:flex;align-items:center;gap:10px;padding:11px 18px;border-radius:999px;background:var(--paper);font-size:14px;font-weight:600;box-shadow:0 6px 16px -10px rgba(31,27,58,.4)}.feature i{font-style:normal;color:var(--coral)}
 
-    /* faq */
-    .faq{background:var(--bg)}
-    .faq-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:96px;align-items:start}
-    .faq-grid .section-head{display:block;margin:0;position:sticky;top:110px}.faq-grid .section-head p{margin-top:22px}
-    .faq-list{border-top:1px solid var(--line-strong)}
-    .faq-list details{border-bottom:1px solid var(--line)}
-    .faq-list summary{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:30px 0;cursor:pointer;list-style:none;font:500 28px/1.2 var(--serif)}
+    /* faq: rounded accordion cards */
+    .faq-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:start}
+    .faq-grid .section-head{display:block;margin:0;position:sticky;top:110px}.faq-grid .section-head p{margin-top:20px}
+    .faq-list{display:grid;gap:12px}
+    .faq-list details{padding:0 28px;border-radius:30px;background:var(--paper);transition:background .3s}
+    .faq-list details[open]{background:var(--butter)}
+    .faq-list summary{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;cursor:pointer;list-style:none;font:500 17px/1.3 var(--display)}
     .faq-list summary::-webkit-details-marker{display:none}
-    .faq-list summary:after{content:'+';flex:none;display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line-strong);border-radius:50%;font:300 24px/1 var(--sans);color:var(--gold);transition:transform .25s var(--ease),background .2s}
-    .faq-list details[open] summary:after{transform:rotate(45deg);background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
-    .faq-list summary:hover{color:var(--gold)}
-    .faq-list p{margin:0 0 30px;max-width:560px;color:var(--muted)}
+    .faq-list summary:after{content:'+';flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;font:400 24px/1 var(--sans);transition:transform .35s var(--ease),background .2s}
+    .faq-list details[open] summary:after{transform:rotate(135deg);background:var(--coral);color:var(--ink)}
+    .faq-list p{margin:0 0 26px;max-width:560px;color:#46425f}
 
-    /* contacts: map full-bleed, card floats over it */
-    .location{background:var(--bg2);padding:0}
-    .location>.location-grid.wrap{position:relative;display:block;width:100%;margin:0;max-width:none}
-    .map-frame{position:relative;overflow:hidden;min-height:800px;background:radial-gradient(circle at 70% 45%,#24201a 0,#15130f 60%),#15130f}
-    .map-frame:before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:80px 80px;opacity:.55}
-    .map-frame:after{content:'';position:absolute;left:-10%;right:-10%;top:52%;height:30px;background:rgba(243,238,228,.07);border-block:1px solid var(--line);transform:rotate(-12deg)}
-    .map-pin{position:absolute;left:68%;top:46%;transform:translate(-50%,-50%);display:grid;place-items:center;width:60px;height:60px;border-radius:50%;background:var(--gold);color:var(--on-gold);font-size:26px;box-shadow:0 0 0 12px rgba(214,179,106,.16),0 0 0 34px rgba(214,179,106,.07)}
-    .map-label{position:absolute;left:68%;top:calc(46% + 62px);transform:translateX(-50%);white-space:nowrap;padding:10px 18px;background:var(--card);border:1px solid var(--line-strong);font-size:13px;font-weight:600;letter-spacing:.06em}
-    .location-card{position:absolute;left:max(32px,calc((100% - 1280px)/2));top:0;bottom:0;margin:auto 0;height:fit-content;width:min(500px,calc(100% - 64px));z-index:2;background:var(--bg);border:1px solid var(--line-strong);padding:48px}
-    .location-card h2{font-size:clamp(34px,3.4vw,46px);margin:20px 0 20px}.location-card p{color:var(--muted);margin:0 0 30px}
-    .address-line{font-size:15px;line-height:1.9;color:#d9d3c6}.address-line strong{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}.address-line a{font:500 26px var(--serif)}
+    /* contacts: two rounded tiles */
+    .location-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:16px}
+    .location-card{padding:52px;border-radius:48px;background:var(--ink);color:#fff}
+    .location-card .eyebrow{background:var(--coral)}.location-card .eyebrow:before{background:var(--ink)}
+    .location-card h2{font-size:clamp(28px,3.2vw,42px);margin:20px 0}.location-card p{color:#cfcbe6;margin:0 0 28px}
+    .address-line{font-size:15px;line-height:1.9;color:#e7e4f5}.address-line strong{display:inline-block;margin-bottom:2px;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.12);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--sun)}.address-line a{font:500 22px var(--display)}
+    .map-frame{position:relative;overflow:hidden;min-height:460px;border-radius:48px;background:var(--mint)}
+    .map-frame:before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(31,27,58,.14) 2px,transparent 2.5px);background-size:30px 30px}
+    .map-frame:after{content:'';position:absolute;left:-10%;right:-10%;top:55%;height:46px;background:#fff;border-radius:99px;transform:rotate(-14deg);box-shadow:0 0 0 8px rgba(255,255,255,.4)}
+    .map-pin{position:absolute;left:50%;top:40%;translate:-50% -50%;display:grid;place-items:center;width:76px;height:76px;border-radius:50% 50% 50% 8px;rotate:-45deg;background:var(--coral);box-shadow:0 14px 0 rgba(31,27,58,.14);animation:bob 2.6s ease-in-out infinite}
+    .map-pin span{rotate:45deg;font-size:28px}
+    @keyframes bob{50%{translate:-50% calc(-50% - 10px)}}
+    .map-label{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);white-space:nowrap;padding:12px 22px;border-radius:999px;background:#fff;font-size:14px;font-weight:700;box-shadow:var(--shadow)}
 
-    /* footer with outlined wordmark */
-    footer{position:relative;background:var(--bg);padding:72px 0 44px;border-top:1px solid var(--line);overflow:hidden}
-    footer:before{content:'ЭТАЛОН';display:block;text-align:center;font:500 clamp(70px,19vw,300px)/.9 var(--serif);letter-spacing:.04em;color:transparent;-webkit-text-stroke:1px rgba(214,179,106,.4);margin-bottom:56px;user-select:none}
-    .footer-row{display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap}
-    .footer-note{font-size:13px;color:var(--muted)}
-    .footer-links{display:flex;gap:28px;font-size:12px;letter-spacing:.14em;text-transform:uppercase}.footer-links a:hover{color:var(--gold)}
+    /* footer: dark rounded base with gradient wordmark */
+    footer{margin-top:40px;padding:72px 0 44px;background:var(--ink);color:#fff;border-radius:64px 64px 0 0;overflow:hidden}
+    footer:before{content:'ЭТАЛОН';display:block;text-align:center;font:600 clamp(48px,15vw,220px)/1 var(--display);letter-spacing:-.03em;background:linear-gradient(90deg,var(--coral),var(--sun));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:48px;user-select:none}
+    .footer-row{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+    .footer-row .brand-sub{color:#bdb9d6}.footer-note{font-size:13px;color:#bdb9d6}
+    .footer-links{display:flex;gap:8px;flex-wrap:wrap}.footer-links a{padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.1);font-size:14px;font-weight:600;transition:background .2s,color .2s}.footer-links a:hover{background:var(--sun);color:var(--ink)}
 
     /* modal + toast */
-    .modal{position:fixed;inset:0;z-index:60;display:none;place-items:center;padding:20px;background:rgba(5,5,4,.78);backdrop-filter:blur(8px)}.modal.open{display:grid}
-    .modal-card{position:relative;width:min(580px,100%);max-height:calc(100svh - 40px);overflow:auto;background:var(--card);border:1px solid var(--line-strong);padding:48px}
-    .modal-card h2{font-size:42px}.modal-card>p{color:var(--muted);margin:10px 0 28px}
-    .modal-close{position:absolute;right:16px;top:16px;width:40px;height:40px;border:1px solid var(--line-strong);border-radius:50%;background:transparent;font-size:22px;line-height:1}.modal-close:hover{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
-    .modal-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.modal-fields label{font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}.modal-fields .wide{grid-column:1/-1}
-    .modal-fields input,.modal-fields select{display:block;width:100%;margin-top:8px;min-height:50px;padding:0 14px;border:1px solid var(--line-strong);border-radius:var(--r);background:var(--bg);font-size:15px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink)}
-    .modal-fields input:focus,.modal-fields select:focus{border-color:var(--gold);outline:0}
-    .booking-summary{margin:20px 0;padding:16px 20px;border-left:2px solid var(--gold);background:rgba(214,179,106,.08);font-size:14px;color:var(--muted)}
-    .booking-summary div{display:flex;justify-content:space-between;gap:12px;color:var(--ink)}.booking-summary strong{font:500 28px var(--serif);color:var(--gold)}.booking-summary small{color:var(--muted)}
-    .modal-card .btn{width:100%}.fineprint{margin-top:16px;font-size:12px;color:var(--muted)}
-    .toast{position:fixed;left:50%;bottom:28px;z-index:70;max-width:min(520px,calc(100% - 32px));transform:translate(-50%,24px);opacity:0;pointer-events:none;padding:16px 24px;background:var(--gold);color:var(--on-gold);font-size:14px;font-weight:500;transition:opacity .3s,transform .3s var(--ease)}.toast.show{opacity:1;transform:translate(-50%,0)}
+    .modal{position:fixed;inset:0;z-index:60;display:none;place-items:center;padding:20px;background:rgba(31,27,58,.6);backdrop-filter:blur(8px)}.modal.open{display:grid}
+    .modal-card{position:relative;width:min(580px,100%);max-height:calc(100svh - 40px);overflow:auto;background:var(--paper);border-radius:44px;padding:44px}
+    .modal-card h2{font-size:28px}.modal-card>p{color:var(--muted);margin:10px 0 24px}
+    .modal-close{position:absolute;right:18px;top:18px;width:44px;height:44px;border:0;border-radius:50%;background:var(--cream);font-size:22px;line-height:1;transition:transform .3s var(--ease),background .2s}.modal-close:hover{background:var(--sun);transform:rotate(90deg)}
+    .modal-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.modal-fields label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.modal-fields .wide{grid-column:1/-1}
+    .modal-fields input,.modal-fields select{display:block;width:100%;margin-top:6px;min-height:52px;padding:0 18px;border:2px solid transparent;border-radius:20px;background:var(--cream);font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink)}
+    .modal-fields input:focus,.modal-fields select:focus{border-color:var(--ink);outline:0}
+    .booking-summary{margin:18px 0;padding:16px 22px;border-radius:26px;background:var(--butter);font-size:14px;color:#46425f}
+    .booking-summary div{display:flex;justify-content:space-between;gap:12px;color:var(--ink)}.booking-summary strong{font:500 22px var(--display)}.booking-summary small{color:#46425f}
+    .modal-card .btn{width:100%}.fineprint{margin-top:14px;font-size:12px;color:var(--muted)}
+    .toast{position:fixed;left:50%;bottom:28px;z-index:70;max-width:min(520px,calc(100% - 32px));transform:translate(-50%,24px);opacity:0;pointer-events:none;padding:16px 26px;border-radius:999px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;box-shadow:var(--shadow);transition:opacity .3s,transform .4s var(--ease)}.toast.show{opacity:1;transform:translate(-50%,0)}
 
     /* scroll progress + reveal (JS adds the classes) */
-    body:after{content:'';position:fixed;left:0;top:0;height:2px;width:100%;z-index:80;pointer-events:none;background:var(--gold);transform:scaleX(var(--read-progress,0));transform-origin:left}
-    body.portfolio-motion .site-reveal{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--reveal-index,0)*90ms)}
+    body:after{content:'';position:fixed;left:0;top:0;height:4px;width:100%;z-index:80;pointer-events:none;background:linear-gradient(90deg,var(--coral),var(--sun));border-radius:0 4px 4px 0;transform:scaleX(var(--read-progress,0));transform-origin:left}
+    body.portfolio-motion .site-reveal{opacity:0;transform:translateY(40px) scale(.97);transition:opacity .7s var(--soft),transform .8s var(--ease);transition-delay:calc(var(--reveal-index,0)*90ms)}
     body.portfolio-motion .site-reveal.is-in{opacity:1;transform:none}
 
     /* responsive */
     @media(max-width:1100px){
-      section{padding:96px 0}.nav-links{display:none}.nav{grid-template-columns:auto 1fr}.brand{order:1}.phone{display:none}
-      .bookingbar{grid-template-columns:1fr 1fr 1fr}.field{border-bottom:1px solid var(--line)}.field:nth-last-child(2){border-right:1px solid var(--line)}.bookingbar .btn{grid-column:1/-1;min-height:56px}
-      .room-card{flex-basis:46%}
-      .calendar-layout{grid-template-columns:1fr}.calendar-box{border-right:0;border-bottom:1px solid var(--line)}
-      .intro-grid{grid-template-columns:1fr;gap:72px}.intro-copy{order:2}.intro-photo{order:1;max-height:520px;aspect-ratio:4/3;margin:0 0 0 22px}
-      .faq-grid{grid-template-columns:1fr;gap:44px}.faq-grid .section-head{position:static}
-      .hero-foot{display:none}.service{grid-template-columns:60px 1fr}.service p{grid-column:2}
-      .location-card{position:relative;left:auto;top:auto;bottom:auto;height:auto;width:100%;margin:0;border-width:1px 0}.map-frame{min-height:380px}
+      section{padding:84px 0}.nav-links{display:none}.phone{display:none}
+      .hero{padding:124px 0 110px}.hero-grid{grid-template-columns:1fr;gap:36px}.hero-art{height:460px;max-width:520px;margin:0 auto;width:100%}
+      .bookingbar{grid-template-columns:1fr 1fr 1fr}.bookingbar .btn{grid-column:1/-1;min-height:60px}
+      .rooms-grid{grid-template-columns:1fr}
+      .calendar-layout{grid-template-columns:1fr}
+      .services-grid{grid-template-columns:1fr 1fr}.amenity-gallery{grid-template-columns:1fr 1fr}.amenity-gallery figure:nth-child(3){grid-column:1/-1;border-radius:36px;height:320px}.amenity-gallery figure:nth-child(3) figcaption{top:auto;bottom:22px}
+      .facts-row{grid-template-columns:1fr 1fr}
+      .intro-grid{grid-template-columns:1fr;gap:56px}.intro-photo{max-width:440px;margin:0 auto 0 0;width:calc(100% - 20px)}
+      .faq-grid{grid-template-columns:1fr;gap:36px}.faq-grid .section-head{position:static}
+      .location-grid{grid-template-columns:1fr}.map-frame{min-height:340px}
+      .availability{border-radius:44px}
     }
     @media(max-width:620px){
-      body{font-size:15px}.wrap,.hero>.wrap:not(.hero-foot){width:calc(100% - 32px)}section{padding:72px 0}
-      header,header.solid{height:64px}.brand-sub{display:none}.brand-name{font-size:19px}header .btn{min-height:40px;padding:0 16px}
-      .section-head{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:40px}
-      .hero-content{padding:120px 0 170px}.hero h1{font-size:clamp(52px,17vw,84px)}.hero h1 em{padding-left:.5em}.hero p{font-size:16px}.hero-actions{gap:22px}
-      .booking-float{margin-top:-70px}.bookingbar{grid-template-columns:1fr 1fr}.field{padding:14px 16px}
-      .rooms-section{padding-top:110px}.room-card{flex-basis:84%;min-width:0}.rooms-toolbar{padding:18px 0}
-      .facts-row{grid-template-columns:1fr 1fr}.fact{padding:40px 16px}.fact:nth-child(2){border-right:0}.fact:nth-child(-n+2){border-bottom:1px solid var(--line)}
-      .calendar-box{padding:24px 16px}.date-inputs{grid-template-columns:1fr}.month-pair{grid-template-columns:1fr}.next-month-panel{display:none}.cal-legend{grid-template-columns:1fr}.booking-step{font-size:22px}.booking-step small{display:none}
-      .service{padding:28px 0;gap:14px 16px}
-      .amenity-gallery{grid-template-columns:1fr;grid-auto-rows:240px;margin-top:56px}.amenity-gallery figure:nth-child(1){grid-row:auto}
-      .features{grid-template-columns:1fr}.intro-photo{margin-left:16px}
-      .faq-list summary{font-size:21px;padding:24px 0}
-      .location-card{padding:40px 16px}
-      footer{padding-top:48px}.footer-row{flex-direction:column;align-items:flex-start}
-      .modal-card{padding:32px 20px}.modal-fields{grid-template-columns:1fr}
+      body{font-size:15px}.wrap{width:calc(100% - 32px)}section{padding:64px 0}
+      header{top:10px;height:60px;width:calc(100% - 20px)}.nav{padding:0 8px 0 12px}.brand-sub{display:none}.brand-name{font-size:15px}.brand-mark{width:38px;height:38px}header .btn{min-height:42px;padding:0 18px}
+      .section-head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:32px}
+      .hero{padding:108px 0 100px}.hero p{font-size:16px}.hero-art{height:380px}.hero-art .blob{width:150px;height:150px}.sticker.s1{width:104px;height:104px}.sticker.s1 b{font-size:28px}.sticker{font-size:11px}
+      .booking-float{margin-top:-64px}.bookingbar{grid-template-columns:1fr 1fr;border-radius:30px;padding:10px}.field{padding:10px 14px;border-radius:20px}
+      .marquee-track{font-size:16px}
+      .rooms-section{padding-top:84px}.rooms-toolbar{padding:18px 20px;border-radius:30px}
+      .room-card{grid-template-columns:1fr;border-radius:34px}.room-image{min-height:240px}.room-info{padding:18px 8px 8px}
+      .facts{padding-bottom:64px}.fact{padding:24px 18px;border-radius:28px}
+      .availability{margin:0 8px;border-radius:34px}.calendar-box{padding:22px 14px;border-radius:30px}.date-inputs{grid-template-columns:1fr}.month-pair{grid-template-columns:1fr}.next-month-panel{display:none}.cal-legend{grid-template-columns:1fr}.booking-step{font-size:16px}.booking-step small{display:none}.calendar-results{border-radius:30px}
+      .services-grid{grid-template-columns:1fr}.service{min-height:0;border-radius:32px}.service .icon{margin-bottom:24px}
+      .amenity-gallery{grid-template-columns:1fr}.amenity-gallery figure,.amenity-gallery figure:nth-child(3){height:300px}.amenity-gallery figure:nth-child(1){border-radius:999px 999px 36px 36px}
+      .faq-list details{padding:0 20px}.faq-list summary{font-size:15px}
+      .location-card{padding:34px 24px;border-radius:36px}.map-frame{border-radius:36px;min-height:300px}
+      footer{border-radius:40px 40px 0 0;padding-top:48px}.footer-row{flex-direction:column;align-items:flex-start}
+      .modal-card{padding:32px 20px;border-radius:32px}.modal-fields{grid-template-columns:1fr}
     }
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}body.portfolio-motion .site-reveal{opacity:1;transform:none}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}body.portfolio-motion .site-reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -267,13 +290,14 @@
     <div class="nav-right"><a class="phone" href="tel:+79280000000">+7 (928) 000-00-00</a><button class="btn" data-book>Забронировать</button></div>
   </div></header>
   <main id="top">
-    <section class="hero" style="padding:0"><div class="wrap"><div class="hero-content"><div class="eyebrow">Грозный · Вахи Алиева, 45</div><h1>Добро пожаловать<br><em>в «Эталон»</em></h1><p>Тёплый свет, спокойная атмосфера и комфорт, который чувствуется в каждой детали.</p><div class="hero-actions"><a class="btn" href="#quickSearch">Проверить наличие</a><a class="text-link" href="#rooms">НОМЕРА И СЬЮТЫ&nbsp; ↗</a></div></div></div><div class="wrap hero-foot"><span>✦</span> ОТЕЛЬ «ЭТАЛОН» · ГРОЗНЫЙ</div></section>
+    <section class="hero"><div class="wrap hero-grid"><div class="hero-content"><div class="eyebrow">Грозный · Вахи Алиева, 45</div><h1>Добро пожаловать<br><em>в «Эталон»</em></h1><p>Тёплый свет, спокойная атмосфера и комфорт, который чувствуется в каждой детали.</p><div class="hero-actions"><a class="btn" href="#quickSearch">Проверить наличие</a><a class="text-link" href="#rooms">НОМЕРА И СЬЮТЫ&nbsp; ↗</a></div></div><div class="hero-art" aria-hidden="true"><div class="blob"></div><div class="arch"></div><img class="pill" src="images (3).jpg" alt=""><span class="sticker s1"><b>10</b>номеров</span><span class="sticker s2">Тёплый приём ☀</span><span class="sticker s3">Забота 24/7</span></div></div><div class="wrap hero-foot"><span>✦</span> ОТЕЛЬ «ЭТАЛОН» · ГРОЗНЫЙ</div></section>
     <div class="booking-float"><div class="wrap"><div class="quick-booking" id="quickBooking"><form class="bookingbar" id="quickSearch">
       <div class="field"><label>Заезд</label><input id="quickIn" type="date" /></div><div class="field"><label>Выезд</label><input id="quickOut" type="date" /></div><div class="field"><label>Гости</label><select id="guests"><option>1 гость</option><option selected>2 гостя</option><option>3 гостя</option><option>4 гостя</option></select></div><div class="field"><label>Номеров</label><select><option selected>1 номер</option><option>2 номера</option><option>3 номера</option></select></div><button class="btn" type="submit">Найти номер&nbsp; ↗</button>
     </form></div></div></div>
     <section class="rooms-section" id="rooms"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Размещение</div><h2>Выберите номер</h2></div><p>Найдите подходящий вариант для вашего отдыха.</p></div><div class="rooms-toolbar"><div><h3 id="roomsStepTitle">Доступные номера</h3><p>Сравните категории и выберите подходящий вариант.</p></div><div class="rooms-trip"><span>▦ <b id="roomsTripDates">Выберите даты</b></span><span>♙ <b id="roomsTripGuests">2 взрослых</b></span><button type="button" id="editTripDates">Изменить</button></div></div><div class="rooms-grid" id="roomCards"></div><p class="room-selection-note">Статусы и остатки показаны для демонстрации. Точную доступность на ваши даты подтвердит администратор.</p><div class="booking-benefits"><span>♧ <strong>Комфортные номера</strong></span><span>◈ <strong>Безопасное бронирование</strong></span><span>☏ <strong>Поддержка 24/7</strong></span></div></div></section>
     <section class="availability" id="availability"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Планируйте поездку</div><h2>Выберите даты проживания</h2></div><p>Проверьте доступность номеров на нужный период.</p></div><div class="calendar-layout"><div class="calendar-box"><div class="booking-step"><span>1</span> Выберите заезд и выезд <small>Шаг 1 из 3</small></div><div class="date-inputs"><label>Заезд<input id="calendarCheckin" type="date"></label><label>Выезд<input id="calendarCheckout" type="date"></label><label>Гости<select id="calendarGuests"><option>1 взрослый</option><option selected>2 взрослых</option><option>3 взрослых</option><option>4 взрослых</option></select></label></div><div class="month-pair"><div class="month-panel"><div class="cal-top"><button id="prevMonth" class="month-arrow" aria-label="Предыдущий месяц">‹</button><div class="cal-month" id="calMonth"></div><span class="month-spacer"></span></div><div class="cal-week"><span>ПН</span><span>ВТ</span><span>СР</span><span>ЧТ</span><span>ПТ</span><span>СБ</span><span>ВС</span></div><div class="cal-days" id="calDays"></div></div><div class="month-panel next-month-panel"><div class="cal-top"><div class="month-spacer"></div><div class="cal-month" id="calMonthNext"></div><button id="nextMonth" class="month-arrow" aria-label="Следующий месяц">›</button></div><div class="cal-week"><span>ПН</span><span>ВТ</span><span>СР</span><span>ЧТ</span><span>ПТ</span><span>СБ</span><span>ВС</span></div><div class="cal-days" id="calDaysNext"></div></div></div><div class="cal-legend"><span><i class="legend-swatch"></i><span><strong>Свободно</strong><small>Есть номера</small></span></span><span><i class="legend-swatch few"></i><span><strong>Мало мест</strong><small>Осталось 1–2 номера</small></span></span><span><i class="legend-swatch full"></i><span><strong>Занято</strong><small>Нет свободных номеров</small></span></span><span class="period-legend"><i class="period-swatch"></i><span><strong>Ваш период</strong><small id="periodLegend">Выберите даты</small></span></span></div><div class="range-summary" id="rangeSummary" aria-live="polite"></div><p class="cal-hint">Сначала отметьте заезд, затем выезд. Занятые дни нельзя выбрать.</p></div><aside class="calendar-results"><div class="booking-cover"><span>ЭТАЛОН · ГРОЗНЫЙ</span></div><div class="stay-summary-head"><span class="best-price">✦ ЛУЧШИЕ УСЛОВИЯ</span><h3 id="resultsTitle">Ваше проживание</h3><p id="resultsText">Выберите даты, чтобы увидеть подходящие номера.</p></div><div class="stay-summary"><div class="stay-line"><span>Заезд</span><strong id="summaryCheckin">Выберите дату</strong></div><div class="stay-line"><span>Выезд</span><strong id="summaryCheckout">Выберите дату</strong></div><div class="stay-line"><span>Количество ночей</span><strong id="summaryNights">—</strong></div><div class="stay-line"><span>Гости</span><strong id="summaryGuests">2 взрослых</strong></div></div><div class="cancel-note">✦ <span><strong>Гибкие условия</strong><small>Все детали подтвердит администратор</small></span></div><div id="availabilityList" class="stay-available-list"></div><div class="cal-actions"><button class="btn" id="showAvailableRooms" type="button">Показать доступные номера <span>→</span></button></div></aside></div></div></section>
     <section id="services"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Всё для комфорта</div><h2>Приятные детали</h2></div><p>Забота о гостях, комфорт в номерах и внимание к мелочам — чтобы вы могли просто отдыхать.</p></div><div class="services-grid"><article class="service"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg></div><h3>Стойка 24/7</h3><p>Поможем с заездом, такси и любыми вопросами в любое время.</p></article><article class="service"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8.5a13 13 0 0 1 17 0M6.8 12a8 8 0 0 1 10.4 0M10 15.3a3.1 3.1 0 0 1 4 0"/><circle cx="12" cy="18.5" r=".7"/></svg></div><h3>Быстрый Wi‑Fi</h3><p>Оставайтесь на связи и работайте с комфортом.</p></article><article class="service"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.2"/></svg></div><h3>Удобное расположение</h3><p>Отель находится в городе, рядом с городской инфраструктурой.</p></article><article class="service"><div class="icon">✧</div><h3>Завтрак</h3><p>Неспешное утро и вкусный завтрак по предварительному запросу.</p></article></div><div class="amenity-gallery"><figure><img src="images (1).jpg" alt="Уютный интерьер номера"><figcaption>Пространство для отдыха</figcaption></figure><figure><img src="images (4).jpg" alt="Интерьер сьют-номера"><figcaption>Тепло и тишина</figcaption></figure><figure><img src="images (8).jpg" alt="Премиальный номер отеля"><figcaption>Детали, которые остаются</figcaption></figure></div></div></section>
+    <div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Тёплый приём</span><span>Уютные номера</span><span>Забота 24/7</span><span>Wi‑Fi везде</span><span>Тёплый приём</span><span>Уютные номера</span><span>Забота 24/7</span><span>Wi‑Fi везде</span><span>Тёплый приём</span><span>Уютные номера</span><span>Забота 24/7</span><span>Wi‑Fi везде</span><span>Тёплый приём</span><span>Уютные номера</span><span>Забота 24/7</span><span>Wi‑Fi везде</span></div></div>
     <section class="facts" aria-label="Отель в цифрах"><div class="wrap facts-row"><div class="fact"><b>10</b><span>номеров</span></div><div class="fact"><b>4</b><span>категории</span></div><div class="fact"><b>24/7</b><span>стойка гостя</span></div><div class="fact"><b>Wi‑Fi</b><span>во всём отеле</span></div></div></section>
     <section id="about"><div class="wrap intro-grid"><div class="intro-photo"><img src="images (1).jpg" alt="Светлый номер отеля Эталон"><div class="photo-caption">Место, куда хочется вернуться</div></div><div class="intro-copy"><div class="eyebrow">Об отеле</div><h2>Гостеприимство<br>в деталях</h2><p>«Эталон» — небольшой городской отель для тех, кто ценит спокойствие, личное пространство и тёплый приём. Здесь легко восстановить силы после насыщенного дня и почувствовать ритм Грозного.</p><p>Всего десять номеров, чтобы сохранить камерную атмосферу и уделить внимание каждому гостю.</p><div class="features"><div class="feature"><i>✦</i> Уютные номера</div><div class="feature"><i>◈</i> Забота 24/7</div><div class="feature"><i>⌁</i> Wi‑Fi на всей территории</div><div class="feature"><i>⌖</i> Удобное расположение</div></div><a class="room-link" href="#services">УЗНАТЬ ОБ УСЛУГАХ ↗</a></div></div></section>
     <section class="faq" id="faq"><div class="wrap faq-grid"><div class="section-head"><div><div class="eyebrow">Вопросы и ответы</div><h2>Коротко о главном</h2></div><p>Не нашли ответ? Позвоните нам или оставьте заявку — администратор поможет.</p></div><div class="faq-list"><details open><summary>Как забронировать номер?</summary><p>Выберите даты в календаре и подходящую категорию, затем нажмите «Выбрать» и оставьте имя и телефон. Администратор свяжется с вами и подтвердит наличие номера.</p></details><details><summary>Сколько номеров в отеле?</summary><p>Всего десять номеров в четырёх категориях: Стандарт, Комфорт, Делюкс и Люкс. Камерный формат позволяет уделить внимание каждому гостю.</p></details><details><summary>Работает ли стойка круглосуточно?</summary><p>Да, стойка гостя работает 24/7: поможем с заездом, такси и любыми вопросами в любое время.</p></details><details><summary>Есть ли завтрак и Wi‑Fi?</summary><p>Wi‑Fi доступен на всей территории отеля. Завтрак организуем по предварительному запросу.</p></details><details><summary>Цены и наличие на сайте — окончательные?</summary><p>Сейчас сайт демонстрационный: цены и статусы наличия примерные. Точную стоимость и доступность на ваши даты подтверждает администратор.</p></details></div></div></section>
