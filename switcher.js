@@ -5,7 +5,7 @@
   const PR = 'https://github.com/somon101/hostel/pull/';
   /* новые макеты сверху; чтобы добавить макет, положите его в versions/<id>/index.html и допишите строку сюда */
   const MOCKUPS = [
-    { id: 'v8', title: 'Тёплый, скруглённый, спокойный', tag: 'Основной сайт', pr: 6,
+    { id: 'v8', title: 'Тёплый, скруглённый, спокойный', tag: 'Главный макет', pr: 6,
       desc: 'Собран по вашим 20 ответам. Светлый кремовый фон, терракотовые кнопки, сильно скруглённые карточки, фото на весь экран, плавающее меню, переключатели темы и языка (RU и EN).' },
     { id: 'v7', title: 'Мягкая бумага и жёлтая полоса', tag: 'Черновик, не слит', pr: null,
       desc: 'Редизайн по навыку Hallmark: бумажная фактура, жирный округлый шрифт, жёлтая полоса быстрого бронирования и тёмный блок контактов.' },
@@ -28,7 +28,7 @@
   const id = me && me.dataset.id;
   if (!id) return; // главная страница только читает список
   const root = me.getAttribute('src').replace(/switcher\.js.*$/, '');
-  const href = (m) => (m.id === 'v8' ? `${root}index.html` : `${root}versions/${m.id}/index.html`);
+  const href = (m) => `${root}versions/${m.id}/index.html`;
   const idx = MOCKUPS.findIndex((m) => m.id === id);
 
   const host = document.createElement('div');
@@ -70,7 +70,7 @@
   const panel = sh.getElementById('panel'); const fab = sh.getElementById('fab');
   const newer = MOCKUPS[idx - 1]; const older = MOCKUPS[idx + 1];
   const step = (m, label, ch) => (m ? `<a class="step" href="${href(m)}" aria-label="${label}: ${m.title}">${ch}</a>` : `<span class="step" aria-disabled="true" aria-label="${label}">${ch}</span>`);
-  panel.innerHTML = `<div class="head"><a href="${root}mockups.html">Все макеты</a><div class="steps">${step(older, 'Предыдущий', '‹')}${step(newer, 'Следующий', '›')}</div></div>` +
+  panel.innerHTML = `<div class="head"><a href="${root}index.html">Все макеты</a><div class="steps">${step(older, 'Предыдущий', '‹')}${step(newer, 'Следующий', '›')}</div></div>` +
     MOCKUPS.map((m) => `<a class="item" href="${href(m)}"${m.id === id ? ' aria-current="page"' : ''}><span class="n">${m.num}</span><span><div class="t">${m.title}</div><div class="s">${m.tag || (m.pr ? 'Pull request №' + m.pr : '')}</div></span></a>`).join('');
   const set = (open) => { panel.classList.toggle('open', open); fab.setAttribute('aria-expanded', String(open)); };
   fab.addEventListener('click', () => set(!panel.classList.contains('open')));
