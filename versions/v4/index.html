@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d0c0a" />
+  <meta name="description" content="Эталон — камерный отель премиум-класса в Грозном. Выберите номер и проверьте свободные даты онлайн." />
+  <title>Эталон — отель в Грозном</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap');
+    @font-face{font-family:Inter;src:url('../../fonts/inter-cyrillic.woff2') format('woff2');font-style:normal;font-weight:400 800;font-display:swap;unicode-range:U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+    @font-face{font-family:Inter;src:url('../../fonts/inter-latin.woff2') format('woff2');font-style:normal;font-weight:400 800;font-display:swap;unicode-range:U+0000-00FF}
+    /* Dark editorial system: warm black surfaces, one champagne-gold accent, Playfair Display / Inter */
+    :root{color-scheme:dark;--bg:#0d0c0a;--bg2:#141210;--card:#1a1713;--line:rgba(243,238,228,.14);--line-strong:rgba(243,238,228,.28);--ink:#f3eee4;--muted:#a9a193;--gold:#d6b36a;--gold-deep:#a8832f;--on-gold:#15110a;--ok:#7fc59b;--warn:#e3b55a;--bad:#e5877e;--serif:'Playfair Display',Georgia,'Times New Roman',serif;--sans:Inter,system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--ease:cubic-bezier(.2,.7,.2,1);--r:2px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px;background:var(--bg)}
+    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}button,input,select{font:inherit;color:inherit}button{cursor:pointer}img{display:block;max-width:100%}
+    :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+    .wrap{width:min(1280px,calc(100% - 64px));margin:auto}
+    section{padding:136px 0}
+    .eyebrow{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+    .eyebrow:before{content:'';width:40px;height:1px;background:currentColor}
+    h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0;line-height:1.08;letter-spacing:-.015em}
+    h2 em,h1 em{font-style:italic;color:var(--gold)}
+    .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:48px;margin-bottom:64px}
+    .section-head h2{font-size:clamp(42px,6vw,84px);margin-top:20px}
+    .section-head p{max-width:360px;margin:0;color:var(--muted)}
+
+    /* buttons: sharp, editorial */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:52px;padding:0 32px;border:1px solid var(--gold);background:var(--gold);color:var(--on-gold);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;border-radius:var(--r);transition:background .25s,color .25s,transform .25s var(--ease)}
+    .btn:hover{background:transparent;color:var(--gold)}
+    .text-link,.room-link{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;border-bottom:1px solid var(--gold);padding-bottom:6px;color:var(--ink);transition:color .2s}
+    .text-link:hover,.room-link:hover{color:var(--gold)}
+
+    /* header: nav left, logo centre, actions right */
+    header{position:fixed;inset:0 0 auto;z-index:30;height:88px;transition:background .3s,height .3s,border-color .3s;border-bottom:1px solid transparent}
+    header.solid{height:68px;background:rgba(13,12,10,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+    .nav{height:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px}
+    .nav-links{order:1;display:flex;gap:30px;white-space:nowrap;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+    .nav-links a[href="#availability"]{display:none}.nav-links a{position:relative;padding:6px 0;color:#d9d3c6}.nav-links a:after{content:'';position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--gold);transition:right .3s var(--ease)}
+    .nav-links a:hover{color:var(--ink)}.nav-links a:hover:after{right:0}
+    .brand{order:2;display:flex;flex-direction:row;align-items:center;gap:14px}
+    .brand-mark{width:40px;height:40px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;font:600 21px var(--serif);color:var(--gold)}
+    .brand-name{font:600 22px/1 var(--serif);letter-spacing:.3em;text-indent:.3em}
+    .brand-sub{font-size:9px;letter-spacing:.34em;margin-top:6px;color:var(--muted)}
+    .nav-right{order:3;display:flex;align-items:center;justify-content:flex-end;gap:26px}.phone{font-size:13px;font-weight:600;white-space:nowrap;letter-spacing:.04em}
+    header .btn{min-height:42px;padding:0 22px;background:transparent;color:var(--ink);border-color:var(--line-strong)}header .btn:hover{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+
+    /* hero: giant headline anchored bottom-left */
+    .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding:0;background:var(--bg) url('../../photo-0.jpg') center 40%/cover no-repeat;overflow:hidden}
+    .hero:before{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 4%,rgba(13,12,10,.55) 45%,rgba(13,12,10,.3) 100%),linear-gradient(90deg,rgba(13,12,10,.75),transparent 70%)}
+    .hero>.wrap:not(.hero-foot){position:relative;width:min(1280px,calc(100% - 64px))}
+    .hero-content{padding:160px 0 210px;max-width:1100px}
+    .hero .eyebrow{margin-bottom:34px}
+    .hero h1{font-size:clamp(60px,11.5vw,184px);line-height:.92;letter-spacing:-.03em;font-weight:500;margin:0 0 40px}
+    .hero h1 em{display:block;padding-left:.9em}
+    .hero p{font-size:18px;max-width:440px;margin:0 0 44px;color:#d4cec1}
+    .hero-actions{display:flex;align-items:center;gap:36px;flex-wrap:wrap}
+    .hero-foot{position:absolute;left:auto;width:auto;transform:none;right:max(32px,calc((100% - 1280px)/2));bottom:206px;writing-mode:vertical-rl;display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.3em;color:var(--muted)}.hero-foot span{color:var(--gold)}
+
+    /* booking bar docked on the hero's lower edge */
+    .booking-float{position:relative;z-index:5;margin-top:-92px}
+    .quick-booking-title{display:none}
+    .bookingbar{display:grid;grid-template-columns:repeat(5,1fr) auto;align-items:stretch;background:rgba(26,23,19,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line-strong);border-radius:var(--r);padding:0}
+    .field{padding:20px 24px;border-right:1px solid var(--line);min-width:0}.field:nth-last-child(2){border-right:0}
+    .field label{display:block;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+    .field input,.field select{width:100%;border:0;outline:0;background:transparent;font-size:16px;font-weight:500;color:var(--ink);padding:2px 0;min-height:28px}
+    .field select{text-overflow:ellipsis}.field select option{background:var(--card);color:var(--ink)}
+    .field:focus-within{background:rgba(255,255,255,.04)}
+    .bookingbar .btn{min-width:190px;min-height:0;border-radius:0}
+
+    /* rooms: tall photo cards, one row */
+    .rooms-section{background:var(--bg);padding-top:170px}
+    .rooms-toolbar{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:36px}
+    .rooms-toolbar h3{font-size:28px}.rooms-toolbar p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+    .rooms-trip{display:flex;align-items:center;gap:24px;flex-wrap:wrap;font-size:14px;color:var(--muted)}.rooms-trip b{color:var(--ink);font-weight:600}
+    .rooms-trip button{background:none;border:0;padding:6px 0;border-bottom:1px solid var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--gold)}
+    .rooms-grid{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:thin;scrollbar-color:var(--gold-deep) transparent}
+    .room-card{position:relative;flex:1 0 calc((100% - 48px)/4);min-width:280px;aspect-ratio:3/4.4;scroll-snap-align:start;overflow:hidden;background:var(--card);border-radius:var(--r);isolation:isolate}
+    .room-card.is-unavailable{opacity:.55}
+    .room-image{position:absolute;inset:0;z-index:-1}.room-image:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,12,10,.97) 10%,rgba(13,12,10,.78) 48%,rgba(13,12,10,.1) 100%)}
+    .room-image img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}.room-card:hover .room-image img{transform:scale(1.07)}
+    .room-availability{position:absolute;left:18px;top:18px;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:rgba(13,12,10,.78);border:1px solid var(--line-strong);font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--ok)}
+    .room-availability:before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor}
+    .room-availability.few{color:var(--warn)}.room-availability.full{color:var(--bad)}
+    .room-count-badge{position:absolute;right:18px;top:18px;z-index:2;font:italic 500 18px var(--serif);color:var(--ink)}
+    .room-info{position:absolute;inset:auto 0 0;display:flex;flex-direction:column;padding:26px}
+    .room-name-row{display:flex;flex-direction:column;gap:8px}
+    .room-order{order:-1;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+    .room-title{font:500 40px/1 var(--serif)}
+    .room-desc{margin:12px 0 14px;font-size:14px;color:#cfc8ba}
+    .room-facts{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:#cfc8ba;padding:14px 0;border-top:1px solid var(--line)}
+    .room-thumbs{display:none}
+    .room-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line)}
+    .room-price{font:500 28px/1 var(--serif);white-space:nowrap}.room-price small{display:block;margin-top:6px;font:400 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .room-choose{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 20px;border:1px solid var(--gold);background:var(--gold);color:var(--on-gold);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:var(--r);transition:background .2s,color .2s}
+    .room-choose:hover:not(:disabled){background:transparent;color:var(--gold)}.room-choose:disabled{background:transparent;border-color:var(--line-strong);color:var(--muted);cursor:not-allowed}
+    .room-selection-note{margin:28px 0 0;font-size:13px;color:var(--muted)}
+    .booking-benefits{display:flex;gap:12px 40px;flex-wrap:wrap;margin:22px 0 0;font-size:14px;color:var(--muted)}.booking-benefits strong{color:var(--ink);font-weight:600}
+
+    /* facts: oversized numerals */
+    .facts{padding:0;background:var(--bg)}
+    .facts-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .fact{padding:64px 28px;border-right:1px solid var(--line)}.fact:last-child{border-right:0}
+    .fact b{display:block;font:500 clamp(54px,7vw,104px)/1 var(--serif);color:transparent;-webkit-text-stroke:1px var(--gold)}
+    .fact span{display:block;margin-top:14px;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+    /* availability / calendar */
+    .availability{background:var(--bg2)}
+    .calendar-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(340px,1fr);gap:0;border:1px solid var(--line);align-items:stretch}
+    .calendar-box{padding:44px;border-right:1px solid var(--line)}
+    .booking-step{display:flex;align-items:center;gap:14px;font:500 28px var(--serif);margin-bottom:26px}
+    .booking-step span{display:grid;place-items:center;width:34px;height:34px;border:1px solid var(--gold);border-radius:50%;color:var(--gold);font:600 14px var(--sans)}
+    .booking-step small{margin-left:auto;font:500 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+    .date-inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px}
+    .date-inputs label{display:block;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+    .date-inputs input,.date-inputs select{display:block;width:100%;margin-top:8px;min-height:50px;padding:0 14px;border:1px solid var(--line-strong);border-radius:var(--r);background:var(--bg);font-size:15px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink)}
+    .date-inputs input:focus,.date-inputs select:focus{border-color:var(--gold);outline:0}
+    .month-pair{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+    .cal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .cal-month{font:500 26px var(--serif);text-align:center;flex:1}
+    .month-arrow{width:40px;height:40px;border:1px solid var(--line-strong);border-radius:50%;background:transparent;font-size:20px;line-height:1;transition:background .2s,color .2s,border-color .2s}.month-arrow:hover{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+    .month-spacer{width:40px;flex:none}
+    .cal-week,.cal-days{display:grid;grid-template-columns:repeat(7,1fr)}
+    .cal-week span{text-align:center;font-size:10px;font-weight:600;letter-spacing:.14em;color:var(--muted);padding:8px 0}
+    .cal-days{gap:3px 0}
+    .day{position:relative;aspect-ratio:1;min-height:40px;border:0;background:transparent;border-radius:50%;font-size:14px;font-weight:500;color:var(--ink);transition:background .15s,color .15s}
+    .day.available:hover:not(:disabled){background:rgba(255,255,255,.1)}
+    .day.few:not(.past){color:var(--warn);font-weight:700}.day.few:not(.past):after{content:'';position:absolute;left:50%;bottom:6px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--warn)}
+    .day.full{color:#6c6558;text-decoration:line-through;cursor:not-allowed}.day.past{color:#554f45;text-decoration:none;cursor:not-allowed}
+    .day.range-candidate:not(:disabled):not(.selected){background:rgba(214,179,106,.07)}
+    .day.inrange{background:rgba(214,179,106,.18);border-radius:0;color:var(--ink)}
+    .day.range-conflict{background:rgba(229,135,126,.22);color:var(--bad)}
+    .day.selected{background:var(--gold);color:var(--on-gold);font-weight:700;border-radius:50%}
+    .cal-legend{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 20px;margin-top:30px;padding-top:26px;border-top:1px solid var(--line);font-size:13px}
+    .cal-legend>span{display:flex;align-items:center;gap:12px}.cal-legend strong{display:block;font-weight:600}.cal-legend small{color:var(--muted);font-size:12px}
+    .legend-swatch,.period-swatch{flex:none;width:18px;height:18px;border-radius:50%;border:1px solid var(--line-strong)}
+    .legend-swatch.few{background:rgba(227,181,90,.35);border-color:var(--warn)}.legend-swatch.full{background:#2a2620;border-color:#6c6558}.period-swatch{background:var(--gold);border-color:var(--gold)}
+    .range-summary{display:none;margin-top:22px;padding:16px 20px;border-left:2px solid var(--gold);background:rgba(214,179,106,.08);font-size:14px}.range-summary.visible{display:block}
+    .cal-hint{margin:20px 0 0;font-size:13px;color:var(--muted)}
+    .calendar-results{background:var(--card);display:flex;flex-direction:column}
+    .booking-cover{height:170px;display:flex;align-items:flex-end;padding:20px 30px;background:linear-gradient(0deg,var(--card),rgba(26,23,19,.1)),url('../../photo-6.jpg') center/cover}
+    .booking-cover span{font-size:11px;letter-spacing:.3em;color:var(--gold)}
+    .stay-summary-head{padding:26px 30px 8px}.best-price{font-size:10px;letter-spacing:.24em;font-weight:600;color:var(--gold)}
+    .stay-summary-head h3{font-size:38px;margin:10px 0 8px}.stay-summary-head p{margin:0;font-size:14px;color:var(--muted)}
+    .stay-summary{padding:8px 30px}.stay-line{display:flex;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);font-size:14px}
+    .stay-line span{color:var(--muted)}.stay-line strong{font-weight:600;text-align:right}
+    .cancel-note{display:flex;gap:10px;margin:6px 30px 0;padding:16px 0;font-size:13px;color:var(--gold)}.cancel-note small{display:block;color:var(--muted)}.cancel-note strong{color:var(--ink)}
+    .stay-available-list{padding:0 30px;display:grid;gap:10px}
+    .avail-row{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:10px;border:1px solid var(--line);cursor:pointer;transition:background .2s,border-color .2s}
+    .avail-row:hover{background:rgba(255,255,255,.05);border-color:var(--gold)}.avail-row img{width:64px;height:52px;object-fit:cover}
+    .avail-row strong{font:500 20px var(--serif);display:block}.avail-row small{color:var(--muted);font-size:12px}.avail-price{text-align:right;font-weight:600}.avail-price small{display:block}
+    .avail-empty{padding:14px;font-size:14px;color:var(--bad)}
+    .cal-actions{padding:22px 30px 32px;margin-top:auto}.cal-actions .btn{width:100%}
+
+    /* services: ruled index list */
+    #services{background:var(--bg)}
+    .services-grid{display:block;border-top:1px solid var(--line-strong);counter-reset:svc}
+    .service{counter-increment:svc;display:grid;grid-template-columns:90px 1fr 1fr;align-items:center;gap:24px;padding:38px 0;border-bottom:1px solid var(--line);transition:padding .35s var(--ease),background .35s}
+    .service:hover{padding-left:20px;background:rgba(255,255,255,.03)}
+    .service:before{content:'0' counter(svc);font:italic 500 22px var(--serif);color:var(--gold)}
+    .service .icon{display:none}
+    .service h3{font-size:clamp(28px,3.4vw,46px)}.service p{margin:0;color:var(--muted);max-width:420px}
+    .amenity-gallery{display:grid;grid-template-columns:5fr 7fr;grid-auto-rows:270px;gap:16px;margin-top:80px}
+    .amenity-gallery figure{position:relative;margin:0;overflow:hidden;border-radius:var(--r)}
+    .amenity-gallery figure:nth-child(1){grid-row:span 2}
+    .amenity-gallery img{width:100%;height:100%;object-fit:cover;filter:saturate(.9);transition:transform .9s var(--ease)}.amenity-gallery figure:hover img{transform:scale(1.05)}
+    .amenity-gallery figcaption{position:absolute;inset:auto 0 0;padding:60px 24px 22px;background:linear-gradient(0deg,rgba(13,12,10,.9),transparent);font:italic 500 24px var(--serif)}
+
+    /* about: copy left, framed photo right */
+    #about{background:var(--bg2)}
+    .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:110px;align-items:center}
+    .intro-copy{order:1}.intro-photo{order:2;position:relative;aspect-ratio:4/5;max-height:700px}
+    .intro-photo:before{content:'';position:absolute;inset:-22px 22px 22px -22px;border:1px solid var(--gold)}
+    .intro-photo img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:var(--r)}
+    .photo-caption{position:absolute;right:-1px;bottom:36px;padding:16px 22px 16px 28px;background:var(--gold);color:var(--on-gold);font:italic 500 22px var(--serif)}
+    .intro-copy h2{font-size:clamp(46px,6vw,92px);margin:22px 0 32px}
+    .intro-copy p{max-width:480px;color:var(--muted);font-size:17px;line-height:1.8}
+    .features{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:40px 0 44px;border-top:1px solid var(--line)}
+    .feature{display:flex;align-items:center;gap:14px;padding:18px 0;border-bottom:1px solid var(--line);font-size:15px;font-weight:500}.feature i{font-style:normal;color:var(--gold);font-size:16px}
+
+    /* faq */
+    .faq{background:var(--bg)}
+    .faq-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:96px;align-items:start}
+    .faq-grid .section-head{display:block;margin:0;position:sticky;top:110px}.faq-grid .section-head p{margin-top:22px}
+    .faq-list{border-top:1px solid var(--line-strong)}
+    .faq-list details{border-bottom:1px solid var(--line)}
+    .faq-list summary{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:30px 0;cursor:pointer;list-style:none;font:500 28px/1.2 var(--serif)}
+    .faq-list summary::-webkit-details-marker{display:none}
+    .faq-list summary:after{content:'+';flex:none;display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line-strong);border-radius:50%;font:300 24px/1 var(--sans);color:var(--gold);transition:transform .25s var(--ease),background .2s}
+    .faq-list details[open] summary:after{transform:rotate(45deg);background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+    .faq-list summary:hover{color:var(--gold)}
+    .faq-list p{margin:0 0 30px;max-width:560px;color:var(--muted)}
+
+    /* contacts: map full-bleed, card floats over it */
+    .location{background:var(--bg2);padding:0}
+    .location>.location-grid.wrap{position:relative;display:block;width:100%;margin:0;max-width:none}
+    .map-frame{position:relative;overflow:hidden;min-height:800px;background:radial-gradient(circle at 70% 45%,#24201a 0,#15130f 60%),#15130f}
+    .map-frame:before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:80px 80px;opacity:.55}
+    .map-frame:after{content:'';position:absolute;left:-10%;right:-10%;top:52%;height:30px;background:rgba(243,238,228,.07);border-block:1px solid var(--line);transform:rotate(-12deg)}
+    .map-pin{position:absolute;left:68%;top:46%;transform:translate(-50%,-50%);display:grid;place-items:center;width:60px;height:60px;border-radius:50%;background:var(--gold);color:var(--on-gold);font-size:26px;box-shadow:0 0 0 12px rgba(214,179,106,.16),0 0 0 34px rgba(214,179,106,.07)}
+    .map-label{position:absolute;left:68%;top:calc(46% + 62px);transform:translateX(-50%);white-space:nowrap;padding:10px 18px;background:var(--card);border:1px solid var(--line-strong);font-size:13px;font-weight:600;letter-spacing:.06em}
+    .location-card{position:absolute;left:max(32px,calc((100% - 1280px)/2));top:0;bottom:0;margin:auto 0;height:fit-content;width:min(500px,calc(100% - 64px));z-index:2;background:var(--bg);border:1px solid var(--line-strong);padding:48px}
+    .location-card h2{font-size:clamp(34px,3.4vw,46px);margin:20px 0 20px}.location-card p{color:var(--muted);margin:0 0 30px}
+    .address-line{font-size:15px;line-height:1.9;color:#d9d3c6}.address-line strong{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}.address-line a{font:500 26px var(--serif)}
+
+    /* footer with outlined wordmark */
+    footer{position:relative;background:var(--bg);padding:72px 0 44px;border-top:1px solid var(--line);overflow:hidden}
+    footer:before{content:'ЭТАЛОН';display:block;text-align:center;font:500 clamp(70px,19vw,300px)/.9 var(--serif);letter-spacing:.04em;color:transparent;-webkit-text-stroke:1px rgba(214,179,106,.4);margin-bottom:56px;user-select:none}
+    .footer-row{display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap}
+    .footer-note{font-size:13px;color:var(--muted)}
+    .footer-links{display:flex;gap:28px;font-size:12px;letter-spacing:.14em;text-transform:uppercase}.footer-links a:hover{color:var(--gold)}
+
+    /* modal + toast */
+    .modal{position:fixed;inset:0;z-index:60;display:none;place-items:center;padding:20px;background:rgba(5,5,4,.78);backdrop-filter:blur(8px)}.modal.open{display:grid}
+    .modal-card{position:relative;width:min(580px,100%);max-height:calc(100svh - 40px);overflow:auto;background:var(--card);border:1px solid var(--line-strong);padding:48px}
+    .modal-card h2{font-size:42px}.modal-card>p{color:var(--muted);margin:10px 0 28px}
+    .modal-close{position:absolute;right:16px;top:16px;width:40px;height:40px;border:1px solid var(--line-strong);border-radius:50%;background:transparent;font-size:22px;line-height:1}.modal-close:hover{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+    .modal-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.modal-fields label{font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}.modal-fields .wide{grid-column:1/-1}
+    .modal-fields input,.modal-fields select{display:block;width:100%;margin-top:8px;min-height:50px;padding:0 14px;border:1px solid var(--line-strong);border-radius:var(--r);background:var(--bg);font-size:15px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink)}
+    .modal-fields input:focus,.modal-fields select:focus{border-color:var(--gold);outline:0}
+    .booking-summary{margin:20px 0;padding:16px 20px;border-left:2px solid var(--gold);background:rgba(214,179,106,.08);font-size:14px;color:var(--muted)}
+    .booking-summary div{display:flex;justify-content:space-between;gap:12px;color:var(--ink)}.booking-summary strong{font:500 28px var(--serif);color:var(--gold)}.booking-summary small{color:var(--muted)}
+    .modal-card .btn{width:100%}.fineprint{margin-top:16px;font-size:12px;color:var(--muted)}
+    .toast{position:fixed;left:50%;bottom:28px;z-index:70;max-width:min(520px,calc(100% - 32px));transform:translate(-50%,24px);opacity:0;pointer-events:none;padding:16px 24px;background:var(--gold);color:var(--on-gold);font-size:14px;font-weight:500;transition:opacity .3s,transform .3s var(--ease)}.toast.show{opacity:1;transform:translate(-50%,0)}
+
+    /* scroll progress + reveal (JS adds the classes) */
+    body:after{content:'';position:fixed;left:0;top:0;height:2px;width:100%;z-index:80;pointer-events:none;background:var(--gold);transform:scaleX(var(--read-progress,0));transform-origin:left}
+    body.portfolio-motion .site-reveal{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--reveal-index,0)*90ms)}
+    body.portfolio-motion .site-reveal.is-in{opacity:1;transform:none}
+
+    /* responsive */
+    @media(max-width:1100px){
+      section{padding:96px 0}.nav-links{display:none}.nav{grid-template-columns:auto 1fr}.brand{order:1}.phone{display:none}
+      .bookingbar{grid-template-columns:1fr 1fr 1fr}.field{border-bottom:1px solid var(--line)}.field:nth-last-child(2){border-right:1px solid var(--line)}.bookingbar .btn{grid-column:1/-1;min-height:56px}
+      .room-card{flex-basis:46%}
+      .calendar-layout{grid-template-columns:1fr}.calendar-box{border-right:0;border-bottom:1px solid var(--line)}
+      .intro-grid{grid-template-columns:1fr;gap:72px}.intro-copy{order:2}.intro-photo{order:1;max-height:520px;aspect-ratio:4/3;margin:0 0 0 22px}
+      .faq-grid{grid-template-columns:1fr;gap:44px}.faq-grid .section-head{position:static}
+      .hero-foot{display:none}.service{grid-template-columns:60px 1fr}.service p{grid-column:2}
+      .location-card{position:relative;left:auto;top:auto;bottom:auto;height:auto;width:100%;margin:0;border-width:1px 0}.map-frame{min-height:380px}
+    }
+    @media(max-width:620px){
+      body{font-size:15px}.wrap,.hero>.wrap:not(.hero-foot){width:calc(100% - 32px)}section{padding:72px 0}
+      header,header.solid{height:64px}.brand-sub{display:none}.brand-name{font-size:19px}header .btn{min-height:40px;padding:0 16px}
+      .section-head{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:40px}
+      .hero-content{padding:120px 0 170px}.hero h1{font-size:clamp(52px,17vw,84px)}.hero h1 em{padding-left:.5em}.hero p{font-size:16px}.hero-actions{gap:22px}
+      .booking-float{margin-top:-70px}.bookingbar{grid-template-columns:1fr 1fr}.field{padding:14px 16px}
+      .rooms-section{padding-top:110px}.room-card{flex-basis:84%;min-width:0}.rooms-toolbar{padding:18px 0}
+      .facts-row{grid-template-columns:1fr 1fr}.fact{padding:40px 16px}.fact:nth-child(2){border-right:0}.fact:nth-child(-n+2){border-bottom:1px solid var(--line)}
+      .calendar-box{padding:24px 16px}.date-inputs{grid-template-columns:1fr}.month-pair{grid-template-columns:1fr}.next-month-panel{display:none}.cal-legend{grid-template-columns:1fr}.booking-step{font-size:22px}.booking-step small{display:none}
+      .service{padding:28px 0;gap:14px 16px}
+      .amenity-gallery{grid-template-columns:1fr;grid-auto-rows:240px;margin-top:56px}.amenity-gallery figure:nth-child(1){grid-row:auto}
+      .features{grid-template-columns:1fr}.intro-photo{margin-left:16px}
+      .faq-list summary{font-size:21px;padding:24px 0}
+      .location-card{padding:40px 16px}
+      footer{padding-top:48px}.footer-row{flex-direction:column;align-items:flex-start}
+      .modal-card{padding:32px 20px}.modal-fields{grid-template-columns:1fr}
+    }
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}body.portfolio-motion .site-reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+  <header><div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Эталон — на главную"><div class="brand-mark"><span>Э</span></div><div><div class="brand-name">ЭТАЛОН</div><div class="brand-sub">ОТЕЛЬ · ГРОЗНЫЙ</div></div></a>
+    <nav class="nav-links"><a href="#rooms">Номера</a><a href="#services">Услуги</a><a href="#about">Об отеле</a><a href="#availability">Бронирование</a><a href="#faq">Вопросы</a><a href="#contacts">Контакты</a></nav>
+    <div class="nav-right"><a class="phone" href="tel:+79280000000">+7 (928) 000-00-00</a><button class="btn" data-book>Забронировать</button></div>
+  </div></header>
+  <main id="top">
+    <section class="hero" style="padding:0"><div class="wrap"><div class="hero-content"><div class="eyebrow">Грозный · Вахи Алиева, 45</div><h1>Добро пожаловать<br><em>в «Эталон»</em></h1><p>Тёплый свет, спокойная атмосфера и комфорт, который чувствуется в каждой детали.</p><div class="hero-actions"><a class="btn" href="#quickSearch">Проверить наличие</a><a class="text-link" href="#rooms">НОМЕРА И СЬЮТЫ&nbsp; ↗</a></div></div></div><div class="wrap hero-foot"><span>✦</span> ОТЕЛЬ «ЭТАЛОН» · ГРОЗНЫЙ</div></section>
+    <div class="booking-float"><div class="wrap"><div class="quick-booking" id="quickBooking"><form class="bookingbar" id="quickSearch">
+      <div class="field"><label>Заезд</label><input id="quickIn" type="date" /></div><div class="field"><label>Выезд</label><input id="quickOut" type="date" /></div><div class="field"><label>Гости</label><select id="guests"><option>1 гость</option><option selected>2 гостя</option><option>3 гостя</option><option>4 гостя</option></select></div><div class="field"><label>Номеров</label><select><option selected>1 номер</option><option>2 номера</option><option>3 номера</option></select></div><button class="btn" type="submit">Найти номер&nbsp; ↗</button>
+    </form></div></div></div>
+    <section class="rooms-section" id="rooms"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Размещение</div><h2>Выберите номер</h2></div><p>Найдите подходящий вариант для вашего отдыха.</p></div><div class="rooms-toolbar"><div><h3 id="roomsStepTitle">Доступные номера</h3><p>Сравните категории и выберите подходящий вариант.</p></div><div class="rooms-trip"><span>▦ <b id="roomsTripDates">Выберите даты</b></span><span>♙ <b id="roomsTripGuests">2 взрослых</b></span><button type="button" id="editTripDates">Изменить</button></div></div><div class="rooms-grid" id="roomCards"></div><p class="room-selection-note">Статусы и остатки показаны для демонстрации. Точную доступность на ваши даты подтвердит администратор.</p><div class="booking-benefits"><span>♧ <strong>Комфортные номера</strong></span><span>◈ <strong>Безопасное бронирование</strong></span><span>☏ <strong>Поддержка 24/7</strong></span></div></div></section>
+    <section class="availability" id="availability"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Планируйте поездку</div><h2>Выберите даты проживания</h2></div><p>Проверьте доступность номеров на нужный период.</p></div><div class="calendar-layout"><div class="calendar-box"><div class="booking-step"><span>1</span> Выберите заезд и выезд <small>Шаг 1 из 3</small></div><div class="date-inputs"><label>Заезд<input id="calendarCheckin" type="date"></label><label>Выезд<input id="calendarCheckout" type="date"></label><label>Гости<select id="calendarGuests"><option>1 взрослый</option><option selected>2 взрослых</option><option>3 взрослых</option><option>4 взрослых</option></select></label></div><div class="month-pair"><div class="month-panel"><div class="cal-top"><button id="prevMonth" class="month-arrow" aria-label="Предыдущий месяц">‹</button><div class="cal-month" id="calMonth"></div><span class="month-spacer"></span></div><div class="cal-week"><span>ПН</span><span>ВТ</span><span>СР</span><span>ЧТ</span><span>ПТ</span><span>СБ</span><span>ВС</span></div><div class="cal-days" id="calDays"></div></div><div class="month-panel next-month-panel"><div class="cal-top"><div class="month-spacer"></div><div class="cal-month" id="calMonthNext"></div><button id="nextMonth" class="month-arrow" aria-label="Следующий месяц">›</button></div><div class="cal-week"><span>ПН</span><span>ВТ</span><span>СР</span><span>ЧТ</span><span>ПТ</span><span>СБ</span><span>ВС</span></div><div class="cal-days" id="calDaysNext"></div></div></div><div class="cal-legend"><span><i class="legend-swatch"></i><span><strong>Свободно</strong><small>Есть номера</small></span></span><span><i class="legend-swatch few"></i><span><strong>Мало мест</strong><small>Осталось 1–2 номера</small></span></span><span><i class="legend-swatch full"></i><span><strong>Занято</strong><small>Нет свободных номеров</small></span></span><span class="period-legend"><i class="period-swatch"></i><span><strong>Ваш период</strong><small id="periodLegend">Выберите даты</small></span></span></div><div class="range-summary" id="rangeSummary" aria-live="polite"></div><p class="cal-hint">Сначала отметьте заезд, затем выезд. Занятые дни нельзя выбрать.</p></div><aside class="calendar-results"><div class="booking-cover"><span>ЭТАЛОН · ГРОЗНЫЙ</span></div><div class="stay-summary-head"><span class="best-price">✦ ЛУЧШИЕ УСЛОВИЯ</span><h3 id="resultsTitle">Ваше проживание</h3><p id="resultsText">Выберите даты, чтобы увидеть подходящие номера.</p></div><div class="stay-summary"><div class="stay-line"><span>Заезд</span><strong id="summaryCheckin">Выберите дату</strong></div><div class="stay-line"><span>Выезд</span><strong id="summaryCheckout">Выберите дату</strong></div><div class="stay-line"><span>Количество ночей</span><strong id="summaryNights">—</strong></div><div class="stay-line"><span>Гости</span><strong id="summaryGuests">2 взрослых</strong></div></div><div class="cancel-note">✦ <span><strong>Гибкие условия</strong><small>Все детали подтвердит администратор</small></span></div><div id="availabilityList" class="stay-available-list"></div><div class="cal-actions"><button class="btn" id="showAvailableRooms" type="button">Показать доступные номера <span>→</span></button></div></aside></div></div></section>
+    <section id="services"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Всё для комфорта</div><h2>Приятные детали</h2></div><p>Забота о гостях, комфорт в номерах и внимание к мелочам — чтобы вы могли просто отдыхать.</p></div><div class="services-grid"><article class="service"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg></div><h3>Стойка 24/7</h3><p>Поможем с заездом, такси и любыми вопросами в любое время.</p></article><article class="service"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8.5a13 13 0 0 1 17 0M6.8 12a8 8 0 0 1 10.4 0M10 15.3a3.1 3.1 0 0 1 4 0"/><circle cx="12" cy="18.5" r=".7"/></svg></div><h3>Быстрый Wi‑Fi</h3><p>Оставайтесь на связи и работайте с комфортом.</p></article><article class="service"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.2"/></svg></div><h3>Удобное расположение</h3><p>Отель находится в городе, рядом с городской инфраструктурой.</p></article><article class="service"><div class="icon">✧</div><h3>Завтрак</h3><p>Неспешное утро и вкусный завтрак по предварительному запросу.</p></article></div><div class="amenity-gallery"><figure><img src="../../photo-1.jpg" alt="Уютный интерьер номера"><figcaption>Пространство для отдыха</figcaption></figure><figure><img src="../../photo-4.jpg" alt="Интерьер сьют-номера"><figcaption>Тепло и тишина</figcaption></figure><figure><img src="../../photo-8.jpg" alt="Премиальный номер отеля"><figcaption>Детали, которые остаются</figcaption></figure></div></div></section>
+    <section class="facts" aria-label="Отель в цифрах"><div class="wrap facts-row"><div class="fact"><b>10</b><span>номеров</span></div><div class="fact"><b>4</b><span>категории</span></div><div class="fact"><b>24/7</b><span>стойка гостя</span></div><div class="fact"><b>Wi‑Fi</b><span>во всём отеле</span></div></div></section>
+    <section id="about"><div class="wrap intro-grid"><div class="intro-photo"><img src="../../photo-1.jpg" alt="Светлый номер отеля Эталон"><div class="photo-caption">Место, куда хочется вернуться</div></div><div class="intro-copy"><div class="eyebrow">Об отеле</div><h2>Гостеприимство<br>в деталях</h2><p>«Эталон» — небольшой городской отель для тех, кто ценит спокойствие, личное пространство и тёплый приём. Здесь легко восстановить силы после насыщенного дня и почувствовать ритм Грозного.</p><p>Всего десять номеров, чтобы сохранить камерную атмосферу и уделить внимание каждому гостю.</p><div class="features"><div class="feature"><i>✦</i> Уютные номера</div><div class="feature"><i>◈</i> Забота 24/7</div><div class="feature"><i>⌁</i> Wi‑Fi на всей территории</div><div class="feature"><i>⌖</i> Удобное расположение</div></div><a class="room-link" href="#services">УЗНАТЬ ОБ УСЛУГАХ ↗</a></div></div></section>
+    <section class="faq" id="faq"><div class="wrap faq-grid"><div class="section-head"><div><div class="eyebrow">Вопросы и ответы</div><h2>Коротко о главном</h2></div><p>Не нашли ответ? Позвоните нам или оставьте заявку — администратор поможет.</p></div><div class="faq-list"><details open><summary>Как забронировать номер?</summary><p>Выберите даты в календаре и подходящую категорию, затем нажмите «Выбрать» и оставьте имя и телефон. Администратор свяжется с вами и подтвердит наличие номера.</p></details><details><summary>Сколько номеров в отеле?</summary><p>Всего десять номеров в четырёх категориях: Стандарт, Комфорт, Делюкс и Люкс. Камерный формат позволяет уделить внимание каждому гостю.</p></details><details><summary>Работает ли стойка круглосуточно?</summary><p>Да, стойка гостя работает 24/7: поможем с заездом, такси и любыми вопросами в любое время.</p></details><details><summary>Есть ли завтрак и Wi‑Fi?</summary><p>Wi‑Fi доступен на всей территории отеля. Завтрак организуем по предварительному запросу.</p></details><details><summary>Цены и наличие на сайте — окончательные?</summary><p>Сейчас сайт демонстрационный: цены и статусы наличия примерные. Точную стоимость и доступность на ваши даты подтверждает администратор.</p></details></div></div></section>
+    <section class="location" id="contacts"><div class="wrap location-grid"><div class="location-card"><div class="eyebrow">Ждём вас</div><h2>Удобно добраться,<br>легко остаться</h2><p>Будем рады помочь спланировать ваш приезд. Позвоните нам или оставьте заявку — ответим на вопросы о размещении.</p><div class="address-line"><strong>Адрес</strong><br>Грозный, улица Вахи Алиева, 45<br><br><strong>Телефон</strong><br><a href="tel:+79280000000">+7 (928) 000-00-00</a><br><span style="color:#b4bfce;font-size:13px">Номер и адрес указаны для демонстрации</span></div><div style="margin-top:24px"><button class="btn" data-book>Связаться с отелем</button></div></div><div class="map-frame" aria-label="Схематичная карта расположения отеля"><div class="map-pin"><span>⌖</span></div><div class="map-label">Отель «Эталон» · Грозный</div></div></div></section>
+  </main>
+  <footer><div class="wrap footer-row"><a class="brand" href="#top"><div class="brand-mark"><span>Э</span></div><div><div class="brand-name">ЭТАЛОН</div><div class="brand-sub">ОТЕЛЬ · ГРОЗНЫЙ</div></div></a><div class="footer-note">© 2026 Отель «Эталон».<br>Демонстрационный сайт, цены и контакты примерные.</div><div class="footer-links"><a href="#rooms">Номера</a><a href="#availability">Бронирование</a><a href="#contacts">Контакты</a></div></div></footer>
+  <div class="modal" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><button class="modal-close" id="closeModal" aria-label="Закрыть">×</button><h2 id="modalTitle">Заявка на бронирование</h2><p>Оставьте контакты — администратор свяжется с вами и подтвердит наличие номера.</p><form id="bookingForm"><div class="modal-fields"><label>Ваше имя<input required name="name" placeholder="Как к вам обращаться?"></label><label>Телефон<input required name="phone" type="tel" placeholder="+7 ___ ___-__-__"></label><label>Заезд<input id="modalIn" name="checkin" type="date" required></label><label>Выезд<input id="modalOut" name="checkout" type="date" required></label><label class="wide">Категория номера<select name="room" id="modalRoom"><option>Стандарт</option><option>Комфорт</option><option>Делюкс</option><option>Люкс</option></select></label></div><button class="btn" type="submit">Отправить заявку</button><div class="fineprint">Демонстрационная форма: отправка заявки и подтверждение брони пока не подключены.</div></form></div></div><div class="toast" id="toast"></div>
+  <script>
+    const rooms=[
+      {name:'Стандарт',type:'Уютный номер',price:4500,capacity:'до 2 гостей',size:'20 м²',beds:'1 двуспальная кровать',count:4,img:'../../photo-3.jpg',thumbs:['../../photo-3.jpg','../../photo-1.jpg','../../photo-4.jpg','../../photo-8.jpg'],desc:'Уютный номер для комфортного отдыха.'},
+      {name:'Комфорт',type:'Больше пространства',price:6500,capacity:'до 3 гостей',size:'26 м²',beds:'1 двуспальная кровать + диван',count:3,img:'../../photo-1.jpg',thumbs:['../../photo-1.jpg','../../photo-10.jpg','../../photo-4.jpg','../../photo-8.jpg'],desc:'Больше пространства и удобства для пары или семьи.'},
+      {name:'Делюкс',type:'Особенный отдых',price:8500,capacity:'до 4 гостей',size:'34 м²',beds:'1 двуспальная кровать + диван',count:2,img:'../../photo-10.jpg',thumbs:['../../photo-10.jpg','../../photo-3.jpg','../../photo-1.jpg','../../photo-4.jpg'],desc:'Просторный номер с отдельной зоной отдыха.'},
+      {name:'Люкс',type:'Максимум комфорта',price:12500,capacity:'до 4 гостей',size:'48 м²',beds:'Спальня и гостиная',count:1,img:'../../photo-4.jpg',thumbs:['../../photo-4.jpg','../../photo-8.jpg','../../photo-10.jpg','../../photo-1.jpg'],desc:'Просторный люкс для длительного и особенного отдыха.'}
+    ];
+    const fmt=n=>new Intl.NumberFormat('ru-RU').format(n);
+    document.getElementById('roomCards').innerHTML='';
+    const today=new Date();today.setHours(0,0,0,0);let view=new Date(today.getFullYear(),today.getMonth(),1),checkin=null,checkout=null;
+    const pad=n=>String(n).padStart(2,'0'), dateKey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    const monthName=d=>new Intl.DateTimeFormat('ru-RU',{month:'long',year:'numeric'}).format(d);
+    function statusFor(d){let x=(d.getDate()*13+d.getMonth()*7+d.getFullYear())%17;if(x===0||x===7)return 'full';if(x===3||x===11||x===15)return 'few';return 'free'}
+    function drawMonth(box,month,showNav){box.innerHTML='';const first=new Date(month.getFullYear(),month.getMonth(),1),offset=(first.getDay()+6)%7,days=new Date(month.getFullYear(),month.getMonth()+1,0).getDate();for(let i=0;i<offset;i++)box.append(document.createElement('span'));for(let n=1;n<=days;n++){const d=new Date(month.getFullYear(),month.getMonth(),n),b=document.createElement('button'),status=statusFor(d),isPast=d<today;b.type='button';b.className='day '+(status==='full'?'full':status==='few'?'few':'available')+(isPast?' past':'');b.setAttribute('aria-label',`${n} ${monthName(month)}, ${status==='full'?'занято':status==='few'?'осталось мало мест':'свободно'}`);b.setAttribute('aria-pressed',String(Boolean((checkin&&dateKey(d)===dateKey(checkin))||(checkout&&dateKey(d)===dateKey(checkout)))));b.textContent=n;b.disabled=isPast||status==='full';if((checkin&&dateKey(d)===dateKey(checkin))||(checkout&&dateKey(d)===dateKey(checkout)))b.classList.add('selected');if(checkin&&checkout&&d>checkin&&d<checkout)b.classList.add('inrange');if(checkin&&!checkout&&d>checkin)b.classList.add('range-candidate');if(checkin&&d.getTime()===d0(checkin))b.classList.add('range-start');if(checkout&&d.getTime()===d0(checkout))b.classList.add('range-end');if(checkin&&checkout&&d>checkin&&d<checkout&&status==='full')b.classList.add('range-conflict');b.addEventListener('click',()=>selectDate(d));box.append(b)}}
+    const d0=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime();
+    function renderCalendar(){const box=document.getElementById('calDays');if(!box)return;const monthLabel=document.getElementById('calMonth');if(monthLabel)monthLabel.textContent=monthName(view).replace(/^./,s=>s.toUpperCase());drawMonth(box,view);const second=document.getElementById('calDaysNext');if(second){const next=new Date(view.getFullYear(),view.getMonth()+1,1);document.getElementById('calMonthNext').textContent=monthName(next).replace(/^./,s=>s.toUpperCase());drawMonth(second,next)}const a=document.getElementById('calendarCheckin'),b=document.getElementById('calendarCheckout');if(a)a.value=checkin?dateKey(checkin):'';if(b)b.value=checkout?dateKey(checkout):''}
+    function selectDate(d){if(statusFor(d)==='full'||d<today)return;if(!checkin||checkout||d<=checkin){checkin=d;checkout=null}else{let blocked=false;for(let day=new Date(checkin);day<d;day.setDate(day.getDate()+1))if(statusFor(day)==='full'){blocked=true;break}if(blocked){checkin=d;checkout=null}else checkout=d}renderCalendar();updateResults();syncSelectionStatus()}
+    function syncSelectionStatus(){let el=document.getElementById('selectionStatus');if(el){el.classList.toggle('step-two',Boolean(checkin&&!checkout));el.classList.toggle('done',Boolean(checkin&&checkout));el.textContent=!checkin?'Сначала выберите дату заезда':!checkout?'Теперь выберите дату выезда':`${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'long'}).format(checkin)} — ${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'long'}).format(checkout)} · период выбран`}const box=document.getElementById('rangeSummary');if(!box)return;box.classList.toggle('visible',Boolean(checkin));if(!checkin){box.innerHTML='';return}if(!checkout){box.innerHTML=`Заезд: <strong>${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'long'}).format(checkin)}</strong> · выберите дату выезда`;return}const n=Math.max(1,Math.round((checkout-checkin)/86400000)),blocked=[];for(let d=new Date(checkin);d<checkout;d.setDate(d.getDate()+1))if(statusFor(d)==='full')blocked.push(new Date(d));box.innerHTML=`<strong>${n} ${n===1?'ночь':n<5?'ночи':'ночей'}</strong> · ${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short'}).format(checkin)} — ${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short'}).format(checkout)}${blocked.length?`<br><span style="color:#a64343">В выбранном периоде ${blocked.length} занятых ${blocked.length===1?'день':'дня'}; проверьте доступность номеров справа.</span>`:'<br>Даты выбраны. Доступность номера уточняется по выбранному периоду.'}`;const fmtDate=d=>new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short',year:'numeric'}).format(d);document.getElementById('summaryCheckin').textContent=checkin?fmtDate(checkin):'Выберите дату';document.getElementById('summaryCheckout').textContent=checkout?fmtDate(checkout):'Выберите дату';document.getElementById('summaryNights').textContent=checkout?`${n} ${n===1?'ночь':n<5?'ночи':'ночей'}`:'—';document.getElementById('periodLegend').textContent=checkout?`${fmtDate(checkin)} — ${fmtDate(checkout)}`:checkin?'Выберите выезд':'Выберите даты';document.getElementById('summaryGuests').textContent=document.getElementById('calendarGuests')?.value||'2 взрослых';document.getElementById('resultsTitle').textContent=checkout?'Варианты проживания':checkin?'Выберите дату выезда':'Ваше проживание';document.getElementById('resultsText').textContent=checkout?'Подходящие номера на выбранные даты.':checkin?'Заезд выбран — теперь отметьте дату выезда.':'Выберите даты, чтобы увидеть подходящие номера.'}
+    function updateResults(){syncSelectionStatus();const txt=document.getElementById('resultsText'),list=document.getElementById('availabilityList');updateRoomCards();if(!checkin||!checkout||checkout<=checkin){list.innerHTML='';txt.textContent=checkin?'Заезд выбран — отметьте дату выезда.':'Выберите даты, чтобы увидеть подходящие номера.';return}const nights=Math.round((checkout-checkin)/86400000);txt.textContent='Демонстрационная доступность. Точное наличие подтвердит администратор.';const chosen=document.getElementById('quickRoom')?.value||'';const available=rooms.filter((r,i)=>roomStatus(r,i)!=='full'&&(!chosen||r.name===chosen));list.innerHTML=available.map(r=>`<div class="avail-row" data-available-room="${r.name}" role="button" tabindex="0" aria-label="Выбрать номер ${r.name}"><img src="${r.img}" alt=""><div><strong>${r.name}</strong><small>${roomStatus(r,rooms.indexOf(r))==='few'?'Осталось мало':`Свободен · ${r.capacity} · ${r.size}`}</small></div><div class="avail-price">${fmt(r.price*nights)} ₽<small>за ${nights} ноч.</small></div></div>`).join('')||'<div class="avail-empty">На эти даты свободных номеров не осталось. Попробуйте соседние даты или позвоните администратору.</div>';document.getElementById('modalIn').value=dateKey(checkin);document.getElementById('modalOut').value=dateKey(checkout)}
+    document.getElementById('prevMonth').onclick=()=>{const candidate=new Date(view.getFullYear(),view.getMonth()-1,1);if(candidate<new Date(today.getFullYear(),today.getMonth(),1))return;view=candidate;renderCalendar()};document.getElementById('nextMonth').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCalendar()};renderCalendar();
+    const minDate=dateKey(today);for(const id of ['quickIn','quickOut','modalIn','modalOut'])document.getElementById(id).min=minDate;
+    for(const id of ['calendarCheckin','calendarCheckout'])document.getElementById(id).min=minDate;
+    document.getElementById('calendarCheckin').addEventListener('change',e=>{const d=new Date(e.target.value+'T00:00:00');if(!e.target.value||d<today||statusFor(d)==='full'){e.target.value='';return}checkin=d;checkout=null;view=new Date(d.getFullYear(),d.getMonth(),1);renderCalendar();updateResults()});
+    document.getElementById('calendarCheckout').addEventListener('change',e=>{const d=new Date(e.target.value+'T00:00:00');if(!e.target.value||!checkin||d<=checkin||statusFor(d)==='full'){e.target.value='';return}for(let day=new Date(checkin);day<d;day.setDate(day.getDate()+1))if(statusFor(day)==='full'){e.target.value='';return}checkout=d;view=new Date(checkin.getFullYear(),checkin.getMonth(),1);renderCalendar();updateResults()});
+    document.getElementById('calendarGuests').addEventListener('change',()=>{document.getElementById('summaryGuests').textContent=document.getElementById('calendarGuests').value;document.getElementById('guests').value=document.getElementById('calendarGuests').value.replace(' взрослых',' гостей').replace(' взрослый',' гость')});
+    document.getElementById('showAvailableRooms').addEventListener('click',()=>{if(!checkin||!checkout){document.getElementById('calendarCheckin').focus();document.getElementById('resultsText').textContent='Сначала выберите доступные даты заезда и выезда.';return}document.getElementById('rooms').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('roomCards').scrollIntoView({behavior:'smooth',block:'center'}),250)});
+    document.getElementById('editTripDates').addEventListener('click',()=>document.getElementById('availability').scrollIntoView({behavior:'smooth'}));
+    document.getElementById('prevMonth').onclick=()=>{const candidate=new Date(view.getFullYear(),view.getMonth()-1,1);if(candidate<new Date(today.getFullYear(),today.getMonth(),1))return;view=candidate;renderCalendar()};document.getElementById('nextMonth').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCalendar()};
+    renderCalendar();syncSelectionStatus();
+    function setDates(){let a=document.getElementById('quickIn').value,b=document.getElementById('quickOut').value;if(a){checkin=new Date(a+'T00:00:00');view=new Date(checkin.getFullYear(),checkin.getMonth(),1)}if(b)checkout=new Date(b+'T00:00:00');renderCalendar();updateResults()}
+    document.getElementById('quickSearch').addEventListener('submit',e=>{e.preventDefault();setDates();document.getElementById('availability').scrollIntoView({behavior:'smooth'})});
+    const modal=document.getElementById('bookingModal');function openModal(){if(checkin)document.getElementById('modalIn').value=dateKey(checkin);if(checkout)document.getElementById('modalOut').value=dateKey(checkout);modal.classList.add('open')}document.querySelectorAll('[data-book]').forEach(b=>b.addEventListener('click',openModal));document.getElementById('closeModal').onclick=()=>modal.classList.remove('open');modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('open')});
+    document.getElementById('bookingForm').addEventListener('submit',e=>{e.preventDefault();modal.classList.remove('open');let t=document.getElementById('toast');t.textContent='Демо-форма заполнена. Подключите номер отеля для приёма заявок.';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4500)});
+
+    // Связанный и понятный путь бронирования: поиск, выбор номера, итог заявки.
+    const guestSelect=document.getElementById('guests');
+    const roomSelect=document.getElementById('modalRoom');
+    let selectedRoom='';
+    const quickRoom=document.createElement('div');
+    quickRoom.className='field';
+    quickRoom.innerHTML='<label for="quickRoom">Категория</label><select id="quickRoom"><option value="">Любая категория</option>'+rooms.map(r=>`<option value="${r.name}">${r.name} · ${fmt(r.price)} ₽/ночь</option>`).join('')+'</select>';
+    document.getElementById('quickSearch').insertBefore(quickRoom,document.querySelector('#quickSearch button'));
+    const summary=document.createElement('div');
+    summary.className='booking-summary';
+    summary.id='bookingSummary';
+    document.querySelector('.modal-fields').after(summary);
+    const nightsText=n=>`${n} ${n===1?'ночь':n<5?'ночи':'ночей'}`;
+    function setSelection(name){selectedRoom=name||'';if(selectedRoom)roomSelect.value=selectedRoom;renderSummary()}
+    function renderSummary(){
+      const a=document.getElementById('modalIn').value,b=document.getElementById('modalOut').value;
+      const room=rooms.find(r=>r.name===(selectedRoom||roomSelect.value));
+      if(!room||!a||!b){summary.innerHTML='<span>Итог поездки появится после выбора дат и категории номера.</span>';return}
+      const n=Math.max(1,Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/86400000));
+      summary.innerHTML=`<div><span>${room.name} · ${nightsText(n)}</span><strong>${fmt(room.price*n)} ₽</strong></div><small>${fmt(room.price)} ₽ за ночь · ${guestSelect.value}</small>`;
+    }
+    function chooseRoom(name){setSelection(name);document.getElementById('modalRoom').value=name;openModal()}
+    function roomStatus(room,index){if(!checkin||!checkout)return index===2?'few':'free';for(let day=new Date(checkin);day<checkout;day.setDate(day.getDate()+1)){const code=(day.getDate()*13+day.getMonth()*7+day.getFullYear()+index*3)%17;if(code===0||code===7)return 'full'}const code=(checkin.getDate()+index+checkin.getMonth())%5;return code===0||code===3?'few':'free'}
+    function updateRoomCards(){const grid=document.getElementById('roomCards');if(!grid)return;grid.innerHTML=rooms.map((r,i)=>{const status=roomStatus(r,i),label=status==='full'?'Нет мест':status==='few'?'Осталось мало мест':'Свободен';return `<article class="room-card${status==='full'?' is-unavailable':''}"><div class="room-image"><img src="${r.img}" alt="Интерьер номера ${r.name} отеля Эталон"><span class="room-availability ${status}">${label}</span><span class="room-count-badge">${i+1} / ${rooms.length}</span></div><div class="room-info"><div class="room-name-row"><div class="room-title">${r.name}</div><span class="room-order">${r.type}</span></div><p class="room-desc">${r.desc}</p><div class="room-facts"><span>♙ ${r.capacity}</span><span>▱ ${r.size}</span><span>▤ ${r.beds}</span></div><div class="room-thumbs">${r.thumbs.map(src=>`<img src="${src}" alt="Фото ${r.name}" loading="lazy">`).join('')}</div><div class="room-bottom"><div class="room-price">${fmt(r.price)} ₽<small>за ночь</small></div><button class="room-choose" type="button" data-room="${r.name}" ${status==='full'?'disabled':''}>${status==='full'?'Недоступен':'Выбрать'} <span>→</span></button></div></div></article>`}).join('');const tripDates=document.getElementById('roomsTripDates');if(tripDates)tripDates.textContent=checkin&&checkout?`${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short'}).format(checkin)} – ${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short'}).format(checkout)} · ${Math.max(1,Math.round((checkout-checkin)/86400000))} ноч.`:'Сначала выберите даты';const tripGuests=document.getElementById('roomsTripGuests');if(tripGuests)tripGuests.textContent=document.getElementById('calendarGuests')?.value||'2 взрослых'}
+    const renderRoomCards=()=>{updateRoomCards();document.getElementById('roomCards').addEventListener('click',e=>{const button=e.target.closest('[data-room]');if(button&&!button.disabled)chooseRoom(button.dataset.room)})};
+    renderRoomCards();
+    const originalUpdateResults=updateResults;
+    updateResults=function(){originalUpdateResults();if(checkin&&checkout){document.getElementById('quickIn').value=dateKey(checkin);document.getElementById('quickOut').value=dateKey(checkout);document.getElementById('modalIn').value=dateKey(checkin);document.getElementById('modalOut').value=dateKey(checkout)}};
+    const originalSelectDate=selectDate;
+    selectDate=function(d){originalSelectDate(d);document.getElementById('quickIn').value=checkin?dateKey(checkin):'';document.getElementById('quickOut').value=checkout?dateKey(checkout):'';renderSummary()};
+    const originalSetDates=setDates;
+    setDates=function(){originalSetDates();const wanted=document.getElementById('quickRoom').value;if(wanted)setSelection(wanted);renderSummary()};
+    document.getElementById('quickSearch').addEventListener('change',e=>{if(e.target.id==='quickRoom')setSelection(e.target.value)});
+    document.getElementById('modalRoom').addEventListener('change',e=>{selectedRoom=e.target.value;renderSummary()});
+    document.getElementById('modalIn').addEventListener('change',renderSummary);document.getElementById('modalOut').addEventListener('change',renderSummary);
+    document.getElementById('quickIn').addEventListener('change',e=>{if(!e.target.value)return;document.getElementById('calendarCheckin').value=e.target.value;document.getElementById('calendarCheckin').dispatchEvent(new Event('change'))});
+    document.getElementById('quickOut').addEventListener('change',e=>{if(!e.target.value)return;document.getElementById('calendarCheckout').value=e.target.value;document.getElementById('calendarCheckout').dispatchEvent(new Event('change'))});
+    const originalOpenModal=openModal;
+    openModal=function(){originalOpenModal();if(checkin&&!document.getElementById('modalIn').value)document.getElementById('modalIn').value=dateKey(checkin);if(checkout&&!document.getElementById('modalOut').value)document.getElementById('modalOut').value=dateKey(checkout);renderSummary()};
+    document.getElementById('availabilityList').addEventListener('click',e=>{const row=e.target.closest('[data-available-room]');if(row)chooseRoom(row.dataset.availableRoom)});
+    document.getElementById('bookingForm').addEventListener('submit',e=>{e.preventDefault();const form=e.currentTarget;if(!form.reportValidity())return;const data=new FormData(form),a=new Date(data.get('checkin')+'T00:00:00'),b=new Date(data.get('checkout')+'T00:00:00');if(b<=a){document.getElementById('modalOut').setCustomValidity('Дата выезда должна быть позже даты заезда.');document.getElementById('modalOut').reportValidity();return}document.getElementById('modalOut').setCustomValidity('');const n=Math.max(1,Math.round((b-a)/86400000)),r=rooms.find(x=>x.name===data.get('room'));modal.classList.remove('open');const t=document.getElementById('toast');t.textContent=`Демо-заявка: ${r?.name||'номер'}, ${nightsText(n)} · ${r?fmt(r.price*n)+' ₽':'стоимость уточняется'}. Для реального бронирования подключите контакты отеля.`;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),6000)});
+
+    // Мягкие появления и параллакс по мотивам портфолио; при reduced motion они отключаются.
+    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!reduceMotion){
+      document.body.classList.add('portfolio-motion');
+      const revealItems=[...document.querySelectorAll('.section-head,.intro-photo,.intro-copy,.room-card,.calendar-box,.calendar-results,.service,.location-card,.map-frame')];
+      revealItems.forEach((el,i)=>{el.classList.add('site-reveal');el.style.setProperty('--reveal-index',String(i%4))});
+      if('IntersectionObserver' in window){
+        const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-in');revealObserver.unobserve(entry.target)}}),{rootMargin:'0px 0px -7% 0px',threshold:.08});
+        revealItems.forEach(el=>revealObserver.observe(el));
+      }else revealItems.forEach(el=>el.classList.add('is-in'));
+      const hero=document.querySelector('.hero');let pointerFrame=0;
+      if(hero&&window.matchMedia('(pointer:fine)').matches){hero.addEventListener('pointermove',e=>{let r=hero.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;cancelAnimationFrame(pointerFrame);pointerFrame=requestAnimationFrame(()=>{hero.style.setProperty('--px',(x*24).toFixed(1)+'px');hero.style.setProperty('--py',(y*20).toFixed(1)+'px')})});hero.addEventListener('pointerleave',()=>{hero.style.setProperty('--px','0px');hero.style.setProperty('--py','0px')})}
+      let scrollFrame=0;window.addEventListener('scroll',()=>{if(scrollFrame)return;scrollFrame=requestAnimationFrame(()=>{scrollFrame=0;let max=document.documentElement.scrollHeight-window.innerHeight;document.body.style.setProperty('--read-progress',max>0?(window.scrollY/max).toFixed(4):0)})},{passive:true});
+    }
+  </script>
+  <script>
+    (function(){const h=document.querySelector('header');if(!h)return;const f=()=>h.classList.toggle('solid',window.scrollY>40);f();window.addEventListener('scroll',f,{passive:true})})();
+  </script>
+<script src="../../switcher.js" data-id="v4" defer></script>
+</body>
+</html>
+
+
+
+
+
+

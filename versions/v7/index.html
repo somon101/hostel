@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f3e4">
+  <meta name="description" content="Минутка, камерный отель в Грозном. Выберите номер и проверьте свободные даты онлайн.">
+  <title>Минутка, отель в Грозном</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav"><div class="container nav-in">
+    <a class="wordmark" href="#top" aria-label="Минутка, на главную">Минутка</a>
+    <div class="nav-end">
+      <nav class="nav-links" aria-label="Разделы"><a href="#rooms">Номера</a><a href="#services">Услуги</a><a href="#about">Об отеле</a><a href="#availability">Бронирование</a><a href="#faq">Вопросы</a><a href="#contacts">Контакты</a></nav>
+      <a class="nav-phone" href="tel:+79280000000">+7 (928) 000-00-00</a>
+      <button class="btn btn--primary btn--small" type="button" data-book>Забронировать</button>
+    </div>
+  </div></header>
+  <main id="top">
+    <section class="hero"><div class="container lead-grid">
+      <div class="lead-block">
+        <h1>Добро пожаловать в «Минутку»</h1>
+        <p class="lead">Тёплый свет, спокойная атмосфера и комфорт, который чувствуется в каждой детали.</p>
+        <div class="lead-actions"><a class="btn btn--primary" href="#quickSearch">Проверить наличие</a><a class="link" href="#rooms">Номера и сьюты</a></div>
+      </div>
+      <div class="lead-photo" data-slot="hero" data-alt="Фасад отеля Минутка в вечернем свете"><img src="../../photo-0.jpg" alt="Фасад отеля Минутка в вечернем свете" width="459" height="289" fetchpriority="high"></div>
+    </div></section>
+    <section class="band-pear" id="quickBooking" aria-labelledby="quickTitle"><div class="container band-in">
+      <h2 class="band-title" id="quickTitle">Быстрое бронирование</h2>
+      <form class="bookingbar" id="quickSearch">
+        <div class="field"><label for="quickIn">Заезд</label><input id="quickIn" type="date"></div>
+        <div class="field"><label for="quickOut">Выезд</label><input id="quickOut" type="date"></div>
+        <div class="field"><label for="guests">Гости</label><select id="guests"><option>1 гость</option><option selected>2 гостя</option><option>3 гостя</option><option>4 гостя</option></select></div>
+        <div class="field"><label for="roomsCount">Номеров</label><select id="roomsCount"><option selected>1 номер</option><option>2 номера</option><option>3 номера</option></select></div>
+        <button class="btn btn--ink" type="submit">Найти номер</button>
+      </form>
+    </div></section>
+    <section class="section" id="rooms" data-reveal><div class="container">
+      <div class="head"><h2>Выберите номер</h2><p class="lead">Найдите подходящий вариант для вашего отдыха.</p></div>
+      <div class="trip"><div><h3 id="roomsStepTitle">Доступные номера</h3><p>Сравните категории и выберите подходящий вариант.</p></div><div class="trip-facts"><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> <b id="roomsTripDates">Выберите даты</b></span><span><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> <b id="roomsTripGuests">2 взрослых</b></span><button class="link" type="button" id="editTripDates">Изменить</button></div></div>
+      <div class="rooms-grid" id="roomCards"></div>
+      <p class="room-note">Статусы и остатки показаны для демонстрации. Точную доступность на ваши даты подтвердит администратор.</p>
+      <ul class="benefits"><li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg> Комфортные номера</li><li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg> Безопасное бронирование</li><li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Поддержка 24/7</li></ul>
+    </div></section>
+    <section class="section" id="availability" data-reveal><div class="container">
+      <div class="head"><h2>Выберите даты проживания</h2><p class="lead">Проверьте доступность номеров на нужный период.</p></div>
+      <div class="cal-grid">
+        <div class="calendar-box">
+          <div class="step-line"><h3>Выберите заезд и выезд</h3><small>Шаг 1 из 3</small></div>
+          <div class="date-inputs"><label>Заезд<input id="calendarCheckin" type="date"></label><label>Выезд<input id="calendarCheckout" type="date"></label><label>Гости<select id="calendarGuests"><option>1 взрослый</option><option selected>2 взрослых</option><option>3 взрослых</option><option>4 взрослых</option></select></label></div>
+          <div class="month-pair">
+            <div class="month-panel"><div class="cal-top"><button id="prevMonth" class="month-arrow" type="button" aria-label="Предыдущий месяц"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><div class="cal-month" id="calMonth"></div><span class="month-spacer"></span></div><div class="cal-week"><span>пн</span><span>вт</span><span>ср</span><span>чт</span><span>пт</span><span>сб</span><span>вс</span></div><div class="cal-days" id="calDays"></div></div>
+            <div class="month-panel next-month-panel"><div class="cal-top"><span class="month-spacer"></span><div class="cal-month" id="calMonthNext"></div><button id="nextMonth" class="month-arrow" type="button" aria-label="Следующий месяц"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div><div class="cal-week"><span>пн</span><span>вт</span><span>ср</span><span>чт</span><span>пт</span><span>сб</span><span>вс</span></div><div class="cal-days" id="calDaysNext"></div></div>
+          </div>
+          <div class="cal-legend"><span><i class="legend-swatch"></i><span><strong>Свободно</strong><small>Есть номера</small></span></span><span><i class="legend-swatch few"></i><span><strong>Мало мест</strong><small>Осталось 1 или 2 номера</small></span></span><span><i class="legend-swatch full"></i><span><strong>Занято</strong><small>Нет свободных номеров</small></span></span><span class="period-legend"><i class="period-swatch"></i><span><strong>Ваш период</strong><small id="periodLegend">Выберите даты</small></span></span></div>
+          <div class="range-summary" id="rangeSummary" aria-live="polite"></div>
+          <p class="cal-hint">Сначала отметьте заезд, затем выезд. Занятые дни нельзя выбрать.</p>
+        </div>
+        <aside class="summary">
+          <div><h3 id="resultsTitle">Ваше проживание</h3><p id="resultsText">Выберите даты, чтобы увидеть подходящие номера.</p></div>
+          <div class="stay-summary"><div class="stay-line"><span>Заезд</span><strong id="summaryCheckin">Выберите дату</strong></div><div class="stay-line"><span>Выезд</span><strong id="summaryCheckout">Выберите дату</strong></div><div class="stay-line"><span>Количество ночей</span><strong id="summaryNights">Не выбрано</strong></div><div class="stay-line"><span>Гости</span><strong id="summaryGuests">2 взрослых</strong></div></div>
+          <div class="cancel-note"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg><span><strong>Гибкие условия</strong><small>Все детали подтвердит администратор</small></span></div>
+          <div id="availabilityList" class="stay-available-list"></div>
+          <button class="btn btn--primary" id="showAvailableRooms" type="button">Показать доступные номера</button>
+        </aside>
+      </div>
+    </div></section>
+    <section class="section" id="services" data-reveal><div class="container">
+      <div class="head"><h2>Приятные детали</h2><p class="lead">Забота о гостях, комфорт в номерах и внимание к мелочам, чтобы вы могли просто отдыхать.</p></div>
+      <ul class="rows">
+        <li class="row"><h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg> Стойка 24/7</h3><p>Поможем с заездом, такси и любыми вопросами в любое время.</p></li>
+        <li class="row"><h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/></svg> Быстрый Wi‑Fi</h3><p>Оставайтесь на связи и работайте с комфортом.</p></li>
+        <li class="row"><h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Удобное расположение</h3><p>Отель находится в городе, рядом с городской инфраструктурой.</p></li>
+        <li class="row"><h3><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v3M10 2v3M14 2v3"/></svg> Завтрак</h3><p>Неспешное утро и вкусный завтрак по предварительному запросу.</p></li>
+      </ul>
+    </div></section>
+    <section class="section" id="about" data-reveal><div class="container split">
+      <figure class="about-fig" style="margin:0"><div class="about-photo" data-slot="about" data-alt="Светлый номер отеля Минутка"><img src="../../photo-5.jpg" alt="Светлый номер отеля Минутка" width="678" height="452" loading="lazy"></div><figcaption class="muted" style="margin-top:var(--space-sm)">Место, куда хочется вернуться</figcaption></figure>
+      <div class="about-text">
+        <h2>Гостеприимство в деталях</h2>
+        <p>«Минутка», небольшой городской отель для тех, кто ценит спокойствие, личное пространство и тёплый приём. Здесь легко восстановить силы после насыщенного дня и почувствовать ритм Грозного.</p>
+        <p>Всего <mark>десять номеров</mark>, чтобы сохранить камерную атмосферу и уделить внимание каждому гостю.</p>
+        <ul class="checks"><li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Уютные номера</li><li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Забота 24/7</li><li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Wi‑Fi на всей территории</li><li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Удобное расположение</li></ul>
+        <a class="link" href="#services">Об услугах</a>
+      </div>
+    </div></section>
+    <section class="section" id="faq" data-reveal><div class="container faq-grid">
+      <div class="faq-head"><h2>Коротко о главном</h2><p class="lead">Не нашли ответ? Позвоните нам или оставьте заявку, администратор поможет.</p></div>
+      <div class="faq-list">
+        <details open><summary>Как забронировать номер?</summary><p>Выберите даты в календаре и подходящую категорию, затем нажмите «Выбрать» и оставьте имя и телефон. Администратор свяжется с вами и подтвердит наличие номера.</p></details>
+        <details><summary>Сколько номеров в отеле?</summary><p>Всего десять номеров в четырёх категориях: Стандарт, Комфорт, Делюкс и Люкс. Камерный формат позволяет уделить внимание каждому гостю.</p></details>
+        <details><summary>Работает ли стойка круглосуточно?</summary><p>Да, стойка гостя работает 24/7: поможем с заездом, такси и любыми вопросами в любое время.</p></details>
+        <details><summary>Есть ли завтрак и Wi‑Fi?</summary><p>Wi‑Fi доступен на всей территории отеля. Завтрак организуем по предварительному запросу.</p></details>
+        <details><summary>Цены и наличие на сайте окончательные?</summary><p>Сейчас сайт демонстрационный: цены и статусы наличия примерные. Точную стоимость и доступность на ваши даты подтверждает администратор.</p></details>
+      </div>
+    </div></section>
+    <section class="band-ink" id="contacts" data-reveal><div class="container ink-grid">
+      <div class="ink-text">
+        <h2>Удобно добраться, легко остаться</h2>
+        <p>Будем рады помочь спланировать ваш приезд. Позвоните нам или оставьте заявку, ответим на вопросы о размещении.</p>
+        <button class="btn btn--primary" type="button" data-book>Связаться с отелем</button>
+      </div>
+      <dl class="contact-list">
+        <div><dt>Адрес</dt><dd>Грозный, улица Вахи Алиева, 45</dd></div>
+        <div><dt>Телефон</dt><dd><a href="tel:+79280000000">+7 (928) 000-00-00</a><small>Номер и адрес указаны для демонстрации</small></dd></div>
+      </dl>
+    </div></section>
+  </main>
+  <footer class="foot"><div class="container">
+    <a class="foot-mast" href="#top" aria-label="Минутка, на главную">Минутка</a>
+    <div class="foot-row"><p class="foot-note">© 2026 Отель «Минутка». Демонстрационный сайт, цены и контакты примерные.</p><nav class="foot-links" aria-label="Разделы"><a href="#rooms">Номера</a><a href="#availability">Бронирование</a><a href="#contacts">Контакты</a></nav></div>
+  </div></footer>
+  <div class="modal" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-card"><button class="modal-close" id="closeModal" type="button" aria-label="Закрыть">×</button><h2 id="modalTitle">Заявка на бронирование</h2><p>Оставьте контакты, администратор свяжется с вами и подтвердит наличие номера.</p><form id="bookingForm"><div class="modal-fields"><label>Ваше имя<input required name="name" placeholder="Как к вам обращаться?"></label><label>Телефон<input required name="phone" type="tel" placeholder="+7 ___ ___-__-__"></label><label>Заезд<input id="modalIn" name="checkin" type="date" required></label><label>Выезд<input id="modalOut" name="checkout" type="date" required></label><label class="wide">Категория номера<select name="room" id="modalRoom"><option>Стандарт</option><option>Комфорт</option><option>Делюкс</option><option>Люкс</option></select></label></div><button class="btn btn--primary" type="submit">Отправить заявку</button><div class="fineprint">Демонстрационная форма: отправка заявки и подтверждение брони пока не подключены.</div></form></div></div><div class="toast" id="toast" role="status"></div>
+    <script>
+    const I={user:'<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',size:'<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>',bed:'<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>'};
+    const rooms=[
+      {name:'Стандарт',type:'Уютный номер',price:4500,capacity:'до 2 гостей',size:'20 м²',beds:'1 двуспальная кровать',count:4,img:'../../photo-3.jpg',thumbs:['../../photo-3.jpg','../../photo-1.jpg','../../photo-4.jpg','../../photo-8.jpg'],desc:'Уютный номер для комфортного отдыха.'},
+      {name:'Комфорт',type:'Больше пространства',price:6500,capacity:'до 3 гостей',size:'26 м²',beds:'1 двуспальная кровать + диван',count:3,img:'../../photo-1.jpg',thumbs:['../../photo-1.jpg','../../photo-10.jpg','../../photo-4.jpg','../../photo-8.jpg'],desc:'Больше пространства и удобства для пары или семьи.'},
+      {name:'Делюкс',type:'Особенный отдых',price:8500,capacity:'до 4 гостей',size:'34 м²',beds:'1 двуспальная кровать + диван',count:2,img:'../../photo-10.jpg',thumbs:['../../photo-10.jpg','../../photo-3.jpg','../../photo-1.jpg','../../photo-4.jpg'],desc:'Просторный номер с отдельной зоной отдыха.'},
+      {name:'Люкс',type:'Максимум комфорта',price:12500,capacity:'до 4 гостей',size:'48 м²',beds:'Спальня и гостиная',count:1,img:'../../photo-4.jpg',thumbs:['../../photo-4.jpg','../../photo-8.jpg','../../photo-10.jpg','../../photo-1.jpg'],desc:'Просторный люкс для длительного и особенного отдыха.'}
+    ];
+    const fmt=n=>new Intl.NumberFormat('ru-RU').format(n);
+    document.getElementById('roomCards').innerHTML='';
+    const today=new Date();today.setHours(0,0,0,0);let view=new Date(today.getFullYear(),today.getMonth(),1),checkin=null,checkout=null;
+    const pad=n=>String(n).padStart(2,'0'), dateKey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    const monthName=d=>new Intl.DateTimeFormat('ru-RU',{month:'long',year:'numeric'}).format(d);
+    function statusFor(d){let x=(d.getDate()*13+d.getMonth()*7+d.getFullYear())%17;if(x===0||x===7)return 'full';if(x===3||x===11||x===15)return 'few';return 'free'}
+    function drawMonth(box,month,showNav){box.innerHTML='';const first=new Date(month.getFullYear(),month.getMonth(),1),offset=(first.getDay()+6)%7,days=new Date(month.getFullYear(),month.getMonth()+1,0).getDate();for(let i=0;i<offset;i++)box.append(document.createElement('span'));for(let n=1;n<=days;n++){const d=new Date(month.getFullYear(),month.getMonth(),n),b=document.createElement('button'),status=statusFor(d),isPast=d<today;b.type='button';b.className='day '+(status==='full'?'full':status==='few'?'few':'available')+(isPast?' past':'');b.setAttribute('aria-label',`${n} ${monthName(month)}, ${status==='full'?'занято':status==='few'?'осталось мало мест':'свободно'}`);b.setAttribute('aria-pressed',String(Boolean((checkin&&dateKey(d)===dateKey(checkin))||(checkout&&dateKey(d)===dateKey(checkout)))));b.textContent=n;b.disabled=isPast||status==='full';if((checkin&&dateKey(d)===dateKey(checkin))||(checkout&&dateKey(d)===dateKey(checkout)))b.classList.add('selected');if(checkin&&checkout&&d>checkin&&d<checkout)b.classList.add('inrange');if(checkin&&!checkout&&d>checkin)b.classList.add('range-candidate');if(checkin&&d.getTime()===d0(checkin))b.classList.add('range-start');if(checkout&&d.getTime()===d0(checkout))b.classList.add('range-end');if(checkin&&checkout&&d>checkin&&d<checkout&&status==='full')b.classList.add('range-conflict');b.addEventListener('click',()=>selectDate(d));box.append(b)}}
+    const d0=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime();
+    function renderCalendar(){const box=document.getElementById('calDays');if(!box)return;const monthLabel=document.getElementById('calMonth');if(monthLabel)monthLabel.textContent=monthName(view).replace(/^./,s=>s.toUpperCase());drawMonth(box,view);const second=document.getElementById('calDaysNext');if(second){const next=new Date(view.getFullYear(),view.getMonth()+1,1);document.getElementById('calMonthNext').textContent=monthName(next).replace(/^./,s=>s.toUpperCase());drawMonth(second,next)}const a=document.getElementById('calendarCheckin'),b=document.getElementById('calendarCheckout');if(a)a.value=checkin?dateKey(checkin):'';if(b)b.value=checkout?dateKey(checkout):''}
+    function selectDate(d){if(statusFor(d)==='full'||d<today)return;if(!checkin||checkout||d<=checkin){checkin=d;checkout=null}else{let blocked=false;for(let day=new Date(checkin);day<d;day.setDate(day.getDate()+1))if(statusFor(day)==='full'){blocked=true;break}if(blocked){checkin=d;checkout=null}else checkout=d}renderCalendar();updateResults();syncSelectionStatus()}
+    function syncSelectionStatus(){let el=document.getElementById('selectionStatus');if(el){el.classList.toggle('step-two',Boolean(checkin&&!checkout));el.classList.toggle('done',Boolean(checkin&&checkout));el.textContent=!checkin?'Сначала выберите дату заезда':!checkout?'Теперь выберите дату выезда':`${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'long'}).format(checkin)} по ${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'long'}).format(checkout)}, период выбран`}const box=document.getElementById('rangeSummary');if(!box)return;box.classList.toggle('visible',Boolean(checkin));if(!checkin){box.innerHTML='';return}if(!checkout){box.innerHTML=`Заезд: <strong>${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'long'}).format(checkin)}</strong>, выберите дату выезда`;return}const n=Math.max(1,Math.round((checkout-checkin)/86400000)),blocked=[];for(let d=new Date(checkin);d<checkout;d.setDate(d.getDate()+1))if(statusFor(d)==='full')blocked.push(new Date(d));box.innerHTML=`<strong>${n} ${n===1?'ночь':n<5?'ночи':'ночей'}</strong>, ${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short'}).format(checkin)} по ${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short'}).format(checkout)}${blocked.length?`<br><span class="conflict-note">В выбранном периоде ${blocked.length} занятых ${blocked.length===1?'день':'дня'}; проверьте доступность номеров справа.</span>`:'<br>Даты выбраны. Доступность номера уточняется по выбранному периоду.'}`;const fmtDate=d=>new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short',year:'numeric'}).format(d);document.getElementById('summaryCheckin').textContent=checkin?fmtDate(checkin):'Выберите дату';document.getElementById('summaryCheckout').textContent=checkout?fmtDate(checkout):'Выберите дату';document.getElementById('summaryNights').textContent=checkout?`${n} ${n===1?'ночь':n<5?'ночи':'ночей'}`:'Не выбрано';document.getElementById('periodLegend').textContent=checkout?`${fmtDate(checkin)} по ${fmtDate(checkout)}`:checkin?'Выберите выезд':'Выберите даты';document.getElementById('summaryGuests').textContent=document.getElementById('calendarGuests')?.value||'2 взрослых';document.getElementById('resultsTitle').textContent=checkout?'Варианты проживания':checkin?'Выберите дату выезда':'Ваше проживание';document.getElementById('resultsText').textContent=checkout?'Подходящие номера на выбранные даты.':checkin?'Заезд выбран, теперь отметьте дату выезда.':'Выберите даты, чтобы увидеть подходящие номера.'}
+    function updateResults(){syncSelectionStatus();const txt=document.getElementById('resultsText'),list=document.getElementById('availabilityList');updateRoomCards();if(!checkin||!checkout||checkout<=checkin){list.innerHTML='';txt.textContent=checkin?'Заезд выбран, отметьте дату выезда.':'Выберите даты, чтобы увидеть подходящие номера.';return}const nights=Math.round((checkout-checkin)/86400000);txt.textContent='Демонстрационная доступность. Точное наличие подтвердит администратор.';const chosen=document.getElementById('quickRoom')?.value||'';const available=rooms.filter((r,i)=>roomStatus(r,i)!=='full'&&(!chosen||r.name===chosen));list.innerHTML=available.map(r=>`<div class="avail-row" data-available-room="${r.name}" role="button" tabindex="0" aria-label="Выбрать номер ${r.name}"><img src="${r.img}" alt=""><div><strong>${r.name}</strong><small>${roomStatus(r,rooms.indexOf(r))==='few'?'Осталось мало':`Свободен, ${r.capacity}, ${r.size}`}</small></div><div class="avail-price">${fmt(r.price*nights)} ₽<small>за ${nights} ноч.</small></div></div>`).join('')||'<div class="avail-empty">На эти даты свободных номеров не осталось. Попробуйте соседние даты или позвоните администратору.</div>';document.getElementById('modalIn').value=dateKey(checkin);document.getElementById('modalOut').value=dateKey(checkout)}
+    document.getElementById('prevMonth').onclick=()=>{const candidate=new Date(view.getFullYear(),view.getMonth()-1,1);if(candidate<new Date(today.getFullYear(),today.getMonth(),1))return;view=candidate;renderCalendar()};document.getElementById('nextMonth').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCalendar()};renderCalendar();
+    const minDate=dateKey(today);for(const id of ['quickIn','quickOut','modalIn','modalOut'])document.getElementById(id).min=minDate;
+    for(const id of ['calendarCheckin','calendarCheckout'])document.getElementById(id).min=minDate;
+    document.getElementById('calendarCheckin').addEventListener('change',e=>{const d=new Date(e.target.value+'T00:00:00');if(!e.target.value||d<today||statusFor(d)==='full'){e.target.value='';return}checkin=d;checkout=null;view=new Date(d.getFullYear(),d.getMonth(),1);renderCalendar();updateResults()});
+    document.getElementById('calendarCheckout').addEventListener('change',e=>{const d=new Date(e.target.value+'T00:00:00');if(!e.target.value||!checkin||d<=checkin||statusFor(d)==='full'){e.target.value='';return}for(let day=new Date(checkin);day<d;day.setDate(day.getDate()+1))if(statusFor(day)==='full'){e.target.value='';return}checkout=d;view=new Date(checkin.getFullYear(),checkin.getMonth(),1);renderCalendar();updateResults()});
+    document.getElementById('calendarGuests').addEventListener('change',()=>{document.getElementById('summaryGuests').textContent=document.getElementById('calendarGuests').value;document.getElementById('guests').value=document.getElementById('calendarGuests').value.replace(' взрослых',' гостей').replace(' взрослый',' гость')});
+    document.getElementById('showAvailableRooms').addEventListener('click',()=>{if(!checkin||!checkout){document.getElementById('calendarCheckin').focus();document.getElementById('resultsText').textContent='Сначала выберите доступные даты заезда и выезда.';return}document.getElementById('rooms').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('roomCards').scrollIntoView({behavior:'smooth',block:'center'}),250)});
+    document.getElementById('editTripDates').addEventListener('click',()=>document.getElementById('availability').scrollIntoView({behavior:'smooth'}));
+    document.getElementById('prevMonth').onclick=()=>{const candidate=new Date(view.getFullYear(),view.getMonth()-1,1);if(candidate<new Date(today.getFullYear(),today.getMonth(),1))return;view=candidate;renderCalendar()};document.getElementById('nextMonth').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCalendar()};
+    renderCalendar();syncSelectionStatus();
+    function setDates(){let a=document.getElementById('quickIn').value,b=document.getElementById('quickOut').value;if(a){checkin=new Date(a+'T00:00:00');view=new Date(checkin.getFullYear(),checkin.getMonth(),1)}if(b)checkout=new Date(b+'T00:00:00');renderCalendar();updateResults()}
+    document.getElementById('quickSearch').addEventListener('submit',e=>{e.preventDefault();setDates();document.getElementById('availability').scrollIntoView({behavior:'smooth'})});
+    const modal=document.getElementById('bookingModal');function openModal(){if(checkin)document.getElementById('modalIn').value=dateKey(checkin);if(checkout)document.getElementById('modalOut').value=dateKey(checkout);modal.classList.add('open')}document.querySelectorAll('[data-book]').forEach(b=>b.addEventListener('click',openModal));document.getElementById('closeModal').onclick=()=>modal.classList.remove('open');modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('open')});document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('open')});
+    document.getElementById('bookingForm').addEventListener('submit',e=>{e.preventDefault();modal.classList.remove('open');let t=document.getElementById('toast');t.textContent='Заявка не отправлена: форма пока не подключена. Позвоните в отель.';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),4500)});
+
+    // Связанный и понятный путь бронирования: поиск, выбор номера, итог заявки.
+    const guestSelect=document.getElementById('guests');
+    const roomSelect=document.getElementById('modalRoom');
+    let selectedRoom='';
+    const quickRoom=document.createElement('div');
+    quickRoom.className='field';
+    quickRoom.innerHTML='<label for="quickRoom">Категория</label><select id="quickRoom"><option value="">Любая категория</option>'+rooms.map(r=>`<option value="${r.name}">${r.name}, ${fmt(r.price)} ₽ за ночь</option>`).join('')+'</select>';
+    document.getElementById('quickSearch').insertBefore(quickRoom,document.querySelector('#quickSearch button'));
+    const summary=document.createElement('div');
+    summary.className='booking-summary';
+    summary.id='bookingSummary';
+    document.querySelector('.modal-fields').after(summary);
+    const nightsText=n=>`${n} ${n===1?'ночь':n<5?'ночи':'ночей'}`;
+    function setSelection(name){selectedRoom=name||'';if(selectedRoom)roomSelect.value=selectedRoom;renderSummary()}
+    function renderSummary(){
+      const a=document.getElementById('modalIn').value,b=document.getElementById('modalOut').value;
+      const room=rooms.find(r=>r.name===(selectedRoom||roomSelect.value));
+      if(!room||!a||!b){summary.innerHTML='<span>Итог поездки появится после выбора дат и категории номера.</span>';return}
+      const n=Math.max(1,Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/86400000));
+      summary.innerHTML=`<div><span>${room.name}, ${nightsText(n)}</span><strong>${fmt(room.price*n)} ₽</strong></div><small>${fmt(room.price)} ₽ за ночь, ${guestSelect.value}</small>`;
+    }
+    function chooseRoom(name){setSelection(name);document.getElementById('modalRoom').value=name;openModal()}
+    function roomStatus(room,index){if(!checkin||!checkout)return index===2?'few':'free';for(let day=new Date(checkin);day<checkout;day.setDate(day.getDate()+1)){const code=(day.getDate()*13+day.getMonth()*7+day.getFullYear()+index*3)%17;if(code===0||code===7)return 'full'}const code=(checkin.getDate()+index+checkin.getMonth())%5;return code===0||code===3?'few':'free'}
+    function updateRoomCards(){const grid=document.getElementById('roomCards');if(!grid)return;grid.innerHTML=rooms.map((r,i)=>{const status=roomStatus(r,i),label=status==='full'?'Нет мест':status==='few'?'Осталось мало мест':'Свободен';return `<article class="room-card${status==='full'?' is-unavailable':''}"><div class="room-image" data-slot="room-${i+1}" data-alt="Фото номера ${r.name}"><img src="${r.img}" alt="Интерьер номера ${r.name} отеля Минутка" width="640" height="400" loading="lazy"><span class="room-status ${status}" data-keep>${label}</span></div><div class="room-body"><h3 class="room-title">${r.name}</h3><p class="room-kind">${r.type}</p><p class="room-desc">${r.desc}</p><div class="room-facts"><span>${I.user} ${r.capacity}</span><span>${I.size} ${r.size}</span><span>${I.bed} ${r.beds}</span></div></div><div class="room-bottom"><p class="room-price">${fmt(r.price)} ₽<small>за ночь</small></p><button class="btn btn--primary room-choose" type="button" data-room="${r.name}" ${status==='full'?'disabled':''}>${status==='full'?'Недоступен':'Выбрать'}</button></div></article>`}).join('');const tripDates=document.getElementById('roomsTripDates');if(tripDates)tripDates.textContent=checkin&&checkout?`${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short'}).format(checkin)} по ${new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short'}).format(checkout)}, ${Math.max(1,Math.round((checkout-checkin)/86400000))} ноч.`:'Сначала выберите даты';const tripGuests=document.getElementById('roomsTripGuests');if(tripGuests)tripGuests.textContent=document.getElementById('calendarGuests')?.value||'2 взрослых'}
+    const renderRoomCards=()=>{updateRoomCards();document.getElementById('roomCards').addEventListener('click',e=>{const button=e.target.closest('[data-room]');if(button&&!button.disabled)chooseRoom(button.dataset.room)})};
+    renderRoomCards();
+    const originalUpdateResults=updateResults;
+    updateResults=function(){originalUpdateResults();if(checkin&&checkout){document.getElementById('quickIn').value=dateKey(checkin);document.getElementById('quickOut').value=dateKey(checkout);document.getElementById('modalIn').value=dateKey(checkin);document.getElementById('modalOut').value=dateKey(checkout)}};
+    const originalSelectDate=selectDate;
+    selectDate=function(d){originalSelectDate(d);document.getElementById('quickIn').value=checkin?dateKey(checkin):'';document.getElementById('quickOut').value=checkout?dateKey(checkout):'';renderSummary()};
+    const originalSetDates=setDates;
+    setDates=function(){originalSetDates();const wanted=document.getElementById('quickRoom').value;if(wanted)setSelection(wanted);renderSummary()};
+    document.getElementById('quickSearch').addEventListener('change',e=>{if(e.target.id==='quickRoom')setSelection(e.target.value)});
+    document.getElementById('modalRoom').addEventListener('change',e=>{selectedRoom=e.target.value;renderSummary()});
+    document.getElementById('modalIn').addEventListener('change',renderSummary);document.getElementById('modalOut').addEventListener('change',renderSummary);
+    document.getElementById('quickIn').addEventListener('change',e=>{if(!e.target.value)return;document.getElementById('calendarCheckin').value=e.target.value;document.getElementById('calendarCheckin').dispatchEvent(new Event('change'))});
+    document.getElementById('quickOut').addEventListener('change',e=>{if(!e.target.value)return;document.getElementById('calendarCheckout').value=e.target.value;document.getElementById('calendarCheckout').dispatchEvent(new Event('change'))});
+    const originalOpenModal=openModal;
+    openModal=function(){originalOpenModal();if(checkin&&!document.getElementById('modalIn').value)document.getElementById('modalIn').value=dateKey(checkin);if(checkout&&!document.getElementById('modalOut').value)document.getElementById('modalOut').value=dateKey(checkout);renderSummary()};
+    document.getElementById('availabilityList').addEventListener('click',e=>{const row=e.target.closest('[data-available-room]');if(row)chooseRoom(row.dataset.availableRoom)});
+    document.getElementById('bookingForm').addEventListener('submit',e=>{e.preventDefault();const form=e.currentTarget;if(!form.reportValidity())return;const data=new FormData(form),a=new Date(data.get('checkin')+'T00:00:00'),b=new Date(data.get('checkout')+'T00:00:00');if(b<=a){document.getElementById('modalOut').setCustomValidity('Дата выезда должна быть позже даты заезда.');document.getElementById('modalOut').reportValidity();return}document.getElementById('modalOut').setCustomValidity('');const n=Math.max(1,Math.round((b-a)/86400000)),r=rooms.find(x=>x.name===data.get('room'));modal.classList.remove('open');const t=document.getElementById('toast');t.textContent='Заявка не отправлена: форма пока не подключена. Позвоните в отель.';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),6000)});
+
+    // Одно появление секций: класс добавляет скрипт, без скрипта страница видна целиком.
+    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){document.documentElement.classList.add('js');
+      const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px',threshold:.06});
+      document.querySelectorAll('[data-reveal]').forEach(el=>{el.classList.add('will-reveal');io.observe(el)});
+    }
+    // Слоты: свои фото подставляются без правки вёрстки (hallmarkSlots({hero:'foto.jpg'})).
+    window.hallmarkSlots=(m)=>{for(const [k,v] of Object.entries(m)){const s=document.querySelector(`[data-slot="${k}"]`);if(!s)continue;const im=new Image();im.src=typeof v==='string'?v:v.src;im.alt=(typeof v==='object'&&v.alt)||s.dataset.alt||'';s.querySelectorAll(':scope > img').forEach(o=>o.remove());s.prepend(im)}};
+    document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'&&t.closest('[data-slot]'))t.remove()},true);
+  </script>
+<script src="../../switcher.js" data-id="v7" defer></script>
+</body>
+</html>
