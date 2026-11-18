@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0b0b0d">
+<meta name="description" content="Минутка, небольшой городской отель в Грозном. Выберите номер и отправьте заявку на бронирование.">
+<title data-i18n="meta.title">Минутка, отель в Грозном</title>
+<script>try{var t=localStorage.getItem('theme');document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(e){}</script>
+<style>
+  /* Дизайн по правилам AppStarter (DESIGN.md): нейтральный Midnight, тёмная тема по умолчанию, светлая тоже есть.
+     Акцент белый (в светлой чёрный). Зелёный только для успеха, красный для ошибок, жёлтый для «идёт», синий для выбранного.
+     Карточки: радиус 20, рамка 1 px, без теней. Кнопки, чипы, меню: таблетки. Шрифт Inter. */
+  @font-face { font-family: Inter; src: url("../../fonts/inter-cyrillic.woff2") format("woff2"); font-weight: 400 800; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+  @font-face { font-family: Inter; src: url("../../fonts/inter-latin.woff2") format("woff2"); font-weight: 400 800; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  :root {
+    color-scheme: dark;
+    --bg: #0b0b0d; --card: #17171a; --card2: #1d1d21; --ink: #f4f5f7; --mut: #8d929c; --line: rgb(255 255 255 / .08);
+    --chip: #232327; --accent: #f4f5f7; --on-accent: #0b0c0e;
+    --ok: #3ddc7a; --bad: #ff6b7d; --run: #ffd25f; --info: #6fb0ff; --off: #3a3a40;
+    --pill: #000000; --pill-ink: #f4f5f7; --pill-mut: #8d929c; --on-photo: rgb(11 11 13 / .62);
+    --menu-shadow: 0 12px 32px rgb(0 0 0 / .5); --dim: rgb(0 0 0 / .55);
+    --font: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --ease-menu: cubic-bezier(.2, .9, .3, 1.1);
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #ececef; --card: #ffffff; --card2: #f4f4f6; --ink: #0d0f12; --mut: #6b7280; --line: rgb(13 15 18 / .09);
+    --chip: #ffffff; --accent: #0d0f12; --on-accent: #ffffff;
+    --ok: #16a34a; --bad: #d7334a; --run: #c88a00; --info: #2f6bff; --off: #c9cbd3;
+    --pill: #0d0f12; --on-photo: rgb(13 15 18 / .58);
+    --menu-shadow: 0 12px 32px rgb(13 15 18 / .18); --dim: rgb(0 0 0 / .55);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.5 var(--font); -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-bottom: 120px; overflow-x: clip; }
+  h1, h2, h3, p, ul, dl, dd, figure { margin: 0; }
+  ul { padding: 0; list-style: none; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; border: 0; background: none; padding: 0; text-align: inherit; }
+  :focus-visible { outline: 2px solid var(--info); outline-offset: 2px; }
+  svg.i { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .page { width: min(1160px, 100%); margin-inline: auto; display: grid; gap: 48px; }
+  .mut { color: var(--mut); }
+
+  /* кнопки */
+  .pill { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 0 22px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: opacity .18s; }
+  .pill:hover { opacity: .88; }
+  .pill:active { opacity: .75; }
+  .pill.quiet { background: var(--card); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+  .pill.small { min-height: 38px; padding: 0 16px; font-size: 14px; }
+  .pill svg.i { width: 18px; height: 18px; }
+  .round { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); text-decoration: none; transition: background-color .18s; }
+  .round:hover { background: var(--card2); }
+  .round svg.i { width: 20px; height: 20px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: var(--card2); color: var(--ink); font-size: 12px; font-weight: 700; }
+  .chip svg.i { width: 14px; height: 14px; color: var(--mut); }
+  .ico { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--card2); color: var(--ink); flex: none; }
+
+  /* шапка */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 16px; }
+  .who { display: flex; align-items: center; gap: 12px; min-width: 0; text-decoration: none; }
+  .who .ico { width: 44px; height: 44px; font-size: 18px; font-weight: 800; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); }
+  .who small { display: block; font-size: 12px; color: var(--mut); line-height: 1.2; }
+  .who b { display: block; font-size: 20px; font-weight: 800; letter-spacing: -.6px; line-height: 1.2; }
+  .acts { display: flex; align-items: center; gap: 8px; }
+
+  /* главная карточка с фото */
+  .hero { position: relative; display: grid; align-content: end; min-height: min(620px, 78svh); padding: 24px; border-radius: 28px; overflow: hidden; isolation: isolate; background: var(--card); color: #f4f5f7; }
+  .hero > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center 55%; }
+  .hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgb(11 11 13 / .82) 0%, rgb(11 11 13 / .35) 55%, rgb(11 11 13 / .12) 100%); }
+  .hero-body { display: grid; gap: 14px; max-width: 640px; }
+  .hero h1 { font-size: clamp(34px, 6vw, 60px); font-weight: 800; letter-spacing: -2px; line-height: 1.04; text-wrap: balance; }
+  .hero p { font-size: 17px; color: rgb(244 245 247 / .86); max-width: 34em; }
+  .hero .row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .hero .pill.quiet { background: var(--on-photo); color: #f4f5f7; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .16); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .hero .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .hero .chip { background: var(--on-photo); color: #f4f5f7; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .hero .chip svg.i { color: #f4f5f7; }
+
+  /* быстрое бронирование: карточка без рамки, радиус 26 */
+  .quick { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) auto; gap: 12px; align-items: end; padding: 16px; border-radius: 26px; background: var(--card); }
+  .quick h2 { grid-column: 1 / -1; font-size: 17px; font-weight: 800; letter-spacing: -.3px; }
+  .field { display: grid; gap: 6px; min-width: 0; }
+  .field label, .field .lab { font-size: 12px; font-weight: 600; color: var(--mut); }
+  .field input, .field select, .field textarea, .val { width: 100%; min-height: 48px; padding: 0 14px; border-radius: 14px; background: var(--card2); box-shadow: inset 0 0 0 1px var(--line); border: 0; color: var(--ink); font-size: 15px; font-weight: 600; text-align: left; }
+  .field textarea { min-height: 110px; padding: 12px 14px; resize: vertical; font-weight: 500; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; box-shadow: inset 0 0 0 1px var(--ink); }
+  .field input::-webkit-calendar-picker-indicator { filter: invert(.55); }
+  :root[data-theme="light"] .field input::-webkit-calendar-picker-indicator { filter: none; opacity: .55; }
+  .val { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .val svg.i { width: 18px; height: 18px; color: var(--mut); }
+  .quickday { display: flex; flex-wrap: wrap; gap: 6px; grid-column: 1 / -1; }
+  .quickday button { padding: 7px 14px; border-radius: 999px; background: var(--card2); box-shadow: inset 0 0 0 1px var(--line); font-size: 13px; font-weight: 600; transition: background-color .18s, color .18s; }
+  .quickday button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+
+  /* заголовки секций */
+  .sec { display: grid; gap: 16px; }
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 0 4px; }
+  .sec-head h2 { font-size: 28px; font-weight: 800; letter-spacing: -1px; line-height: 1.15; }
+  .sec-head p { color: var(--mut); font-size: 14px; max-width: 34em; }
+
+  /* номера: одна вещь, одна большая карточка */
+  .rooms { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .room { display: grid; gap: 14px; align-content: start; padding: 10px 10px 16px; border-radius: 24px; background: var(--card); }
+  .room .ph { aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden; background: var(--card2); }
+  .room .ph img { width: 100%; height: 100%; object-fit: cover; }
+  .room-body { display: grid; gap: 4px; padding: 0 8px; }
+  .room-body h3 { font-size: 20px; font-weight: 800; letter-spacing: -.4px; }
+  .room-body .kind { font-size: 13px; color: var(--mut); }
+  .room-body .desc { font-size: 14px; color: var(--mut); margin-top: 4px; }
+  .room .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 8px; }
+  .room-foot { display: grid; gap: 12px; padding: 0 8px; margin-top: 4px; }
+  .price { font-size: 40px; font-weight: 800; letter-spacing: -1.5px; line-height: 1; }
+  .price small { display: block; margin-top: 6px; font-size: 13px; font-weight: 500; letter-spacing: 0; color: var(--mut); }
+  .note { padding: 0 4px; font-size: 13px; color: var(--mut); }
+
+  /* группы строк */
+  .group { border-radius: 20px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; }
+  .row2 { display: flex; align-items: center; gap: 14px; padding: 14px; border-top: 1px solid var(--line); }
+  .row2:first-child { border-top: 0; }
+  .row2 .t { flex: 1; min-width: 0; }
+  .row2 .t b { display: block; font-size: 15px; font-weight: 600; }
+  .row2 .t span { display: block; font-size: 13px; color: var(--mut); }
+  .row2 > svg.i { color: var(--mut); width: 18px; height: 18px; }
+  .services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+
+  /* о нас */
+  .about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 12px; }
+  .about .ph { min-height: 340px; border-radius: 24px; overflow: hidden; background: var(--card2); }
+  .about .ph img { width: 100%; height: 100%; object-fit: cover; }
+  .about-card { display: grid; gap: 16px; align-content: start; padding: 24px; border-radius: 24px; background: var(--card); }
+  .about-card h2 { font-size: 28px; font-weight: 800; letter-spacing: -1px; line-height: 1.15; }
+  .about-card p { color: var(--mut); font-size: 15px; max-width: 36em; }
+  .about-card p b { color: var(--ink); font-weight: 700; }
+  .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .tile { padding: 12px; border-radius: 18px; background: var(--card2); }
+  .tile b { display: block; font-size: 26px; font-weight: 800; letter-spacing: -1px; line-height: 1.1; }
+  .tile span { font-size: 12px; color: var(--mut); }
+
+  /* галерея: ряд листается вбок, следующий кадр виден краем */
+  .strip { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; scrollbar-width: thin; scrollbar-color: var(--off) transparent; }
+  .strip li { flex: 0 0 min(320px, 78%); scroll-snap-align: start; border-radius: 20px; overflow: hidden; background: var(--card2); aspect-ratio: 4 / 3; }
+  .strip img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* вопросы */
+  details.row2 { display: block; padding: 0; }
+  details.row2 summary { display: flex; align-items: center; gap: 14px; padding: 14px; list-style: none; cursor: pointer; font-size: 15px; font-weight: 600; }
+  details.row2 summary::-webkit-details-marker { display: none; }
+  details.row2 summary span { flex: 1; }
+  details.row2 summary svg.i { color: var(--mut); width: 18px; height: 18px; transition: transform .18s; }
+  details.row2[open] summary svg.i { transform: rotate(180deg); }
+  details.row2 p { padding: 0 14px 14px; color: var(--mut); font-size: 14px; max-width: 44em; }
+
+  /* контакты */
+  .contacts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; align-items: start; }
+  .phonebig { padding: 20px; border-radius: 24px; background: var(--card); display: grid; gap: 14px; }
+  .phonebig .lab { font-size: 14px; color: var(--mut); }
+  .phonebig a.num { font-size: clamp(30px, 5vw, 44px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; text-decoration: none; }
+  .phonebig .row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .formcard { display: grid; gap: 14px; padding: 20px; border-radius: 24px; background: var(--card); }
+  .formcard h3 { font-size: 20px; font-weight: 800; letter-spacing: -.4px; }
+  .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .fields .wide { grid-column: 1 / -1; }
+  .fine { font-size: 12px; color: var(--mut); }
+
+  .foot { padding: 8px 4px 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; font-size: 13px; color: var(--mut); }
+
+  /* плавающая нижняя панель: чёрная таблетка, круглые значки 46, активный белый */
+  .bar { position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 40; translate: -50% 0; display: flex; gap: 4px; padding: 6px; border-radius: 999px; background: var(--pill); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); }
+  .bar a { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; color: var(--pill-mut); transition: background-color .18s, color .18s; }
+  .bar a:hover { color: var(--pill-ink); }
+  .bar a[aria-current="true"] { background: #f4f5f7; color: #0b0c0e; }
+
+  /* всплывающее меню: радиус 22, пункт 15, значок в кружке 34, вырастает из своей кнопки */
+  .menu { position: absolute; z-index: 60; min-width: 232px; padding: 8px; border-radius: 22px; background: var(--card2); box-shadow: inset 0 0 0 1px var(--line), var(--menu-shadow); transform-origin: top right; opacity: 0; transform: scale(.86); pointer-events: none; transition: opacity .18s var(--ease-menu), transform .18s var(--ease-menu); }
+  .menu.open { opacity: 1; transform: scale(1); pointer-events: auto; }
+  .menu .sep { height: 1px; margin: 6px 12px; background: var(--line); }
+  .menu .item { display: flex; align-items: center; gap: 12px; width: 100%; padding: 9px 12px 9px 9px; border-radius: 15px; font-size: 15px; font-weight: 600; }
+  .menu .item:hover { background: var(--card); }
+  .menu .item .ico { width: 34px; height: 34px; background: var(--card); }
+  .menu .item .ico svg.i { width: 18px; height: 18px; }
+  .menu .item span.t { flex: 1; }
+  .menu .item .dot { width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 0 0 2px var(--off); }
+  .menu .item[aria-checked="true"] .dot { background: var(--accent); box-shadow: inset 0 0 0 4px var(--card2), 0 0 0 2px var(--accent); }
+
+  /* окно: плавающее, все углы 28, отступ 16, фон притемнён */
+  dialog { width: min(560px, calc(100% - 32px)); max-height: calc(100dvh - 48px); margin: 24px auto auto; padding: 0; border: 0; border-radius: 28px; background: var(--card); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line), var(--menu-shadow); overflow: auto; }
+  dialog::backdrop { background: var(--dim); }
+  .dlg { display: grid; gap: 16px; padding: 12px 20px 20px; }
+  .dlg-top { display: grid; grid-template-columns: 36px 1fr 36px; align-items: center; }
+  .dlg-top i { grid-column: 2; justify-self: center; width: 36px; height: 4px; border-radius: 4px; background: var(--off); }
+  .dlg-top button { grid-column: 3; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--card2); }
+  .dlg-top button svg.i { width: 18px; height: 18px; }
+  .dlg h2 { font-size: 20px; font-weight: 800; letter-spacing: -.4px; }
+  .dlg .cap { font-size: 13px; color: var(--mut); margin-top: 2px; }
+  .total { padding: 16px; border-radius: 20px; background: var(--card2); display: grid; gap: 2px; }
+  .total .lab { font-size: 14px; color: var(--mut); }
+  .total b { font-size: 40px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; }
+  .total small { font-size: 13px; color: var(--mut); }
+  .dlg form { display: grid; gap: 14px; }
+  .dlg form .pill { width: 100%; }
+
+  /* сообщение: таблетка над нижней панелью, одно за раз */
+  .toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); z-index: 70; max-width: min(520px, calc(100% - 32px)); display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px; background: var(--card); color: var(--ink); font-weight: 600; font-size: 14px; box-shadow: inset 0 0 0 1px var(--toast, var(--info)), var(--menu-shadow); translate: -50% 40%; opacity: 0; pointer-events: none; transition: opacity .24s ease-out, translate .24s cubic-bezier(.215, .61, .355, 1); }
+  .toast.show { opacity: 1; translate: -50% 0; }
+  .toast svg.i { width: 18px; height: 18px; color: var(--toast, var(--info)); }
+
+  @media (max-width: 1000px) {
+    .quick { grid-template-columns: repeat(2, minmax(0, 1fr)); } .quick .pill { grid-column: 1 / -1; }
+    .about, .contacts { grid-template-columns: minmax(0, 1fr); }
+    .services { grid-template-columns: minmax(0, 1fr); }
+    .about .ph { min-height: 260px; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 14px; }
+    .page { gap: 36px; }
+    .hero { padding: 16px; border-radius: 24px; min-height: 70svh; }
+    .acts .pill { display: none; }
+    .sec-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .sec-head h2, .about-card h2 { font-size: 24px; }
+    .fields { grid-template-columns: minmax(0, 1fr); }
+    .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .tile b { font-size: 22px; }
+    .menu { min-width: 216px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 3v4M17 5h4"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-size" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v3M10 2v3M14 2v3"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+</svg>
+
+<div class="page" id="top">
+  <header class="top">
+    <a class="who" href="#top" aria-label="Минутка" data-i18n-attr="aria-label:brand.home">
+      <span class="ico" aria-hidden="true">М</span>
+      <span><small data-i18n="top.sub">Отель в Грозном</small><b data-i18n="brand">Минутка</b></span>
+    </a>
+    <div class="acts">
+      <button class="pill small" type="button" data-book><svg class="i" aria-hidden="true"><use href="#i-cal"/></svg><span data-i18n="book">Забронировать</span></button>
+      <a class="round" href="tel:+79280000000" aria-label="Позвонить" data-i18n-attr="aria-label:call"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></a>
+      <button class="round" type="button" id="prefBtn" aria-haspopup="menu" aria-expanded="false" aria-label="Оформление и язык" data-i18n-attr="aria-label:pref"><svg class="i" aria-hidden="true"><use href="#i-sliders"/></svg></button>
+    </div>
+  </header>
+
+  <main style="display:grid;gap:48px">
+    <section class="hero" aria-labelledby="h1">
+      <img src="../../photo-4.jpg" alt="Просторный номер с тёплым светом и большой кроватью" data-i18n-attr="alt:hero.alt" width="738" height="414" fetchpriority="high">
+      <div class="hero-body">
+        <div class="chips">
+          <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg><span data-i18n="hero.f1">10 номеров</span></span>
+          <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span data-i18n="hero.f2">Стойка 24/7</span></span>
+          <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-wifi"/></svg><span data-i18n="hero.f3">Wi‑Fi на всей территории</span></span>
+        </div>
+        <h1 id="h1" data-i18n="hero.title">Добро пожаловать в «Минутку»</h1>
+        <p data-i18n="hero.lead">Тёплый свет, спокойная атмосфера и комфорт, который чувствуется в каждой детали.</p>
+        <div class="row">
+          <button class="pill" type="button" data-book><span data-i18n="book">Забронировать</span></button>
+          <a class="pill quiet" href="#rooms" data-i18n="hero.rooms">Номера и сьюты</a>
+        </div>
+      </div>
+    </section>
+
+    <form class="quick" id="quick" aria-labelledby="quickT">
+      <h2 id="quickT" data-i18n="quick.title">Быстрое бронирование</h2>
+      <div class="field"><label for="qIn" data-i18n="f.in">Заезд</label><input id="qIn" type="date"></div>
+      <div class="field"><label for="qOut" data-i18n="f.out">Выезд</label><input id="qOut" type="date"></div>
+      <div class="field"><span class="lab" id="qGuestsL" data-i18n="f.guests">Гости</span>
+        <button class="val" type="button" id="qGuests" aria-haspopup="menu" aria-expanded="false" aria-labelledby="qGuestsL qGuestsV"><span id="qGuestsV">2</span><svg class="i" aria-hidden="true"><use href="#i-down"/></svg></button></div>
+      <div class="field"><span class="lab" id="qRoomL" data-i18n="f.room">Категория номера</span>
+        <button class="val" type="button" id="qRoom" aria-haspopup="menu" aria-expanded="false" aria-labelledby="qRoomL qRoomV"><span id="qRoomV" data-i18n="any">Любая</span><svg class="i" aria-hidden="true"><use href="#i-down"/></svg></button></div>
+      <button class="pill" type="submit" data-i18n="quick.go">Найти номер</button>
+      <div class="quickday" role="group" aria-label="Быстрый выбор даты" data-i18n-attr="aria-label:quick.days">
+        <button type="button" data-day="0" data-i18n="d.today">Сегодня</button><button type="button" data-day="1" data-i18n="d.tomorrow">Завтра</button><button type="button" data-day="sat" data-i18n="d.sat">В субботу</button>
+      </div>
+    </form>
+
+    <section class="sec" id="rooms" aria-labelledby="roomsT">
+      <div class="sec-head"><h2 id="roomsT" data-i18n="rooms.title">Выберите номер</h2><p data-i18n="rooms.lead">Найдите подходящий вариант для вашего отдыха.</p></div>
+      <ul class="rooms">
+        <li class="room" data-room="standard" data-price="4500">
+          <div class="ph"><img src="../../photo-3.jpg" alt="Номер Стандарт: кровать у окна с шторами" data-i18n-attr="alt:r.standard.alt" width="638" height="480" loading="lazy"></div>
+          <div class="room-body"><h3 data-i18n="r.standard.name">Стандарт</h3><p class="kind" data-i18n="r.standard.kind">Уютный номер</p><p class="desc" data-i18n="r.standard.desc">Уютный номер для комфортного отдыха.</p></div>
+          <div class="chips"><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg><span data-i18n="r.standard.cap">до 2 гостей</span></span><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-size"/></svg>20 м²</span><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg><span data-i18n="r.standard.beds">1 двуспальная кровать</span></span></div>
+          <div class="room-foot"><p class="price"><span data-price-view>4 500 ₽</span><small data-i18n="perNightLabel">за ночь</small></p><button class="pill" type="button" data-book data-room-pick="standard" data-i18n="book">Забронировать</button></div>
+        </li>
+        <li class="room" data-room="comfort" data-price="6500">
+          <div class="ph"><img src="../../photo-1.jpg" alt="Номер Комфорт: светлая комната с большим окном" data-i18n-attr="alt:r.comfort.alt" width="678" height="452" loading="lazy"></div>
+          <div class="room-body"><h3 data-i18n="r.comfort.name">Комфорт</h3><p class="kind" data-i18n="r.comfort.kind">Больше пространства</p><p class="desc" data-i18n="r.comfort.desc">Больше пространства и удобства для пары или семьи.</p></div>
+          <div class="chips"><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg><span data-i18n="r.comfort.cap">до 3 гостей</span></span><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-size"/></svg>26 м²</span><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg><span data-i18n="r.comfort.beds">1 двуспальная кровать + диван</span></span></div>
+          <div class="room-foot"><p class="price"><span data-price-view>6 500 ₽</span><small data-i18n="perNightLabel">за ночь</small></p><button class="pill" type="button" data-book data-room-pick="comfort" data-i18n="book">Забронировать</button></div>
+        </li>
+        <li class="room" data-room="deluxe" data-price="8500">
+          <div class="ph"><img src="../../photo-10.jpg" alt="Номер Делюкс: тёплый свет, кровать и кресло" data-i18n-attr="alt:r.deluxe.alt" width="638" height="480" loading="lazy"></div>
+          <div class="room-body"><h3 data-i18n="r.deluxe.name">Делюкс</h3><p class="kind" data-i18n="r.deluxe.kind">Особенный отдых</p><p class="desc" data-i18n="r.deluxe.desc">Просторный номер с отдельной зоной отдыха.</p></div>
+          <div class="chips"><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg><span data-i18n="r.deluxe.cap">до 4 гостей</span></span><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-size"/></svg>34 м²</span><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg><span data-i18n="r.deluxe.beds">1 двуспальная кровать + диван</span></span></div>
+          <div class="room-foot"><p class="price"><span data-price-view>8 500 ₽</span><small data-i18n="perNightLabel">за ночь</small></p><button class="pill" type="button" data-book data-room-pick="deluxe" data-i18n="book">Забронировать</button></div>
+        </li>
+        <li class="room" data-room="lux" data-price="12500">
+          <div class="ph"><img src="../../photo-4.jpg" alt="Номер Люкс: спальня с большой кроватью и окнами" data-i18n-attr="alt:r.lux.alt" width="738" height="414" loading="lazy"></div>
+          <div class="room-body"><h3 data-i18n="r.lux.name">Люкс</h3><p class="kind" data-i18n="r.lux.kind">Максимум комфорта</p><p class="desc" data-i18n="r.lux.desc">Просторный люкс для длительного и особенного отдыха.</p></div>
+          <div class="chips"><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg><span data-i18n="r.lux.cap">до 4 гостей</span></span><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-size"/></svg>48 м²</span><span class="chip"><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg><span data-i18n="r.lux.beds">Спальня и гостиная</span></span></div>
+          <div class="room-foot"><p class="price"><span data-price-view>12 500 ₽</span><small data-i18n="perNightLabel">за ночь</small></p><button class="pill" type="button" data-book data-room-pick="lux" data-i18n="book">Забронировать</button></div>
+        </li>
+      </ul>
+      <p class="note" data-i18n="rooms.note">Цены показаны для демонстрации. Точную стоимость и наличие на ваши даты подтвердит администратор.</p>
+    </section>
+
+    <section class="sec" id="services" aria-labelledby="svcT">
+      <div class="sec-head"><h2 id="svcT" data-i18n="svc.title">Приятные детали</h2><p data-i18n="svc.lead">Забота о гостях, комфорт в номерах и внимание к мелочам, чтобы вы могли просто отдыхать.</p></div>
+      <div class="services">
+        <div class="group">
+          <div class="row2"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-wifi"/></svg></span><span class="t"><b data-i18n="svc.wifi.t">Быстрый Wi‑Fi</b><span data-i18n="svc.wifi.d">Оставайтесь на связи и работайте с комфортом.</span></span></div>
+          <div class="row2"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg></span><span class="t"><b data-i18n="svc.desk.t">Стойка 24/7</b><span data-i18n="svc.desk.d">Поможем с заездом, такси и любыми вопросами в любое время.</span></span></div>
+        </div>
+        <div class="group">
+          <div class="row2"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span><span class="t"><b data-i18n="svc.loc.t">Удобное расположение</b><span data-i18n="svc.loc.d">Отель находится в городе, рядом с городской инфраструктурой.</span></span></div>
+          <div class="row2"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-coffee"/></svg></span><span class="t"><b data-i18n="svc.bf.t">Завтрак</b><span data-i18n="svc.bf.d">Неспешное утро и вкусный завтрак по предварительному запросу.</span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about" aria-labelledby="aboutT">
+      <div class="ph"><img src="../../photo-0.jpg" alt="Фасад отеля вечером, окна светятся тёплым светом" data-i18n-attr="alt:about.alt" width="459" height="289" loading="lazy"></div>
+      <div class="about-card">
+        <h2 id="aboutT" data-i18n="about.title">Гостеприимство в деталях</h2>
+        <p data-i18n="about.p1">«Минутка», небольшой городской отель для тех, кто ценит спокойствие, личное пространство и тёплый приём. Здесь легко восстановить силы после насыщенного дня и почувствовать ритм Грозного.</p>
+        <p data-i18n-html="about.p2">Всего <b>десять номеров</b>, чтобы сохранить камерную атмосферу и уделить внимание каждому гостю.</p>
+        <div class="tiles">
+          <div class="tile"><b>10</b><span data-i18n="tile.rooms">номеров</span></div>
+          <div class="tile"><b>4</b><span data-i18n="tile.cats">категории</span></div>
+          <div class="tile"><b>24/7</b><span data-i18n="tile.desk">стойка гостя</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="gallery" aria-labelledby="galT">
+      <div class="sec-head"><h2 id="galT" data-i18n="gal.title">Фотогалерея</h2><p data-i18n="gal.lead">Несколько кадров из номеров отеля.</p></div>
+      <ul class="strip" tabindex="0" aria-label="Фотографии" data-i18n-attr="aria-label:gal.aria">
+        <li><img src="../../photo-6.jpg" alt="Номер с красным изголовьем кровати и хрустальной люстрой" data-i18n-attr="alt:g1" width="588" height="340" loading="lazy"></li>
+        <li><img src="../../photo-5.jpg" alt="Кровать и ванная комната за стеклянной перегородкой" data-i18n-attr="alt:g2" width="678" height="452" loading="lazy"></li>
+        <li><img src="../../photo-2.jpg" alt="Кровать у окна, коричневые шторы и торшер" data-i18n-attr="alt:g3" width="547" height="365" loading="lazy"></li>
+        <li><img src="../../photo-8.jpg" alt="Номер с бетонными стенами, деревом и зелёными акцентами" data-i18n-attr="alt:g4" width="638" height="480" loading="lazy"></li>
+        <li><img src="../../photo-9.jpg" alt="Номер с рабочим столом и тёмной отделкой" data-i18n-attr="alt:g5" width="579" height="320" loading="lazy"></li>
+      </ul>
+    </section>
+
+    <section class="sec" id="faq" aria-labelledby="faqT">
+      <div class="sec-head"><h2 id="faqT" data-i18n="faq.title">Коротко о главном</h2><p data-i18n="faq.lead">Не нашли ответ? Позвоните нам или оставьте заявку, администратор поможет.</p></div>
+      <div class="group">
+        <details class="row2" open><summary><span data-i18n="faq.q1">Как забронировать номер?</span><svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p data-i18n="faq.a1">Нажмите «Забронировать», выберите даты и категорию номера, оставьте имя и телефон. Администратор свяжется с вами и подтвердит наличие номера.</p></details>
+        <details class="row2"><summary><span data-i18n="faq.q2">Сколько номеров в отеле?</span><svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p data-i18n="faq.a2">Всего десять номеров в четырёх категориях: Стандарт, Комфорт, Делюкс и Люкс. Камерный формат позволяет уделить внимание каждому гостю.</p></details>
+        <details class="row2"><summary><span data-i18n="faq.q3">Работает ли стойка круглосуточно?</span><svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p data-i18n="faq.a3">Да, стойка гостя работает 24/7: поможем с заездом, такси и любыми вопросами в любое время.</p></details>
+        <details class="row2"><summary><span data-i18n="faq.q4">Есть ли завтрак и Wi‑Fi?</span><svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p data-i18n="faq.a4">Wi‑Fi доступен на всей территории отеля. Завтрак организуем по предварительному запросу.</p></details>
+        <details class="row2"><summary><span data-i18n="faq.q5">Цены и наличие на сайте окончательные?</span><svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p data-i18n="faq.a5">Сейчас сайт демонстрационный: цены и данные примерные. Точную стоимость и доступность на ваши даты подтверждает администратор.</p></details>
+      </div>
+    </section>
+
+    <section class="sec" id="contacts" aria-labelledby="ctT">
+      <div class="sec-head"><h2 id="ctT" data-i18n="ct.title">Удобно добраться, легко остаться</h2><p data-i18n="ct.lead">Будем рады помочь спланировать ваш приезд. Позвоните нам или напишите, ответим на вопросы о размещении.</p></div>
+      <div class="contacts">
+        <div style="display:grid;gap:12px">
+          <div class="phonebig">
+            <span class="lab" data-i18n="ct.phone">Телефон</span>
+            <a class="num" href="tel:+79280000000">+7 (928) 000-00-00</a>
+            <span class="fine" data-i18n="ct.demo">Номер и адрес указаны для демонстрации</span>
+            <div class="row"><a class="pill quiet small" href="https://wa.me/79280000000" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg>WhatsApp</a><a class="pill quiet small" href="tg://resolve?phone=79280000000"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg>Telegram</a></div>
+          </div>
+          <div class="group">
+            <div class="row2"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span><span class="t"><b data-i18n="ct.addrv">Грозный, улица Вахи Алиева, 45</b><span data-i18n="ct.addr">Адрес</span></span></div>
+            <div class="row2"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg></span><span class="t"><b data-i18n="ct.deskv">Круглосуточно</b><span data-i18n="ct.desk">Стойка гостя</span></span></div>
+          </div>
+        </div>
+        <form class="formcard" id="contactForm">
+          <h3 data-i18n="cf.title">Написать нам</h3>
+          <div class="fields">
+            <div class="field"><label for="cfName" data-i18n="f.name">Ваше имя</label><input id="cfName" name="name" required autocomplete="name"></div>
+            <div class="field"><label for="cfPhone" data-i18n="f.phone">Телефон</label><input id="cfPhone" name="phone" type="tel" required autocomplete="tel" inputmode="tel"></div>
+            <div class="field wide"><label for="cfMsg" data-i18n="f.msg">Сообщение</label><textarea id="cfMsg" name="message"></textarea></div>
+          </div>
+          <button class="pill" type="submit" data-i18n="cf.send">Отправить</button>
+          <p class="fine" data-i18n="f.demo">Форма пока не подключена: отправка заявок не работает. Позвоните в отель.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot"><span data-i18n="foot.note">© 2026 Отель «Минутка». Демонстрационный сайт, цены и контакты примерные.</span><span>Макет 9, дизайн по правилам AppStarter</span></footer>
+</div>
+
+<nav class="bar" id="bar" aria-label="Разделы" data-i18n-attr="aria-label:nav.label">
+  <a href="#top" aria-label="Главная" data-i18n-attr="aria-label:nav.home" data-spy="top"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg></a>
+  <a href="#rooms" aria-label="Номера" data-i18n-attr="aria-label:nav.rooms" data-spy="rooms"><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg></a>
+  <a href="#services" aria-label="Услуги" data-i18n-attr="aria-label:nav.services" data-spy="services"><svg class="i" aria-hidden="true"><use href="#i-spark"/></svg></a>
+  <a href="#gallery" aria-label="Фото" data-i18n-attr="aria-label:nav.gallery" data-spy="gallery"><svg class="i" aria-hidden="true"><use href="#i-image"/></svg></a>
+  <a href="#contacts" aria-label="Контакты" data-i18n-attr="aria-label:nav.contacts" data-spy="contacts"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></a>
+</nav>
+
+<div class="menu" id="menu" role="menu" hidden></div>
+
+<dialog id="bookDialog" aria-labelledby="bookTitle">
+  <div class="dlg">
+    <div class="dlg-top"><i aria-hidden="true"></i><button type="button" id="bookClose" aria-label="Закрыть" data-i18n-attr="aria-label:close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <div><h2 id="bookTitle" data-i18n="bk.title">Заявка на бронирование</h2><p class="cap" data-i18n="bk.lead">Оставьте контакты, администратор свяжется с вами и подтвердит наличие номера.</p></div>
+    <form id="bookForm">
+      <div class="fields">
+        <div class="field"><label for="bkName" data-i18n="f.name">Ваше имя</label><input id="bkName" name="name" required autocomplete="name"></div>
+        <div class="field"><label for="bkPhone" data-i18n="f.phone">Телефон</label><input id="bkPhone" name="phone" type="tel" required autocomplete="tel" inputmode="tel"></div>
+        <div class="field"><label for="bkIn" data-i18n="f.in">Заезд</label><input id="bkIn" name="checkin" type="date" required></div>
+        <div class="field"><label for="bkOut" data-i18n="f.out">Выезд</label><input id="bkOut" name="checkout" type="date" required></div>
+        <div class="field"><label for="bkGuests" data-i18n="f.guests">Гости</label><select id="bkGuests" name="guests"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option></select></div>
+        <div class="field"><label for="bkRoom" data-i18n="f.room">Категория номера</label><select id="bkRoom" name="room"></select></div>
+      </div>
+      <div class="total" id="bkTotal" aria-live="polite"></div>
+      <button class="pill" type="submit" data-i18n="bk.send">Отправить заявку</button>
+      <p class="fine" data-i18n="f.demo">Форма пока не подключена: отправка заявок не работает. Позвоните в отель.</p>
+    </form>
+  </div>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  'use strict';
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const root = document.documentElement;
+  const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch { /* приватный режим */ } } };
+
+  /* ---------- тексты: русский лежит в разметке, английский здесь, чеченский ждёт перевода ---------- */
+  const T = {
+    ru: {
+      loc: 'ru-RU', any: 'Любая', total: 'Итого', pick: 'Выберите даты, и мы посчитаем стоимость.', bad: 'Выезд должен быть позже заезда.',
+      nights: (n) => `${n} ${n % 10 === 1 && n % 100 !== 11 ? 'ночь' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 'ночи' : 'ночей'}`,
+      perNight: (p) => `${p} за ночь`, notSent: 'Пока не отправляется: позвоните нам', dark: 'Тёмная тема', light: 'Светлая тема', ru: 'Русский', en: 'English', theme: 'Тема', lang: 'Язык',
+    },
+    en: {
+      loc: 'en-GB', any: 'Any', total: 'Total', pick: 'Choose your dates and we will work out the price.', bad: 'Check-out must be after check-in.',
+      nights: (n) => `${n} ${n === 1 ? 'night' : 'nights'}`, perNight: (p) => `${p} per night`, notSent: 'Not sent yet: please call us', dark: 'Dark theme', light: 'Light theme', ru: 'Русский', en: 'English', theme: 'Theme', lang: 'Language',
+      'meta.title': 'Minutka, a hotel in Grozny', 'top.sub': 'Hotel in Grozny', brand: 'Minutka', 'brand.home': 'Minutka, home', call: 'Call', pref: 'Appearance and language', book: 'Book now',
+      'hero.alt': 'A spacious room with warm light and a large bed', 'hero.f1': '10 rooms', 'hero.f2': 'Front desk 24/7', 'hero.f3': 'Wi‑Fi throughout', 'hero.title': 'Welcome to Minutka',
+      'hero.lead': 'Warm light, a calm atmosphere and comfort you can feel in every detail.', 'hero.rooms': 'Rooms and suites',
+      'quick.title': 'Quick booking', 'quick.go': 'Find a room', 'quick.days': 'Quick date choice', 'd.today': 'Today', 'd.tomorrow': 'Tomorrow', 'd.sat': 'On Saturday',
+      'f.in': 'Check-in', 'f.out': 'Check-out', 'f.guests': 'Guests', 'f.room': 'Room category', 'f.name': 'Your name', 'f.phone': 'Phone', 'f.msg': 'Message',
+      'f.demo': 'The form is not connected yet: requests are not sent. Please call the hotel.',
+      'rooms.title': 'Choose a room', 'rooms.lead': 'Find the right option for your stay.', perNightLabel: 'per night',
+      'rooms.note': 'Prices are shown for demonstration. The administrator will confirm the exact price and availability for your dates.',
+      'r.standard.alt': 'Standard room: a bed by the window with curtains', 'r.standard.kind': 'A cosy room', 'r.standard.name': 'Standard', 'r.standard.desc': 'A cosy room for a comfortable stay.', 'r.standard.cap': 'up to 2 guests', 'r.standard.beds': '1 double bed',
+      'r.comfort.alt': 'Comfort room: a bright room with a large window', 'r.comfort.kind': 'More space', 'r.comfort.name': 'Comfort', 'r.comfort.desc': 'More space and convenience for a couple or a family.', 'r.comfort.cap': 'up to 3 guests', 'r.comfort.beds': '1 double bed + sofa',
+      'r.deluxe.alt': 'Deluxe room: warm light, a bed and an armchair', 'r.deluxe.kind': 'A special stay', 'r.deluxe.name': 'Deluxe', 'r.deluxe.desc': 'A spacious room with a separate lounge area.', 'r.deluxe.cap': 'up to 4 guests', 'r.deluxe.beds': '1 double bed + sofa',
+      'r.lux.alt': 'Suite: a bedroom with a large bed and tall windows', 'r.lux.kind': 'Maximum comfort', 'r.lux.name': 'Suite', 'r.lux.desc': 'A spacious suite for a long or special stay.', 'r.lux.cap': 'up to 4 guests', 'r.lux.beds': 'Bedroom and living room',
+      'svc.title': 'Pleasant details', 'svc.lead': 'Care for guests, comfortable rooms and attention to small things, so you can simply rest.',
+      'svc.wifi.t': 'Fast Wi‑Fi', 'svc.wifi.d': 'Stay connected and work in comfort.', 'svc.desk.t': 'Front desk 24/7', 'svc.desk.d': 'We help with check-in, taxis and any question, at any time.',
+      'svc.loc.t': 'Handy location', 'svc.loc.d': 'The hotel is in the city, close to its infrastructure.', 'svc.bf.t': 'Breakfast', 'svc.bf.d': 'A slow morning and a tasty breakfast on request.',
+      'about.alt': 'The hotel facade in the evening with warm glowing windows', 'about.title': 'Hospitality in the details',
+      'about.p1': 'Minutka is a small city hotel for those who value calm, personal space and a warm welcome. It is easy to recover after a busy day here and to feel the rhythm of Grozny.',
+      'about.p2': 'Just <b>ten rooms</b>, to keep the atmosphere intimate and give every guest attention.', 'tile.rooms': 'rooms', 'tile.cats': 'categories', 'tile.desk': 'front desk',
+      'gal.title': 'Photo gallery', 'gal.lead': 'A few shots of the hotel rooms.', 'gal.aria': 'Photographs',
+      g1: 'A room with a red headboard and a crystal chandelier', g2: 'A bed and a bathroom behind a glass partition', g3: 'A bed by the window, brown curtains and a floor lamp', g4: 'A room with concrete walls, wood and green accents', g5: 'A room with a desk and dark finishes',
+      'faq.title': 'The short answers', 'faq.lead': 'Cannot find an answer? Call us or leave a request and the administrator will help.',
+      'faq.q1': 'How do I book a room?', 'faq.a1': 'Press “Book now”, choose your dates and room category, and leave your name and phone. The administrator will contact you and confirm availability.',
+      'faq.q2': 'How many rooms does the hotel have?', 'faq.a2': 'Ten rooms in four categories: Standard, Comfort, Deluxe and Suite. The small size lets us give every guest attention.',
+      'faq.q3': 'Is the front desk open around the clock?', 'faq.a3': 'Yes, the front desk works 24/7: we help with check-in, taxis and any question, at any time.',
+      'faq.q4': 'Are breakfast and Wi‑Fi available?', 'faq.a4': 'Wi‑Fi is available throughout the hotel. Breakfast is arranged on request.',
+      'faq.q5': 'Are the prices and availability on the site final?', 'faq.a5': 'The site is a demonstration for now: prices and details are examples. The administrator confirms the exact price and availability for your dates.',
+      'ct.title': 'Easy to reach, easy to stay', 'ct.lead': 'We will gladly help plan your arrival. Call or write to us and we will answer your questions about staying.',
+      'ct.phone': 'Phone', 'ct.demo': 'The number and address are for demonstration', 'ct.addrv': 'Grozny, Vakhi Aliev street, 45', 'ct.addr': 'Address', 'ct.deskv': 'Around the clock', 'ct.desk': 'Front desk',
+      'cf.title': 'Write to us', 'cf.send': 'Send', 'foot.note': '© 2026 Minutka hotel. A demonstration site: prices and contacts are examples.',
+      'nav.label': 'Sections', 'nav.home': 'Home', 'nav.rooms': 'Rooms', 'nav.services': 'Services', 'nav.gallery': 'Photos', 'nav.contacts': 'Contacts', close: 'Close',
+      'bk.title': 'Booking request', 'bk.lead': 'Leave your contacts, and the administrator will get in touch and confirm availability.', 'bk.send': 'Send request',
+    },
+    ce: {}, // чеченские тексты: те же ключи, что в английском; пункт «Нохчийн» появится в меню, как только здесь будут записи
+  };
+  let lang = 'ru';
+  const L = () => T[lang] || T.ru;
+  const tr = (k) => (L()[k] !== undefined ? L()[k] : T.ru[k]);
+  const fmt = () => new Intl.NumberFormat(L().loc || 'ru-RU');
+  $$('[data-i18n]').forEach((e) => { e.dataset.ru = e.textContent; });
+  $$('[data-i18n-html]').forEach((e) => { e.dataset.ru = e.innerHTML; });
+  $$('[data-i18n-attr]').forEach((e) => { e.dataset.ruAttrs = JSON.stringify(Object.fromEntries(e.dataset.i18nAttr.split(';').map((p) => { const a = p.split(':')[0]; return [a, e.getAttribute(a)]; }))); });
+  const titleRu = document.title;
+  function applyLang(next) {
+    lang = next; root.lang = next; const d = T[next] || {};
+    $$('[data-i18n]').forEach((e) => { e.textContent = next === 'ru' || d[e.dataset.i18n] === undefined ? e.dataset.ru : d[e.dataset.i18n]; });
+    $$('[data-i18n-html]').forEach((e) => { e.innerHTML = next === 'ru' || d[e.dataset.i18nHtml] === undefined ? e.dataset.ru : d[e.dataset.i18nHtml]; });
+    $$('[data-i18n-attr]').forEach((e) => { const orig = JSON.parse(e.dataset.ruAttrs); e.dataset.i18nAttr.split(';').forEach((p) => { const [a, k] = p.split(':'); e.setAttribute(a, next === 'ru' || d[k] === undefined ? orig[a] : d[k]); }); });
+    document.title = next === 'ru' || !d['meta.title'] ? titleRu : d['meta.title'];
+    $$('[data-price-view]').forEach((e) => { e.textContent = `${fmt().format(Number(e.closest('[data-price]').dataset.price))} ₽`; });
+    syncRoomLabels(); renderTotal(); store.set('lang', next);
+  }
+
+  /* ---------- тема ---------- */
+  const meta = $('meta[name="theme-color"]');
+  const setTheme = (t) => { root.dataset.theme = t; if (meta) meta.content = t === 'light' ? '#ececef' : '#0b0b0d'; store.set('theme', t); };
+  setTheme(root.dataset.theme === 'light' ? 'light' : 'dark');
+
+  /* ---------- всплывающее меню: вырастает из своей кнопки, закрывается вне меню, при прокрутке и по Esc ---------- */
+  const menu = $('#menu'); let menuBtn = null, menuAt = 0, menuY = 0;
+  const ic = (n) => `<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+  function closeMenu() { if (!menuBtn) return; menu.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); const b = menuBtn; menuBtn = null; setTimeout(() => { if (!menuBtn) menu.hidden = true; }, 200); b.focus({ preventScroll: true }); }
+  function openMenu(btn, items) {
+    if (menuBtn === btn) { closeMenu(); return; }
+    menu.innerHTML = '';
+    items.forEach((it) => {
+      if (it === '-') { const s = document.createElement('div'); s.className = 'sep'; menu.append(s); return; }
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'item'; b.setAttribute('role', 'menuitemradio'); b.setAttribute('aria-checked', String(!!it.on));
+      b.innerHTML = `<span class="ico">${ic(it.icon || 'check')}</span><span class="t"></span><span class="dot"></span>`; $('.t', b).textContent = it.label;
+      b.addEventListener('click', () => { it.run(); closeMenu(); }); menu.append(b);
+    });
+    menu.hidden = false; menuBtn = btn; menuAt = performance.now(); menuY = scrollY; btn.setAttribute('aria-expanded', 'true');
+    const r = btn.getBoundingClientRect(); const mw = menu.offsetWidth, mh = menu.offsetHeight;
+    let left = r.right + scrollX - mw; left = Math.max(scrollX + 8, Math.min(left, scrollX + innerWidth - mw - 8));
+    const below = r.bottom + 8 + mh <= innerHeight; menu.style.left = `${left}px`; menu.style.top = `${(below ? r.bottom + 8 : r.top - 8 - mh) + scrollY}px`;
+    menu.style.transformOrigin = `${below ? 'top' : 'bottom'} right`;
+    requestAnimationFrame(() => menu.classList.add('open'));
+  }
+  addEventListener('click', (e) => { if (menuBtn && !menu.contains(e.target) && !menuBtn.contains(e.target)) closeMenu(); });
+  addEventListener('scroll', () => { if (menuBtn && performance.now() - menuAt > 300 && Math.abs(scrollY - menuY) > 8) closeMenu(); }, { passive: true });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuBtn) closeMenu(); });
+
+  const langs = () => [{ id: 'ru', label: tr('ru') }, { id: 'en', label: tr('en') }, ...(Object.keys(T.ce).length ? [{ id: 'ce', label: 'Нохчийн' }] : [])];
+  $('#prefBtn').addEventListener('click', (e) => openMenu(e.currentTarget, [
+    { label: tr('dark'), icon: 'moon', on: root.dataset.theme === 'dark', run: () => setTheme('dark') },
+    { label: tr('light'), icon: 'sun', on: root.dataset.theme === 'light', run: () => setTheme('light') }, '-',
+    ...langs().map((l) => ({ label: l.label, icon: 'globe', on: lang === l.id, run: () => applyLang(l.id) })),
+  ]));
+
+  /* ---------- выбор из вариантов: кнопка-значение и окно со списком ---------- */
+  const rooms = $$('.room').map((r) => ({ id: r.dataset.room, price: Number(r.dataset.price), el: r }));
+  const roomName = (r) => $('h3', r.el).textContent;
+  let qGuests = 2, qRoom = '';
+  const setGuests = (n) => { qGuests = n; $('#qGuestsV').textContent = String(n); };
+  $('#qGuests').addEventListener('click', (e) => openMenu(e.currentTarget, [1, 2, 3, 4].map((n) => ({ label: String(n), icon: 'user', on: qGuests === n, run: () => setGuests(n) }))));
+  const setRoomFilter = (id) => { qRoom = id; const r = rooms.find((x) => x.id === id); $('#qRoomV').textContent = r ? roomName(r) : tr('any'); };
+  $('#qRoom').addEventListener('click', (e) => openMenu(e.currentTarget, [{ id: '', label: tr('any') }, ...rooms.map((r) => ({ id: r.id, label: roomName(r) }))].map((o) => ({ label: o.label, icon: 'bed', on: qRoom === o.id, run: () => setRoomFilter(o.id) }))));
+
+  /* ---------- даты: быстрые кнопки и свои поля ---------- */
+  const pad = (n) => String(n).padStart(2, '0'), iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  $$('#qIn, #qOut, #bkIn, #bkOut').forEach((i) => { i.min = iso(today); });
+  const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+  $$('.quickday button').forEach((b) => b.addEventListener('click', () => {
+    let d = new Date(today); if (b.dataset.day === 'sat') d = addDays(today, (6 - today.getDay() + 7) % 7 || 7); else d = addDays(today, Number(b.dataset.day));
+    $('#qIn').value = iso(d); if (!$('#qOut').value || $('#qOut').value <= iso(d)) $('#qOut').value = iso(addDays(d, 1));
+    $$('.quickday button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  }));
+
+  /* ---------- сообщение: одно за раз, 2,2 с ---------- */
+  const toast = $('#toast'); let tt1, tt2;
+  function say(msg, kind = 'info') {
+    clearTimeout(tt1); clearTimeout(tt2);
+    const c = { ok: 'var(--ok)', bad: 'var(--bad)', run: 'var(--run)', info: 'var(--info)' }[kind];
+    toast.style.setProperty('--toast', c); toast.innerHTML = ic(kind === 'ok' ? 'check' : kind === 'info' ? 'info' : 'alert'); const s = document.createElement('span'); s.textContent = msg; toast.append(s);
+    requestAnimationFrame(() => toast.classList.add('show')); tt1 = setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  /* ---------- окно бронирования: плавающее, внутри расчёт стоимости ---------- */
+  const dlg = $('#bookDialog'), bkRoom = $('#bkRoom'), bkIn = $('#bkIn'), bkOut = $('#bkOut'), total = $('#bkTotal');
+  function syncRoomLabels() { const keep = bkRoom.value; bkRoom.innerHTML = ''; rooms.forEach((r) => { const o = document.createElement('option'); o.value = r.id; o.textContent = `${roomName(r)}, ${fmt().format(r.price)} ₽`; bkRoom.append(o); }); if (keep) bkRoom.value = keep; const f = rooms.find((x) => x.id === qRoom); $('#qRoomV').textContent = f ? roomName(f) : tr('any'); }
+  function renderTotal() {
+    total.innerHTML = ''; bkOut.setCustomValidity('');
+    const r = rooms.find((x) => x.id === bkRoom.value);
+    const el = (t, c, txt) => { const e = document.createElement(t); if (c) e.className = c; e.textContent = txt; return e; };
+    if (!r || !bkIn.value || !bkOut.value) { total.append(el('span', 'lab', tr('pick'))); return; }
+    const n = Math.round((new Date(`${bkOut.value}T00:00:00`) - new Date(`${bkIn.value}T00:00:00`)) / 86400000);
+    if (n < 1) { bkOut.setCustomValidity(tr('bad')); total.append(el('span', 'lab', tr('bad'))); return; }
+    total.append(el('span', 'lab', `${tr('total')}, ${tr('nights')(n)}`), el('b', '', `${fmt().format(r.price * n)} ₽`), el('small', '', tr('perNight')(`${fmt().format(r.price)} ₽`)));
+  }
+  [bkRoom, bkIn, bkOut].forEach((e) => e.addEventListener('change', renderTotal));
+  bkIn.addEventListener('change', () => { if (bkIn.value) { bkOut.min = bkIn.value; if (bkOut.value && bkOut.value <= bkIn.value) bkOut.value = ''; } renderTotal(); });
+  function openBook(opts = {}) {
+    if (opts.room) bkRoom.value = opts.room; if (opts.in) bkIn.value = opts.in; if (opts.out) bkOut.value = opts.out; if (opts.guests) $('#bkGuests').value = String(opts.guests);
+    renderTotal(); if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+  }
+  $$('[data-book]').forEach((b) => b.addEventListener('click', () => openBook({ room: b.dataset.roomPick })));
+  $('#quick').addEventListener('submit', (e) => { e.preventDefault(); openBook({ room: qRoom || undefined, in: $('#qIn').value, out: $('#qOut').value, guests: qGuests }); });
+  $('#bookClose').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  /* ни у одной формы пока нет сервера, поэтому успех не показываем */
+  $('#bookForm').addEventListener('submit', (e) => { e.preventDefault(); if (!e.currentTarget.reportValidity()) return; dlg.close(); say(tr('notSent'), 'run'); });
+  $('#contactForm').addEventListener('submit', (e) => { e.preventDefault(); say(tr('notSent'), 'run'); });
+
+  /* ---------- нижняя панель: активный раздел ---------- */
+  const spy = $$('#bar a'); const ids = spy.map((a) => a.dataset.spy);
+  const setActive = (id) => spy.forEach((a) => a.setAttribute('aria-current', String(a.dataset.spy === id)));
+  const secs = ids.map((id) => document.getElementById(id));
+  const onScroll = () => { let cur = 'top'; secs.forEach((s) => { if (s && s.getBoundingClientRect().top < innerHeight * 0.4) cur = s.id; }); setActive(cur); };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  /* ---------- старт ---------- */
+  syncRoomLabels(); renderTotal();
+  const saved = store.get('lang'); if (saved && saved !== 'ru' && T[saved] && Object.keys(T[saved]).length) applyLang(saved);
+  else $$('[data-price-view]').forEach((e) => { e.textContent = `${fmt().format(Number(e.closest('[data-price]').dataset.price))} ₽`; });
+})();
+</script>
+<script src="../../switcher.js" data-id="v9" defer></script>
+</body>
+</html>
