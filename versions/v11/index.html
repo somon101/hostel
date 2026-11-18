@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f8e3d6">
+<meta name="description" content="Минутка, небольшой городской отель в Грозном. Выберите номер и отправьте заявку на бронирование.">
+<title data-i18n="meta.title">Минутка, отель в Грозном</title>
+<style>
+  /* Макет 11. Идея: сутки в отеле. Страница идёт от утра к ночи: рассвет, день, закат, ночь.
+     Небо меняет цвет от секции к секции, а у каждой части суток своя забота отеля. Номера листаются вбок большими карточками. */
+  @font-face { font-family: Prata; src: url("../../fonts/prata-cyrillic.woff2") format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+  @font-face { font-family: Prata; src: url("../../fonts/prata-latin.woff2") format("woff2"); font-weight: 400; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: "Golos Text"; src: url("../../fonts/golos-text-cyrillic.woff2") format("woff2"); font-weight: 400 800; font-display: swap; unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+  @font-face { font-family: "Golos Text"; src: url("../../fonts/golos-text-latin.woff2") format("woff2"); font-weight: 400 800; font-display: swap; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  :root {
+    --dawn: #f9e6da; --dawn-2: #f4cdb8; --day: #fbf8f3; --sky: #e6eef2;
+    --dusk: #3a1d3b; --dusk-2: #5c2c4a; --night: #0e1230; --night-2: #1b2253;
+    --ink: #271c25; --muted: #6d5f68; --line: rgb(39 28 37 / .14);
+    --sun: #c8481f; --sun-deep: #a53914; --gold: #f2b866; --on-dark: #fbf2ee; --on-dark-mut: #cbbcc6;
+    --serif: Prata, "Times New Roman", Georgia, serif; --sans: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --ease: cubic-bezier(.22, 1, .36, 1); --wrap: 1240px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body { margin: 0; background: var(--day); color: var(--ink); font: 400 17px/1.65 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+  h1, h2, h3, p, ul, dl, dd, figure { margin: 0; } ul { padding: 0; list-style: none; }
+  img { display: block; max-width: 100%; } a { color: inherit; } button, input, select, textarea { font: inherit; color: inherit; } button { cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+  svg.i { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .w { width: min(var(--wrap), calc(100% - 48px)); margin-inline: auto; }
+  h1, h2, h3, .serif { font-family: var(--serif); font-weight: 400; letter-spacing: -.01em; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; padding: 0 30px; border: 0; border-radius: 999px; font-weight: 600; font-size: 16px; text-decoration: none; white-space: nowrap; transition: transform .3s var(--ease), background-color .25s, box-shadow .3s; }
+  .btn:hover { transform: translateY(-3px); } .btn:active { transform: none; }
+  .btn.sun { background: var(--sun); color: #fff; box-shadow: 0 10px 24px -10px rgb(200 72 31 / .7); } .btn.sun:hover { background: var(--sun-deep); }
+  .btn.ghost { background: rgb(255 255 255 / .14); color: #fff; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .5); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); } .btn.ghost:hover { background: rgb(255 255 255 / .26); }
+  .btn.small { min-height: 44px; padding: 0 22px; font-size: 15px; } .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .time { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .time svg.i { width: 18px; height: 18px; }
+
+  /* шапка поверх фото */
+  header.bar { position: fixed; inset: 0 0 auto; z-index: 60; color: #fff; transition: background-color .35s, color .35s, box-shadow .35s; }
+  header.bar.solid { background: rgb(251 248 243 / .9); color: var(--ink); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 1px 0 var(--line); }
+  header.bar.dark { background: rgb(14 18 48 / .78); color: var(--on-dark); box-shadow: 0 1px 0 rgb(255 255 255 / .1); }
+  .bar-in { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; min-height: 76px; }
+  .nav { display: flex; gap: 28px; font-size: 15px; font-weight: 500; } .nav a { text-decoration: none; opacity: .92; position: relative; padding: 6px 0; } .nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: currentColor; transition: right .3s var(--ease); } .nav a:hover::after { right: 0; }
+  .logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font-family: var(--serif); font-size: 28px; letter-spacing: .02em; }
+  .logo i { width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffd9a0, var(--sun) 70%); box-shadow: 0 0 0 5px rgb(255 255 255 / .18); }
+  .tools { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+  .lang { display: inline-flex; padding: 3px; border-radius: 999px; background: rgb(255 255 255 / .16); } header.bar.solid .lang { background: rgb(39 28 37 / .08); }
+  .lang button { min-width: 38px; height: 34px; padding: 0 10px; border: 0; border-radius: 999px; background: transparent; color: inherit; font-size: 13px; font-weight: 700; } .lang button[aria-pressed="true"] { background: #fff; color: var(--ink); }
+  .burger { display: none; width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgb(255 255 255 / .16); color: inherit; place-items: center; } header.bar.solid .burger { background: rgb(39 28 37 / .08); }
+  .sheet { display: none; background: var(--day); color: var(--ink); } .sheet.open { display: grid; } .sheet a { padding: 16px 24px; text-decoration: none; font-weight: 600; border-top: 1px solid var(--line); }
+
+  /* рассвет */
+  .hero { position: relative; min-height: 100svh; display: grid; align-items: end; color: #fff; overflow: hidden; isolation: isolate; background: var(--dusk-2); }
+  .hero > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center 55%; animation: drift 26s ease-in-out infinite alternate; }
+  @keyframes drift { from { transform: scale(1.03); } to { transform: scale(1.12) translate(-1%, -1%); } }
+  .hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(58 29 59 / .55) 0%, rgb(200 72 31 / .18) 38%, rgb(30 14 24 / .72) 100%); }
+  .hero-in { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 56px; align-items: end; padding-block: 140px 72px; }
+  .hero-copy { display: grid; gap: 26px; } .hero h1 { font-size: clamp(46px, 7.2vw, 112px); line-height: 1; text-wrap: balance; text-shadow: 0 2px 30px rgb(0 0 0 / .25); }
+  .hero-copy p { font-size: 20px; max-width: 28em; color: rgb(255 255 255 / .9); } .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .book { padding: 28px; border-radius: 28px; background: rgb(255 255 255 / .16); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .35), 0 30px 60px -24px rgb(0 0 0 / .5); -webkit-backdrop-filter: blur(22px) saturate(140%); backdrop-filter: blur(22px) saturate(140%); display: grid; gap: 14px; }
+  .book h2 { font-size: 26px; } .book .field label { color: rgb(255 255 255 / .85); }
+  .field { display: grid; gap: 6px; min-width: 0; } .field label { font-size: 13px; font-weight: 600; color: var(--muted); }
+  .field input, .field select, .field textarea { width: 100%; min-width: 0; min-height: 50px; padding: 0 16px; border: 0; border-radius: 14px; background: #fff; color: var(--ink); box-shadow: inset 0 0 0 1px rgb(39 28 37 / .16); font-weight: 500; transition: box-shadow .2s; }
+  .field textarea { min-height: 120px; padding: 14px 16px; resize: vertical; } .field input:focus, .field select:focus, .field textarea:focus { outline: none; box-shadow: inset 0 0 0 2px var(--sun), 0 0 0 4px rgb(200 72 31 / .2); }
+  .book .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } .book .btn { width: 100%; }
+  .scroll { position: absolute; left: 50%; bottom: 20px; translate: -50% 0; width: 2px; height: 36px; background: linear-gradient(#fff, transparent); opacity: .7; animation: line 2.4s ease-in-out infinite; } @keyframes line { 50% { transform: translateY(8px); opacity: .3; } }
+
+  .sec { position: relative; padding-block: 128px; } .sec-head { display: grid; gap: 18px; max-width: 720px; margin-bottom: 64px; }
+  .sec-head h2 { font-size: clamp(36px, 4.6vw, 64px); line-height: 1.06; text-wrap: balance; } .sec-head p { color: var(--muted); font-size: 19px; }
+  .morning { background: linear-gradient(180deg, var(--dawn) 0%, var(--day) 100%); } .morning .time { color: var(--sun); }
+  .noon { background: var(--day); } .noon .time { color: var(--sun); }
+  .bridge { background: linear-gradient(180deg, var(--day) 0, var(--day) 45%, #f0d4cc 62%, #b78898 82%, #6e3f5a 100%); padding-bottom: 240px; }
+  .evening { background: linear-gradient(180deg, #6e3f5a 0%, var(--dusk-2) 30%, var(--dusk) 100%); color: var(--on-dark); } #faq.evening { background: var(--dusk); } .evening .sec-head p { color: #e2d6de; } .evening .time { color: var(--gold); }
+  .night { background: linear-gradient(180deg, var(--dusk) 0%, var(--night-2) 16%, var(--night) 60%); color: var(--on-dark); overflow: hidden; } .night .sec-head p { color: var(--on-dark-mut); } .night .time { color: var(--gold); }
+  .stars { position: absolute; inset: 0; pointer-events: none; opacity: .8; background-image: radial-gradient(1.5px 1.5px at 8% 12%, #fff 50%, transparent 52%), radial-gradient(1px 1px at 22% 34%, #fff 50%, transparent 52%), radial-gradient(1.5px 1.5px at 37% 8%, #ffe3b0 50%, transparent 52%), radial-gradient(1px 1px at 52% 26%, #fff 50%, transparent 52%), radial-gradient(1.5px 1.5px at 68% 14%, #fff 50%, transparent 52%), radial-gradient(1px 1px at 81% 30%, #ffe3b0 50%, transparent 52%), radial-gradient(1.5px 1.5px at 93% 10%, #fff 50%, transparent 52%), radial-gradient(1px 1px at 14% 58%, #fff 50%, transparent 52%), radial-gradient(1px 1px at 76% 62%, #fff 50%, transparent 52%); animation: tw 6s ease-in-out infinite alternate; } @keyframes tw { to { opacity: .45; } }
+
+  /* номера: карусель больших карточек */
+  .rooms-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 40px; } .rooms-head .sec-head { margin-bottom: 0; }
+  .arrows { display: flex; gap: 10px; } .arrows button { width: 56px; height: 56px; border: 0; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; transition: transform .3s var(--ease), background-color .2s; } .arrows button:hover { transform: scale(1.08); background: var(--sun); } .arrows button:disabled { opacity: .3; pointer-events: none; }
+  .track { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px max(24px, calc((100vw - var(--wrap)) / 2)) 32px; scrollbar-width: none; scroll-padding-inline: max(24px, calc((100vw - var(--wrap)) / 2)); } .track::-webkit-scrollbar { display: none; }
+  .room { position: relative; flex: 0 0 min(440px, 82vw); aspect-ratio: 4 / 5.4; border-radius: 36px; overflow: hidden; scroll-snap-align: start; color: #fff; isolation: isolate; box-shadow: 0 30px 50px -30px rgb(58 29 59 / .6); }
+  .room > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); } .room:hover > img { transform: scale(1.07); }
+  .room::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgb(24 10 22 / .96) 0%, rgb(24 10 22 / .86) 38%, rgb(24 10 22 / .5) 62%, rgb(24 10 22 / .05) 82%); }
+  .room-in { position: absolute; inset: auto 0 0; display: grid; gap: 14px; padding: 28px; }
+  .room .kind { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); } .room h3 { font-size: 40px; line-height: 1.05; } .room p.d { color: rgb(255 255 255 / .85); font-size: 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; } .chips > span { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: rgb(255 255 255 / .16); font-size: 13px; font-weight: 500; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); } .chips svg.i { width: 15px; height: 15px; }
+  .buy { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 10px; border-top: 1px solid rgb(255 255 255 / .25); }
+  .price { font-family: var(--serif); font-size: 34px; line-height: 1; white-space: nowrap; } .price small { display: block; margin-top: 6px; font: 400 13px var(--sans); color: rgb(255 255 255 / .75); }
+  .note { margin-top: 12px; font-size: 14px; color: var(--muted); }
+
+  /* сутки: четыре части дня */
+  .parts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .part { display: grid; gap: 14px; align-content: start; padding: 32px 26px 36px; border-radius: 28px; background: rgb(255 255 255 / .08); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .16); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: transform .4s var(--ease), background-color .3s; }
+  .part:hover { transform: translateY(-8px); background: rgb(255 255 255 / .14); } .part svg.i { width: 36px; height: 36px; stroke-width: 1.3; color: var(--gold); } .part .time { color: var(--gold); margin-top: 18px; } .part h3 { font-size: 26px; line-height: 1.15; } .part p { color: var(--on-dark-mut); font-size: 16px; }
+
+  /* об отеле */
+  .about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 80px; align-items: center; }
+  .about .ph { position: relative; aspect-ratio: 4 / 5; border-radius: 220px 220px 36px 36px; overflow: hidden; box-shadow: 0 40px 60px -36px rgb(58 29 59 / .55); } .about .ph img { width: 100%; height: 100%; object-fit: cover; }
+  .about h2 { font-size: clamp(36px, 4.6vw, 64px); line-height: 1.06; margin: 18px 0 26px; text-wrap: balance; } .about p { color: var(--muted); font-size: 19px; max-width: 32em; } .about p + p { margin-top: 16px; } .about strong { color: var(--ink); font-weight: 700; background: linear-gradient(transparent 62%, rgb(242 184 102 / .6) 62%); }
+  .figs { display: flex; flex-wrap: wrap; gap: 24px 56px; margin-top: 40px; } .figs b { display: block; font-family: var(--serif); font-weight: 400; font-size: 60px; line-height: 1; color: var(--sun); } .figs span { font-size: 14px; color: var(--muted); }
+
+  /* галерея */
+  .gallery { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: 120px; gap: 16px; }
+  .gallery li { position: relative; overflow: hidden; border-radius: 28px; background: var(--sky); } .gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); } .gallery li:hover img { transform: scale(1.07); }
+  .gallery li:nth-child(1) { grid-column: span 7; grid-row: span 4; } .gallery li:nth-child(2) { grid-column: span 5; grid-row: span 2; } .gallery li:nth-child(3) { grid-column: span 5; grid-row: span 2; } .gallery li:nth-child(4) { grid-column: span 4; grid-row: span 3; } .gallery li:nth-child(5) { grid-column: span 8; grid-row: span 3; }
+
+  /* вопросы на закате */
+  .faq { max-width: 880px; display: grid; gap: 12px; }
+  .faq details { border-radius: 24px; background: rgb(255 255 255 / .08); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .16); transition: background-color .3s; } .faq details[open] { background: rgb(255 255 255 / .14); }
+  .faq summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 28px; list-style: none; cursor: pointer; font-family: var(--serif); font-size: 24px; line-height: 1.25; } .faq summary::-webkit-details-marker { display: none; }
+  .faq summary i { position: relative; flex: none; width: 38px; height: 38px; border-radius: 50%; background: rgb(255 255 255 / .14); transition: transform .4s var(--ease), background-color .25s; }
+  .faq summary i::before, .faq summary i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 2px; background: #fff; translate: -50% -50%; } .faq summary i::after { rotate: 90deg; } .faq details[open] summary i { transform: rotate(45deg); background: var(--sun); }
+  .faq details p { padding: 0 72px 26px 28px; color: var(--on-dark-mut); max-width: 40em; }
+
+  /* ночь: контакты */
+  .contacts { position: relative; display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 72px; align-items: start; }
+  .contacts h2 { font-size: clamp(36px, 4.6vw, 64px); line-height: 1.06; margin: 18px 0 22px; text-wrap: balance; } .contacts > div > p { color: var(--on-dark-mut); font-size: 19px; max-width: 30em; }
+  .phone { display: block; margin-top: 36px; font-family: var(--serif); font-size: clamp(32px, 4.4vw, 62px); line-height: 1.1; white-space: nowrap; text-decoration: none; color: var(--gold); text-shadow: 0 0 40px rgb(242 184 102 / .35); transition: color .25s; } .phone:hover { color: #fff; }
+  .dl { margin-top: 28px; border-top: 1px solid rgb(255 255 255 / .16); } .dl div { display: grid; grid-template-columns: 130px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgb(255 255 255 / .16); } .dl dt { color: var(--on-dark-mut); font-size: 14px; padding-top: 3px; } .dl dd { font-weight: 600; } .dl small { display: block; font-weight: 400; font-size: 13px; color: var(--on-dark-mut); }
+  .msgrs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .form { display: grid; gap: 16px; padding: 36px; border-radius: 32px; background: rgb(255 255 255 / .08); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .18); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); } .form h3 { font-size: 30px; } .form .field label { color: var(--on-dark-mut); }
+  .form .fields, .dlg .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; } .form .wide { grid-column: 1 / -1; } .fine { font-size: 13px; color: var(--on-dark-mut); }
+  footer { position: relative; padding: 96px 0 40px; color: var(--on-dark); background: var(--night); }
+  .foot-mast { font-family: var(--serif); font-size: clamp(64px, 18vw, 260px); line-height: 1; padding-bottom: .08em; text-decoration: none; display: block; margin-bottom: 40px; background: linear-gradient(180deg, #ffe0a8 0%, var(--sun) 60%, rgb(200 72 31 / .2) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; padding-top: 24px; border-top: 1px solid rgb(255 255 255 / .16); font-size: 14px; color: var(--on-dark-mut); } .foot-row nav { display: flex; flex-wrap: wrap; gap: 8px 24px; } .foot-row a { color: var(--on-dark); font-weight: 600; text-decoration: none; }
+
+  /* часы суток: какая сейчас часть страницы */
+  .dial { position: fixed; right: 20px; bottom: 20px; z-index: 55; display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px 10px 12px; border-radius: 999px; background: rgb(39 28 37 / .72); color: #fff; font-size: 14px; font-weight: 600; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 10px 30px -10px rgb(0 0 0 / .5); pointer-events: none; }
+  .dial i { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffe2ae, var(--sun) 70%); transition: background .6s; } .dial[data-p="day"] i { background: radial-gradient(circle at 35% 30%, #fff6d8, #f5c74a 70%); } .dial[data-p="evening"] i { background: radial-gradient(circle at 35% 30%, #ffd2c0, #e0603a 70%); } .dial[data-p="night"] i { background: radial-gradient(circle at 70% 35%, transparent 38%, #e9ecff 40%); box-shadow: inset -4px -2px 0 -1px #cfd5ff; }
+
+  dialog { width: min(600px, calc(100% - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 0; border-radius: 32px; background: var(--day); color: var(--ink); overflow: auto; box-shadow: 0 40px 100px rgb(10 4 20 / .5); }
+  dialog::backdrop { background: rgb(14 18 48 / .6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); } dialog[open] { animation: up .5s var(--ease) both; } @keyframes up { from { opacity: 0; transform: translateY(32px) scale(.97); } }
+  .dlg { display: grid; gap: 20px; padding: 40px; position: relative; } .dlg h2 { font-size: 34px; padding-right: 56px; line-height: 1.1; } .dlg p.cap { color: var(--muted); } .dlg form { display: grid; gap: 18px; } .dlg .field label { color: var(--muted); }
+  .dlg .x { position: absolute; right: 20px; top: 20px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--dawn); display: grid; place-items: center; }
+  .total { padding: 22px 26px; border-radius: 22px; background: linear-gradient(135deg, var(--dusk-2), var(--night-2)); color: var(--on-dark); display: grid; gap: 2px; } .total .label { color: var(--gold); font-size: 13px; font-weight: 600; } .total b { font-family: var(--serif); font-weight: 400; font-size: 46px; line-height: 1.1; } .total small { color: var(--on-dark-mut); }
+  .dlg .fine { color: var(--muted); }
+  .toast { position: fixed; left: 50%; bottom: 24px; z-index: 90; max-width: min(520px, calc(100% - 32px)); padding: 16px 24px; border-radius: 999px; background: var(--ink); color: #fff; font-weight: 600; font-size: 15px; translate: -50% 24px; opacity: 0; pointer-events: none; transition: opacity .3s, translate .4s var(--ease); } .toast.show { opacity: 1; translate: -50% 0; }
+
+  .rv { opacity: 1; } .js .rv { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease), transform .9s var(--ease); } .js .rv.in { opacity: 1; transform: none; }
+
+  @media (max-width: 1100px) {
+    .nav { display: none; } .burger { display: grid; } .bar-in { grid-template-columns: auto 1fr; } .logo { font-size: 24px; }
+    .hero-in { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-block: 120px 56px; } .book { max-width: 520px; }
+    .parts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .about, .contacts { grid-template-columns: minmax(0, 1fr); gap: 48px; } .about .ph { max-width: 420px; } .sec { padding-block: 88px; }
+    .gallery { grid-auto-rows: 90px; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; } .w { width: calc(100% - 32px); } .sec { padding-block: 64px; } .sec-head { margin-bottom: 40px; } .tools .btn { display: none; }
+    .hero-in { padding-block: 104px 40px; } .hero-copy p { font-size: 17px; } .book { padding: 20px; border-radius: 24px; }
+    .rooms-head { align-items: start; flex-direction: column; } .arrows { display: none; } .room { flex-basis: 84vw; border-radius: 28px; } .room h3 { font-size: 32px; } .room-in { padding: 22px; } .track { gap: 16px; }
+    .parts { grid-template-columns: minmax(0, 1fr); } .form { padding: 24px 18px; } .form .fields, .dlg .fields { grid-template-columns: minmax(0, 1fr); } .dlg { padding: 28px 18px; } .dl div { grid-template-columns: 1fr; gap: 2px; }
+    .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 110px; } .gallery li { grid-column: span 1 !important; grid-row: span 2 !important; border-radius: 20px; } .gallery li:nth-child(1) { grid-column: span 2 !important; grid-row: span 3 !important; } .gallery li:nth-child(5) { display: none; }
+    .faq summary { font-size: 20px; padding: 20px; } .faq details p { padding: 0 20px 22px; } .dial { right: 12px; bottom: 76px; } .about .ph { border-radius: 160px 160px 28px 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } .js .rv { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-size" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-sunrise" viewBox="0 0 24 24"><path d="M17 18a5 5 0 0 0-10 0M12 2v7M4.22 10.22l1.42 1.42M1 18h2M21 18h2M18.36 11.64l1.42-1.42M23 22H1M8 6l4-4 4 4"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+  <symbol id="i-sunset" viewBox="0 0 24 24"><path d="M17 18a5 5 0 0 0-10 0M12 9V2M4.22 10.22l1.42 1.42M1 18h2M21 18h2M18.36 11.64l1.42-1.42M23 22H1M16 5l-4 4-4-4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v3M10 2v3M14 2v3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</svg>
+
+<header class="bar" id="bar">
+  <div class="w bar-in">
+    <nav class="nav" aria-label="Разделы" data-i18n-attr="aria-label:nav.label"><a href="#rooms" data-i18n="nav.rooms">Номера</a><a href="#day" data-i18n="nav.services">Услуги</a><a href="#about" data-i18n="nav.about">Об отеле</a><a href="#faq" data-i18n="nav.faq">Вопросы</a><a href="#contacts" data-i18n="nav.contacts">Контакты</a></nav>
+    <a class="logo" href="#top" aria-label="Минутка" data-i18n-attr="aria-label:brand.home"><i aria-hidden="true"></i><span data-i18n="brand">Минутка</span></a>
+    <div class="tools">
+      <div class="lang" role="group" aria-label="Язык" data-i18n-attr="aria-label:lang.label"><button type="button" data-lang="ru" aria-pressed="true">RU</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <button class="btn sun small" type="button" data-book data-i18n="book">Забронировать</button>
+      <button class="burger" type="button" id="burger" aria-expanded="false" aria-controls="sheet" aria-label="Меню" data-i18n-attr="aria-label:menu"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <nav class="sheet" id="sheet" aria-label="Разделы" data-i18n-attr="aria-label:nav.label"><a href="#rooms" data-i18n="nav.rooms">Номера</a><a href="#day" data-i18n="nav.services">Услуги</a><a href="#about" data-i18n="nav.about">Об отеле</a><a href="#faq" data-i18n="nav.faq">Вопросы</a><a href="#contacts" data-i18n="nav.contacts">Контакты</a><a href="#" data-book data-i18n="book">Забронировать</a></nav>
+</header>
+
+<main>
+  <section class="hero" id="top" data-part="morning" aria-labelledby="h1">
+    <img src="../../photo-4.jpg" alt="Просторный номер с тёплым светом и большой кроватью" data-i18n-attr="alt:hero.alt" width="738" height="414" fetchpriority="high">
+    <div class="w hero-in">
+      <div class="hero-copy">
+        <span class="time"><svg class="i" aria-hidden="true"><use href="#i-sunrise"/></svg><span data-i18n="hero.kick">Отель в Грозном</span></span>
+        <h1 id="h1" data-i18n="hero.title">Добро пожаловать в «Минутку»</h1>
+        <p data-i18n="hero.lead">Тёплый свет, спокойная атмосфера и комфорт, который чувствуется в каждой детали.</p>
+        <div class="hero-actions"><a class="btn sun" href="#rooms"><span data-i18n="hero.rooms">Номера и сьюты</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a><button class="btn ghost" type="button" data-book data-i18n="book">Забронировать</button></div>
+      </div>
+      <form class="book" id="quick" aria-labelledby="qT">
+        <h2 id="qT" data-i18n="quick.title">Быстрое бронирование</h2>
+        <div class="two"><div class="field"><label for="qIn" data-i18n="f.in">Заезд</label><input id="qIn" type="date"></div><div class="field"><label for="qOut" data-i18n="f.out">Выезд</label><input id="qOut" type="date"></div></div>
+        <div class="two"><div class="field"><label for="qGuests" data-i18n="f.guests">Гости</label><select id="qGuests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div><div class="field"><label for="qRoom" data-i18n="f.room">Категория номера</label><select id="qRoom"></select></div></div>
+        <button class="btn sun" type="submit" data-i18n="quick.go">Найти номер</button>
+      </form>
+    </div>
+    <span class="scroll" aria-hidden="true"></span>
+  </section>
+
+  <section class="sec morning" id="rooms" data-part="morning" aria-labelledby="roomsT">
+    <div class="w rooms-head rv"><div class="sec-head"><span class="time"><svg class="i" aria-hidden="true"><use href="#i-sunrise"/></svg><span data-i18n="t.morning">Утро</span></span><h2 id="roomsT" data-i18n="rooms.title">Выберите номер</h2><p data-i18n="rooms.lead">Найдите подходящий вариант для вашего отдыха.</p></div>
+      <div class="arrows"><button type="button" id="prev" aria-label="Назад" data-i18n-attr="aria-label:prev"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg></button><button type="button" id="next" aria-label="Вперёд" data-i18n-attr="aria-label:next"><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></button></div></div>
+    <ul class="track" id="track" tabindex="0" aria-label="Номера" data-i18n-attr="aria-label:rooms.aria">
+      <li class="room" data-room="standard" data-price="4500"><img src="../../photo-3.jpg" alt="Номер Стандарт: кровать у окна с шторами" data-i18n-attr="alt:r.standard.alt" width="638" height="480" loading="lazy"><div class="room-in"><span class="kind" data-i18n="r.standard.kind">Уютный номер</span><h3 data-i18n="r.standard.name">Стандарт</h3><p class="d" data-i18n="r.standard.desc">Уютный номер для комфортного отдыха.</p><div class="chips"><span><svg class="i" aria-hidden="true"><use href="#i-user"/></svg><span data-i18n="r.standard.cap">до 2 гостей</span></span><span><svg class="i" aria-hidden="true"><use href="#i-size"/></svg>20 м²</span><span><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg><span data-i18n="r.standard.beds">1 двуспальная кровать</span></span></div><div class="buy"><p class="price"><span data-price-view>4 500 ₽</span><small data-i18n="perNightLabel">за ночь</small></p><button class="btn sun small" type="button" data-book data-room-pick="standard" data-i18n="book">Забронировать</button></div></div></li>
+      <li class="room" data-room="comfort" data-price="6500"><img src="../../photo-1.jpg" alt="Номер Комфорт: светлая комната с большим окном" data-i18n-attr="alt:r.comfort.alt" width="678" height="452" loading="lazy"><div class="room-in"><span class="kind" data-i18n="r.comfort.kind">Больше пространства</span><h3 data-i18n="r.comfort.name">Комфорт</h3><p class="d" data-i18n="r.comfort.desc">Больше пространства и удобства для пары или семьи.</p><div class="chips"><span><svg class="i" aria-hidden="true"><use href="#i-user"/></svg><span data-i18n="r.comfort.cap">до 3 гостей</span></span><span><svg class="i" aria-hidden="true"><use href="#i-size"/></svg>26 м²</span><span><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg><span data-i18n="r.comfort.beds">1 двуспальная кровать + диван</span></span></div><div class="buy"><p class="price"><span data-price-view>6 500 ₽</span><small data-i18n="perNightLabel">за ночь</small></p><button class="btn sun small" type="button" data-book data-room-pick="comfort" data-i18n="book">Забронировать</button></div></div></li>
+      <li class="room" data-room="deluxe" data-price="8500"><img src="../../photo-10.jpg" alt="Номер Делюкс: тёплый свет, кровать и кресло" data-i18n-attr="alt:r.deluxe.alt" width="638" height="480" loading="lazy"><div class="room-in"><span class="kind" data-i18n="r.deluxe.kind">Особенный отдых</span><h3 data-i18n="r.deluxe.name">Делюкс</h3><p class="d" data-i18n="r.deluxe.desc">Просторный номер с отдельной зоной отдыха.</p><div class="chips"><span><svg class="i" aria-hidden="true"><use href="#i-user"/></svg><span data-i18n="r.deluxe.cap">до 4 гостей</span></span><span><svg class="i" aria-hidden="true"><use href="#i-size"/></svg>34 м²</span><span><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg><span data-i18n="r.deluxe.beds">1 двуспальная кровать + диван</span></span></div><div class="buy"><p class="price"><span data-price-view>8 500 ₽</span><small data-i18n="perNightLabel">за ночь</small></p><button class="btn sun small" type="button" data-book data-room-pick="deluxe" data-i18n="book">Забронировать</button></div></div></li>
+      <li class="room" data-room="lux" data-price="12500"><img src="../../photo-6.jpg" alt="Номер Люкс: спальня с большой кроватью и окнами" data-i18n-attr="alt:r.lux.alt" width="588" height="340" loading="lazy"><div class="room-in"><span class="kind" data-i18n="r.lux.kind">Максимум комфорта</span><h3 data-i18n="r.lux.name">Люкс</h3><p class="d" data-i18n="r.lux.desc">Просторный люкс для длительного и особенного отдыха.</p><div class="chips"><span><svg class="i" aria-hidden="true"><use href="#i-user"/></svg><span data-i18n="r.lux.cap">до 4 гостей</span></span><span><svg class="i" aria-hidden="true"><use href="#i-size"/></svg>48 м²</span><span><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg><span data-i18n="r.lux.beds">Спальня и гостиная</span></span></div><div class="buy"><p class="price"><span data-price-view>12 500 ₽</span><small data-i18n="perNightLabel">за ночь</small></p><button class="btn sun small" type="button" data-book data-room-pick="lux" data-i18n="book">Забронировать</button></div></div></li>
+    </ul>
+    <div class="w"><p class="note" data-i18n="rooms.note">Цены показаны для демонстрации. Точную стоимость и наличие на ваши даты подтвердит администратор.</p></div>
+  </section>
+
+  <section class="sec noon" id="about" data-part="day" aria-labelledby="aboutT"><div class="w about">
+    <div class="ph rv"><img src="../../photo-0.jpg" alt="Фасад отеля вечером, окна светятся тёплым светом" data-i18n-attr="alt:about.alt" width="459" height="289" loading="lazy"></div>
+    <div class="rv"><span class="time"><svg class="i" aria-hidden="true"><use href="#i-sun"/></svg><span data-i18n="t.day">День</span></span><h2 id="aboutT" data-i18n="about.title">Гостеприимство в деталях</h2>
+      <p data-i18n="about.p1">«Минутка», небольшой городской отель для тех, кто ценит спокойствие, личное пространство и тёплый приём. Здесь легко восстановить силы после насыщенного дня и почувствовать ритм Грозного.</p>
+      <p data-i18n-html="about.p2">Всего <strong>десять номеров</strong>, чтобы сохранить камерную атмосферу и уделить внимание каждому гостю.</p>
+      <div class="figs"><div><b>10</b><span data-i18n="tile.rooms">номеров</span></div><div><b>4</b><span data-i18n="tile.cats">категории</span></div><div><b>24/7</b><span data-i18n="tile.desk">стойка гостя</span></div></div></div>
+  </div></section>
+
+  <section class="sec noon bridge" id="gallery" data-part="day" style="padding-top:0" aria-labelledby="galT"><div class="w">
+    <div class="sec-head rv"><h2 id="galT" data-i18n="gal.title">Фотогалерея</h2><p data-i18n="gal.lead">Несколько кадров из номеров отеля.</p></div>
+    <ul class="gallery rv">
+      <li><img src="../../photo-5.jpg" alt="Кровать и ванная комната за стеклянной перегородкой" data-i18n-attr="alt:g2" width="678" height="452" loading="lazy"></li>
+      <li><img src="../../photo-2.jpg" alt="Кровать у окна, коричневые шторы и торшер" data-i18n-attr="alt:g3" width="547" height="365" loading="lazy"></li>
+      <li><img src="../../photo-8.jpg" alt="Номер с бетонными стенами, деревом и зелёными акцентами" data-i18n-attr="alt:g4" width="638" height="480" loading="lazy"></li>
+      <li><img src="../../photo-9.jpg" alt="Номер с рабочим столом и тёмной отделкой" data-i18n-attr="alt:g5" width="579" height="320" loading="lazy"></li>
+      <li><img src="../../photo-7.jpg" alt="Номер с окном на набережную и бирюзовым пледом" data-i18n-attr="alt:g6" width="266" height="190" loading="lazy"></li>
+    </ul>
+  </div></section>
+
+  <section class="sec evening" id="day" data-part="evening" aria-labelledby="dayT"><div class="w">
+    <div class="sec-head rv"><span class="time"><svg class="i" aria-hidden="true"><use href="#i-sunset"/></svg><span data-i18n="t.evening">Вечер</span></span><h2 id="dayT" data-i18n="day.title">Забота в любое время суток</h2><p data-i18n="day.lead">Что отель делает для гостей утром, днём, вечером и ночью.</p></div>
+    <ul class="parts rv">
+      <li class="part"><svg class="i" aria-hidden="true"><use href="#i-coffee"/></svg><span class="time" data-i18n="t.morning">Утро</span><h3 data-i18n="svc.bf.t">Завтрак</h3><p data-i18n="svc.bf.d">Неспешное утро и вкусный завтрак по предварительному запросу.</p></li>
+      <li class="part"><svg class="i" aria-hidden="true"><use href="#i-wifi"/></svg><span class="time" data-i18n="t.day">День</span><h3 data-i18n="svc.wifi.t">Быстрый Wi‑Fi</h3><p data-i18n="svc.wifi.d">Оставайтесь на связи и работайте с комфортом.</p></li>
+      <li class="part"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span class="time" data-i18n="t.evening">Вечер</span><h3 data-i18n="svc.loc.t">Удобное расположение</h3><p data-i18n="svc.loc.d">Отель находится в городе, рядом с городской инфраструктурой.</p></li>
+      <li class="part"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="time" data-i18n="t.night">Ночь</span><h3 data-i18n="svc.desk.t">Стойка 24/7</h3><p data-i18n="svc.desk.d">Поможем с заездом, такси и любыми вопросами в любое время.</p></li>
+    </ul>
+  </div></section>
+
+  <section class="sec evening" id="faq" data-part="evening" style="padding-top:0" aria-labelledby="faqT"><div class="w">
+    <div class="sec-head rv"><h2 id="faqT" data-i18n="faq.title">Коротко о главном</h2><p data-i18n="faq.lead">Не нашли ответ? Позвоните нам или оставьте заявку, администратор поможет.</p></div>
+    <div class="faq rv">
+      <details open><summary><span data-i18n="faq.q1">Как забронировать номер?</span><i aria-hidden="true"></i></summary><p data-i18n="faq.a1">Нажмите «Забронировать», выберите даты и категорию номера, оставьте имя и телефон. Администратор свяжется с вами и подтвердит наличие номера.</p></details>
+      <details><summary><span data-i18n="faq.q2">Сколько номеров в отеле?</span><i aria-hidden="true"></i></summary><p data-i18n="faq.a2">Всего десять номеров в четырёх категориях: Стандарт, Комфорт, Делюкс и Люкс. Камерный формат позволяет уделить внимание каждому гостю.</p></details>
+      <details><summary><span data-i18n="faq.q3">Работает ли стойка круглосуточно?</span><i aria-hidden="true"></i></summary><p data-i18n="faq.a3">Да, стойка гостя работает 24/7: поможем с заездом, такси и любыми вопросами в любое время.</p></details>
+      <details><summary><span data-i18n="faq.q4">Есть ли завтрак и Wi‑Fi?</span><i aria-hidden="true"></i></summary><p data-i18n="faq.a4">Wi‑Fi доступен на всей территории отеля. Завтрак организуем по предварительному запросу.</p></details>
+      <details><summary><span data-i18n="faq.q5">Цены и наличие на сайте окончательные?</span><i aria-hidden="true"></i></summary><p data-i18n="faq.a5">Сейчас сайт демонстрационный: цены и данные примерные. Точную стоимость и доступность на ваши даты подтверждает администратор.</p></details>
+    </div>
+  </div></section>
+
+  <section class="sec night" id="contacts" data-part="night" aria-labelledby="ctT"><span class="stars" aria-hidden="true"></span><div class="w contacts">
+    <div class="rv"><span class="time"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg><span data-i18n="t.night">Ночь</span></span><h2 id="ctT" data-i18n="ct.title">Удобно добраться, легко остаться</h2><p data-i18n="ct.lead">Будем рады помочь спланировать ваш приезд. Позвоните нам или напишите, ответим на вопросы о размещении.</p>
+      <a class="phone" href="tel:+79280000000">+7 (928) 000-00-00</a>
+      <dl class="dl"><div><dt data-i18n="ct.addr">Адрес</dt><dd data-i18n="ct.addrv">Грозный, улица Вахи Алиева, 45</dd></div><div><dt data-i18n="ct.desk">Стойка гостя</dt><dd data-i18n="ct.deskv">Круглосуточно</dd></div><div><dt data-i18n="ct.phone">Телефон</dt><dd>+7 (928) 000-00-00<small data-i18n="ct.demo">Номер и адрес указаны для демонстрации</small></dd></div></dl>
+      <div class="msgrs"><a class="btn sun small" href="https://wa.me/79280000000" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg>WhatsApp</a><a class="btn ghost small" href="tg://resolve?phone=79280000000"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg>Telegram</a></div></div>
+    <form class="form rv" id="contactForm"><h3 data-i18n="cf.title">Написать нам</h3>
+      <div class="fields"><div class="field"><label for="cfName" data-i18n="f.name">Ваше имя</label><input id="cfName" name="name" required autocomplete="name"></div><div class="field"><label for="cfPhone" data-i18n="f.phone">Телефон</label><input id="cfPhone" name="phone" type="tel" required autocomplete="tel" inputmode="tel"></div><div class="field wide"><label for="cfMsg" data-i18n="f.msg">Сообщение</label><textarea id="cfMsg" name="message"></textarea></div></div>
+      <button class="btn sun" type="submit" data-i18n="cf.send">Отправить</button><p class="fine" data-i18n="f.demo">Форма пока не подключена: отправка заявок не работает. Позвоните в отель.</p></form>
+  </div></section>
+</main>
+
+<footer data-part="night"><div class="w">
+  <a class="foot-mast" href="#top" aria-label="Минутка, наверх" data-i18n-attr="aria-label:brand.home"><span data-i18n="brand">Минутка</span></a>
+  <div class="foot-row"><span data-i18n="foot.note">© 2026 Отель «Минутка». Демонстрационный сайт, цены и контакты примерные.</span><nav aria-label="Разделы" data-i18n-attr="aria-label:nav.label"><a href="#rooms" data-i18n="nav.rooms">Номера</a><a href="#day" data-i18n="nav.services">Услуги</a><a href="#faq" data-i18n="nav.faq">Вопросы</a><a href="#contacts" data-i18n="nav.contacts">Контакты</a></nav></div>
+</div></footer>
+
+<div class="dial" id="dial" data-p="morning" aria-hidden="true"><i></i><span id="dialT" data-i18n="t.morning">Утро</span></div>
+
+<dialog id="bookDialog" aria-labelledby="bookTitle"><div class="dlg">
+  <button class="x" type="button" id="bookClose" aria-label="Закрыть" data-i18n-attr="aria-label:close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
+  <div><h2 id="bookTitle" data-i18n="bk.title">Заявка на бронирование</h2><p class="cap" data-i18n="bk.lead">Оставьте контакты, администратор свяжется с вами и подтвердит наличие номера.</p></div>
+  <form id="bookForm"><div class="fields">
+    <div class="field"><label for="bkName" data-i18n="f.name">Ваше имя</label><input id="bkName" name="name" required autocomplete="name"></div>
+    <div class="field"><label for="bkPhone" data-i18n="f.phone">Телефон</label><input id="bkPhone" name="phone" type="tel" required autocomplete="tel" inputmode="tel"></div>
+    <div class="field"><label for="bkIn" data-i18n="f.in">Заезд</label><input id="bkIn" name="checkin" type="date" required></div>
+    <div class="field"><label for="bkOut" data-i18n="f.out">Выезд</label><input id="bkOut" name="checkout" type="date" required></div>
+    <div class="field"><label for="bkGuests" data-i18n="f.guests">Гости</label><select id="bkGuests" name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+    <div class="field"><label for="bkRoom" data-i18n="f.room">Категория номера</label><select id="bkRoom" name="room"></select></div></div>
+    <div class="total" id="bkTotal" aria-live="polite"></div>
+    <button class="btn sun" type="submit" data-i18n="bk.send">Отправить заявку</button><p class="fine" data-i18n="f.demo">Форма пока не подключена: отправка заявок не работает. Позвоните в отель.</p></form>
+</div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  'use strict';
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const root = document.documentElement; root.classList.add('js');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch { /* приватный режим */ } } };
+  const T = {
+    ru: { loc: 'ru-RU', any: 'Любая', total: 'Итого', pick: 'Выберите даты, и мы посчитаем стоимость.', bad: 'Выезд должен быть позже заезда.',
+      nights: (n) => `${n} ${n % 10 === 1 && n % 100 !== 11 ? 'ночь' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 'ночи' : 'ночей'}`,
+      perNight: (p) => `${p} за ночь`, notSent: 'Заявка не отправлена: форма пока не подключена. Позвоните в отель.' },
+    en: {
+      loc: 'en-GB', any: 'Any', total: 'Total', pick: 'Choose your dates and we will work out the price.', bad: 'Check-out must be after check-in.',
+      nights: (n) => `${n} ${n === 1 ? 'night' : 'nights'}`, perNight: (p) => `${p} per night`, notSent: 'Not sent yet: please call us', dark: 'Dark theme', light: 'Light theme', ru: 'Русский', en: 'English', theme: 'Theme', lang: 'Language',
+      'meta.title': 'Minutka, a hotel in Grozny', 'top.sub': 'Hotel in Grozny', brand: 'Minutka', 'brand.home': 'Minutka, home', call: 'Call', pref: 'Appearance and language', book: 'Book now',
+      'hero.alt': 'A spacious room with warm light and a large bed', 'hero.f1': '10 rooms', 'hero.f2': 'Front desk 24/7', 'hero.f3': 'Wi‑Fi throughout', 'hero.title': 'Welcome to Minutka',
+      'hero.lead': 'Warm light, a calm atmosphere and comfort you can feel in every detail.', 'hero.rooms': 'Rooms and suites',
+      'quick.title': 'Quick booking', 'quick.go': 'Find a room', 'quick.days': 'Quick date choice', 'd.today': 'Today', 'd.tomorrow': 'Tomorrow', 'd.sat': 'On Saturday',
+      'f.in': 'Check-in', 'f.out': 'Check-out', 'f.guests': 'Guests', 'f.room': 'Room category', 'f.name': 'Your name', 'f.phone': 'Phone', 'f.msg': 'Message',
+      'f.demo': 'The form is not connected yet: requests are not sent. Please call the hotel.',
+      'rooms.title': 'Choose a room', 'rooms.lead': 'Find the right option for your stay.', perNightLabel: 'per night',
+      'rooms.note': 'Prices are shown for demonstration. The administrator will confirm the exact price and availability for your dates.',
+      'r.standard.alt': 'Standard room: a bed by the window with curtains', 'r.standard.kind': 'A cosy room', 'r.standard.name': 'Standard', 'r.standard.desc': 'A cosy room for a comfortable stay.', 'r.standard.cap': 'up to 2 guests', 'r.standard.beds': '1 double bed',
+      'r.comfort.alt': 'Comfort room: a bright room with a large window', 'r.comfort.kind': 'More space', 'r.comfort.name': 'Comfort', 'r.comfort.desc': 'More space and convenience for a couple or a family.', 'r.comfort.cap': 'up to 3 guests', 'r.comfort.beds': '1 double bed + sofa',
+      'r.deluxe.alt': 'Deluxe room: warm light, a bed and an armchair', 'r.deluxe.kind': 'A special stay', 'r.deluxe.name': 'Deluxe', 'r.deluxe.desc': 'A spacious room with a separate lounge area.', 'r.deluxe.cap': 'up to 4 guests', 'r.deluxe.beds': '1 double bed + sofa',
+      'r.lux.alt': 'Suite: a bedroom with a large bed and tall windows', 'r.lux.kind': 'Maximum comfort', 'r.lux.name': 'Suite', 'r.lux.desc': 'A spacious suite for a long or special stay.', 'r.lux.cap': 'up to 4 guests', 'r.lux.beds': 'Bedroom and living room',
+      'svc.title': 'Pleasant details', 'svc.lead': 'Care for guests, comfortable rooms and attention to small things, so you can simply rest.',
+      'svc.wifi.t': 'Fast Wi‑Fi', 'svc.wifi.d': 'Stay connected and work in comfort.', 'svc.desk.t': 'Front desk 24/7', 'svc.desk.d': 'We help with check-in, taxis and any question, at any time.',
+      'svc.loc.t': 'Handy location', 'svc.loc.d': 'The hotel is in the city, close to its infrastructure.', 'svc.bf.t': 'Breakfast', 'svc.bf.d': 'A slow morning and a tasty breakfast on request.',
+      'about.alt': 'The hotel facade in the evening with warm glowing windows', 'about.title': 'Hospitality in the details',
+      'about.p1': 'Minutka is a small city hotel for those who value calm, personal space and a warm welcome. It is easy to recover after a busy day here and to feel the rhythm of Grozny.',
+      'about.p2': 'Just <b>ten rooms</b>, to keep the atmosphere intimate and give every guest attention.', 'tile.rooms': 'rooms', 'tile.cats': 'categories', 'tile.desk': 'front desk',
+      'gal.title': 'Photo gallery', 'gal.lead': 'A few shots of the hotel rooms.', 'gal.aria': 'Photographs',
+      g1: 'A room with a red headboard and a crystal chandelier', g2: 'A bed and a bathroom behind a glass partition', g3: 'A bed by the window, brown curtains and a floor lamp', g4: 'A room with concrete walls, wood and green accents', g5: 'A room with a desk and dark finishes',
+      'faq.title': 'The short answers', 'faq.lead': 'Cannot find an answer? Call us or leave a request and the administrator will help.',
+      'faq.q1': 'How do I book a room?', 'faq.a1': 'Press “Book now”, choose your dates and room category, and leave your name and phone. The administrator will contact you and confirm availability.',
+      'faq.q2': 'How many rooms does the hotel have?', 'faq.a2': 'Ten rooms in four categories: Standard, Comfort, Deluxe and Suite. The small size lets us give every guest attention.',
+      'faq.q3': 'Is the front desk open around the clock?', 'faq.a3': 'Yes, the front desk works 24/7: we help with check-in, taxis and any question, at any time.',
+      'faq.q4': 'Are breakfast and Wi‑Fi available?', 'faq.a4': 'Wi‑Fi is available throughout the hotel. Breakfast is arranged on request.',
+      'faq.q5': 'Are the prices and availability on the site final?', 'faq.a5': 'The site is a demonstration for now: prices and details are examples. The administrator confirms the exact price and availability for your dates.',
+      'ct.title': 'Easy to reach, easy to stay', 'ct.lead': 'We will gladly help plan your arrival. Call or write to us and we will answer your questions about staying.',
+      'ct.phone': 'Phone', 'ct.demo': 'The number and address are for demonstration', 'ct.addrv': 'Grozny, Vakhi Aliev street, 45', 'ct.addr': 'Address', 'ct.deskv': 'Around the clock', 'ct.desk': 'Front desk',
+      'cf.title': 'Write to us', 'cf.send': 'Send', 'foot.note': '© 2026 Minutka hotel. A demonstration site: prices and contacts are examples.',
+      'nav.label': 'Sections', 'nav.home': 'Home', 'nav.rooms': 'Rooms', 'nav.services': 'Services', 'nav.gallery': 'Photos', 'nav.contacts': 'Contacts', close: 'Close',
+      'bk.title': 'Booking request', 'bk.lead': 'Leave your contacts, and the administrator will get in touch and confirm availability.', 'bk.send': 'Send request',
+
+      't.morning': 'Morning', 't.day': 'Day', 't.evening': 'Evening', 't.night': 'Night', 'day.title': 'Care at every hour', 'day.lead': 'What the hotel does for guests in the morning, afternoon, evening and at night.',
+      prev: 'Previous', next: 'Next', 'rooms.aria': 'Rooms', 'hero.kick': 'A hotel in Grozny', 'nav.faq': 'FAQ', g6: 'A room with a window onto the embankment and a turquoise throw',
+      notSent: 'The request was not sent: the form is not connected yet. Please call the hotel.',
+    },
+  };
+  let lang = 'ru'; const L = () => T[lang] || T.ru; const tr = (k) => (L()[k] !== undefined ? L()[k] : T.ru[k]); const fmt = () => new Intl.NumberFormat(L().loc || 'ru-RU');
+  $$('[data-i18n]').forEach((e) => { e.dataset.ru = e.textContent; }); $$('[data-i18n-html]').forEach((e) => { e.dataset.ru = e.innerHTML; });
+  $$('[data-i18n-attr]').forEach((e) => { e.dataset.ruAttrs = JSON.stringify(Object.fromEntries(e.dataset.i18nAttr.split(';').map((p) => { const a = p.split(':')[0]; return [a, e.getAttribute(a)]; }))); });
+  const titleRu = document.title;
+  function applyLang(next) {
+    lang = next; root.lang = next; const d = T[next] || {};
+    $$('[data-i18n]').forEach((e) => { e.textContent = next === 'ru' || d[e.dataset.i18n] === undefined ? e.dataset.ru : d[e.dataset.i18n]; });
+    $$('[data-i18n-html]').forEach((e) => { e.innerHTML = next === 'ru' || d[e.dataset.i18nHtml] === undefined ? e.dataset.ru : d[e.dataset.i18nHtml]; });
+    $$('[data-i18n-attr]').forEach((e) => { const o = JSON.parse(e.dataset.ruAttrs); e.dataset.i18nAttr.split(';').forEach((p) => { const [a, k] = p.split(':'); e.setAttribute(a, next === 'ru' || d[k] === undefined ? o[a] : d[k]); }); });
+    document.title = next === 'ru' || !d['meta.title'] ? titleRu : d['meta.title'];
+    $$('.lang button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === next)));
+    $$('[data-price-view]').forEach((e) => { e.textContent = `${fmt().format(Number(e.closest('[data-price]').dataset.price))} ₽`; });
+    fillRooms(); renderTotal(); store.set('lang', next);
+  }
+  $$('.lang button').forEach((b) => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+
+  const bar = $('#bar'), nb = $('#burger'), sheet = $('#sheet');
+  nb.addEventListener('click', () => { const o = sheet.classList.toggle('open'); nb.setAttribute('aria-expanded', String(o)); });
+  sheet.addEventListener('click', (e) => { if (e.target.closest('a')) { sheet.classList.remove('open'); nb.setAttribute('aria-expanded', 'false'); } });
+
+  /* часть суток под шапкой: подпись внизу справа и цвет шапки */
+  const parts = $$('[data-part]'); const dial = $('#dial'), dialT = $('#dialT'); const names = { morning: 't.morning', day: 't.day', evening: 't.evening', night: 't.night' };
+  function spy() {
+    bar.classList.toggle('solid', scrollY > 40);
+    let cur = 'morning'; parts.forEach((s) => { if (s.getBoundingClientRect().top < innerHeight * 0.5) cur = s.dataset.part; });
+    if (dial.dataset.p !== cur) { dial.dataset.p = cur; dialT.dataset.i18n = names[cur]; dialT.textContent = tr(names[cur]); dialT.dataset.ru = T.ru[names[cur]] || ({ morning: 'Утро', day: 'День', evening: 'Вечер', night: 'Ночь' })[cur]; if (lang === 'ru') dialT.textContent = dialT.dataset.ru; }
+    const hb = bar.getBoundingClientRect().height; const under = parts.filter((s) => { const r = s.getBoundingClientRect(); return r.top <= hb / 2 && r.bottom > hb / 2; })[0];
+    bar.classList.toggle('dark', !!under && (under.dataset.part === 'night' || (under.dataset.part === 'evening' && under.getBoundingClientRect().top < -120)) && scrollY > 40);
+    if (scrollY > 40 && under && under.dataset.part === 'night') bar.classList.remove('solid'); else if (scrollY > 40) bar.classList.add('solid');
+  }
+  let tick = false; addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { spy(); tick = false; }); } }, { passive: true }); spy();
+
+  const rooms = $$('.room').map((r) => ({ id: r.dataset.room, price: Number(r.dataset.price), el: r })); const nm = (r) => $('h3', r.el).textContent;
+  const track = $('#track'), prev = $('#prev'), next = $('#next');
+  const step = () => Math.min(464, track.clientWidth * 0.86);
+  const arrows = () => { prev.disabled = track.scrollLeft < 8; next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 8; };
+  prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: reduce ? 'auto' : 'smooth' })); next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: reduce ? 'auto' : 'smooth' }));
+  track.addEventListener('scroll', arrows, { passive: true }); addEventListener('resize', arrows); arrows();
+  track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); next.click(); } if (e.key === 'ArrowLeft') { e.preventDefault(); prev.click(); } });
+
+  const pad = (n) => String(n).padStart(2, '0'), iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const today = new Date(); today.setHours(0, 0, 0, 0); $$('#qIn, #qOut, #bkIn, #bkOut').forEach((i) => { i.min = iso(today); });
+  const qRoom = $('#qRoom'), bkRoom = $('#bkRoom'), bkIn = $('#bkIn'), bkOut = $('#bkOut'), total = $('#bkTotal'), dlg = $('#bookDialog');
+  function fillRooms() {
+    const k1 = qRoom.value, k2 = bkRoom.value; qRoom.innerHTML = ''; bkRoom.innerHTML = '';
+    const any = document.createElement('option'); any.value = ''; any.textContent = tr('any'); qRoom.append(any);
+    rooms.forEach((r) => { [qRoom, bkRoom].forEach((s) => { const o = document.createElement('option'); o.value = r.id; o.textContent = `${nm(r)}, ${fmt().format(r.price)} ₽`; s.append(o); }); });
+    qRoom.value = k1 || ''; if (k2) bkRoom.value = k2;
+  }
+  function renderTotal() {
+    total.innerHTML = ''; bkOut.setCustomValidity(''); const r = rooms.find((x) => x.id === bkRoom.value);
+    const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; e.textContent = x; return e; };
+    if (!r || !bkIn.value || !bkOut.value) { total.append(el('span', 'label', tr('pick'))); return; }
+    const n = Math.round((new Date(`${bkOut.value}T00:00:00`) - new Date(`${bkIn.value}T00:00:00`)) / 86400000);
+    if (n < 1) { bkOut.setCustomValidity(tr('bad')); total.append(el('span', 'label', tr('bad'))); return; }
+    total.append(el('span', 'label', `${tr('total')}, ${tr('nights')(n)}`), el('b', '', `${fmt().format(r.price * n)} ₽`), el('small', '', tr('perNight')(`${fmt().format(r.price)} ₽`)));
+  }
+  [bkRoom, bkIn, bkOut].forEach((e) => e.addEventListener('change', renderTotal));
+  bkIn.addEventListener('change', () => { if (bkIn.value) { bkOut.min = bkIn.value; if (bkOut.value && bkOut.value <= bkIn.value) bkOut.value = ''; } renderTotal(); });
+  function openBook(o = {}) { if (o.room) bkRoom.value = o.room; if (o.in) bkIn.value = o.in; if (o.out) bkOut.value = o.out; if (o.guests) $('#bkGuests').value = o.guests; renderTotal(); if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', ''); }
+  $$('[data-book]').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); openBook({ room: b.dataset.roomPick }); }));
+  $('#quick').addEventListener('submit', (e) => { e.preventDefault(); openBook({ room: qRoom.value || undefined, in: $('#qIn').value, out: $('#qOut').value, guests: $('#qGuests').value }); });
+  $('#bookClose').addEventListener('click', () => dlg.close()); dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  const toast = $('#toast'); let tt; const say = (m) => { toast.textContent = m; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 4500); };
+  /* ни у одной формы пока нет сервера, поэтому успех не показываем */
+  $('#bookForm').addEventListener('submit', (e) => { e.preventDefault(); if (!e.currentTarget.reportValidity()) return; dlg.close(); say(tr('notSent')); });
+  $('#contactForm').addEventListener('submit', (e) => { e.preventDefault(); say(tr('notSent')); });
+
+  const rv = $$('.rv'); if (reduce || !('IntersectionObserver' in window)) rv.forEach((e) => e.classList.add('in'));
+  else { const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .06 }); rv.forEach((e) => io.observe(e)); }
+
+  fillRooms(); renderTotal();
+  const sv = store.get('lang'); if (sv === 'en') applyLang('en'); else $$('[data-price-view]').forEach((e) => { e.textContent = `${fmt().format(Number(e.closest('[data-price]').dataset.price))} ₽`; });
+})();
+</script>
+<script src="../../switcher.js" data-id="v11" defer></script>
+</body>
+</html>
