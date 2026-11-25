@@ -1,8 +1,8 @@
-# Design System Master File: Минутка (warm)
+# Design System Master File: Ангел (warm)
 
 > **LOGIC:** When building a page, read this file first. If `design-system/minutka-warm/pages/<page>.md` exists, its rules override this file.
 
-**Project:** Минутка, a small city hotel (10 rooms, Грозный)
+**Project:** Ангел, a small city hotel (10 rooms, Грозный)
 **Source of truth:** the owner's 20 answers (below). The `ui-ux-pro-max` generator proposed a navy and gold "Liquid Glass" hotel look; the owner rejected it, so the generated file was replaced. Typography, palette family and checklists come from the skill's searches (`typography`, `google-fonts`, `color`, `ux`).
 
 ## Owner's decisions

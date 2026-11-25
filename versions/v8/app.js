@@ -1,4 +1,4 @@
-/* Минутка: theme, language, navigation, reveal, booking dialog. Everything degrades to the plain page without this script. */
+/* Ангел: theme, language, navigation, reveal, booking dialog. Everything degrades to the plain page without this script. */
 (() => {
   'use strict';
   const $ = (s, r = document) => r.querySelector(s);
@@ -26,10 +26,10 @@
       pickDates: 'Choose your dates and we will work out the price.', badDates: 'Check-out must be after check-in.',
       notSent: 'The request was not sent: the form is not connected yet. Please call the hotel.',
       loc: 'en-GB',
-      'meta.title': 'Minutka, a hotel in Grozny', skip: 'Skip to content', brand: 'Minutka', 'brand.home': 'Minutka, home', 'nav.label': 'Sections',
+      'meta.title': 'Angel, a hotel in Grozny', skip: 'Skip to content', brand: 'Angel', 'brand.home': 'Angel, home', 'nav.label': 'Sections',
       'nav.rooms': 'Rooms', 'nav.services': 'Services', 'nav.about': 'About', 'nav.gallery': 'Gallery', 'nav.faq': 'FAQ', 'nav.contacts': 'Contacts',
       'lang.label': 'Language', 'theme.toggle': 'Switch theme', book: 'Book now', menu: 'Menu', close: 'Close', call: 'Call',
-      'hero.alt': 'A spacious room with warm light and a large bed', 'hero.title': 'Welcome to Minutka',
+      'hero.alt': 'A spacious room with warm light and a large bed', 'hero.title': 'Welcome to Angel',
       'hero.lead': 'Warm light, a calm atmosphere and comfort you can feel in every detail.', 'hero.rooms': 'Rooms and suites',
       'hero.facts': 'At a glance', 'hero.f1': '10 rooms', 'hero.f2': 'Front desk 24/7', 'hero.f3': 'Wi‑Fi throughout',
       'rooms.title': 'Choose a room', 'rooms.lead': 'Find the right option for your stay.', perNight: 'per night',
@@ -42,7 +42,7 @@
       'svc.wifi.t': 'Fast Wi‑Fi', 'svc.wifi.d': 'Stay connected and work in comfort.', 'svc.desk.t': 'Front desk 24/7', 'svc.desk.d': 'We help with check-in, taxis and any question, at any time.',
       'svc.loc.t': 'Handy location', 'svc.loc.d': 'The hotel is in the city, close to its infrastructure.', 'svc.bf.t': 'Breakfast', 'svc.bf.d': 'A slow morning and a tasty breakfast on request.',
       'about.alt': 'The hotel facade in the evening with warm glowing windows', 'about.title': 'Hospitality in the details',
-      'about.p1': 'Minutka is a small city hotel for those who value calm, personal space and a warm welcome. It is easy to recover after a busy day here and to feel the rhythm of Grozny.',
+      'about.p1': 'Angel is a small city hotel for those who value calm, personal space and a warm welcome. It is easy to recover after a busy day here and to feel the rhythm of Grozny.',
       'about.p2': 'Just <strong>ten rooms</strong>, to keep the atmosphere intimate and give every guest attention.',
       'about.c1': 'Cosy rooms', 'about.c2': 'Care 24/7', 'about.c3': 'Wi‑Fi throughout', 'about.c4': 'Handy location', 'about.link': 'About the services',
       'gal.title': 'Photo gallery', 'gal.lead': 'A few shots of the hotel rooms.',
@@ -58,7 +58,7 @@
       'cf.title': 'Write to us', 'cf.lead': 'Leave your name and phone and the administrator will call you back.', 'cf.send': 'Send',
       'f.name': 'Your name', 'f.phone': 'Phone', 'f.msg': 'Message', 'f.in': 'Check-in', 'f.out': 'Check-out', 'f.guests': 'Guests', 'f.room': 'Room category',
       'f.demo': 'The form is not connected yet: requests are not sent. Please call the hotel.',
-      'foot.note': '© 2026 Minutka hotel. A demonstration site: prices and contacts are examples.',
+      'foot.note': '© 2026 Angel hotel. A demonstration site: prices and contacts are examples.',
       'bk.title': 'Booking request', 'bk.lead': 'Leave your contacts, and the administrator will get in touch and confirm availability.', 'bk.send': 'Send request',
     },
     ce: {}, // add the Chechen texts here, same keys as English; the НО switch appears as soon as this has entries
